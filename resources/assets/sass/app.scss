@@ -1,0 +1,53 @@
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+// Slick Slider
+@import "~slick-carousel/slick/slick";
+@import "~slick-carousel/slick/slick-theme";
+
+
+body {
+  height: 100%;
+  @import "header";
+  @import "flex_wrap";
+  @import "pure_select";
+  @import "slick_custom";
+  @import "animation";
+  @import "section";
+  @import "footer";
+
+  .auth-panel {
+    margin-top: 20px;
+  }
+  
+  .animate-top {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    opacity: .3;
+    right: 20px;
+    bottom: -62px;
+    z-index: 1000;
+    cursor: pointer;
+    transform: translate3d(0,0,0);
+    border: solid 1px #000;
+    text-align: center;
+    .fa {
+      color: #000;
+      font-size: 2.3em;
+      margin-top: 2px;
+    }
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .container {
+      width: 100%;
+    }
+  }
+}

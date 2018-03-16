@@ -1,0 +1,8 @@
+.flex_page_wrap {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  .flex_content_wr {
+    flex: 1;
+  }
+}
