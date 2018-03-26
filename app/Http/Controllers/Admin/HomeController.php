@@ -25,5 +25,35 @@ class HomeController extends Controller
     public function highcharts(){
         return view('admin.index');
     }
-    
+
+    public function permission(){
+        return view('permission');
+    }
+
+    public function test11(){
+        return view('test',
+            [
+                'boxTitle'=>'测试11',
+                'active' => 'test11'
+            ]
+        );
+    }
+
+    public function test12(){
+        return view('test',
+            [
+                'boxTitle'=>'测试12',
+                'active' => 'test12'
+            ]
+        );
+    }
+
+    public function test2(){
+        return view('test',
+            [
+                'boxTitle'=>'测试2',
+                'active' => 'test2'
+            ]
+        );
+    }
 }

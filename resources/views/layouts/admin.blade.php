@@ -21,9 +21,10 @@
     <!-- Morris chart -->
     <link rel="stylesheet" href="{{ asset('bower_components/morris.js/morris.css') }}">
 
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
+    <script src="{{ asset('js/suxin/jquery-1.9.1.min.js') }}"></script>
+    <script src="{{ asset('js/suxin/index.js') }}"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">

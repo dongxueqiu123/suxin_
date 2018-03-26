@@ -41,11 +41,11 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '8889'),
-            'database' => env('DB_DATABASE', 'suxin_laravel'),
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', 'root'),
+            'host' => env('DB_HOST', '192.168.1.43'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'suxin'),
+            'username' => env('DB_USERNAME', 'suxin'),
+            'password' => env('DB_PASSWORD', 'Abcd1234%'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',

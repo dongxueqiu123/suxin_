@@ -35,9 +35,9 @@
                         <ul class="dropdown-menu">
                             <li>
                             @if (Auth::user()->role === 1)
-                                <a href="<?php echo url('/').'/'.app()->getLocale().'/admin' ?>">@lang('auth.dashboard_lnk')</a>
+                                <a href="<?php echo url('/').'/admin' ?>">@lang('auth.dashboard_lnk')</a>
                             @else
-                                <a href="<?php echo url('/').'/'.app()->getLocale().'/account' ?>">@lang('auth.dashboard_lnk')</a>
+                                <a href="<?php echo url('/').'/admin' ?>">@lang('auth.dashboard_lnk')</a>
                             @endif
                             </li>
                             <li>

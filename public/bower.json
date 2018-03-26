@@ -1,0 +1,22 @@
+{
+  "name": "suxin_laravel",
+  "version": "1.0",
+  "homepage": "",
+  "authors": [
+    "Ilya Shulgin <ishulgin8@gmail.com>"
+  ],
+  "description": "suxin laravel platform",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [],
+  "license": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "admin-lte": "*"
+  }
+}
