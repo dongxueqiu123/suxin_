@@ -73,12 +73,12 @@ Route::group(['prefix' => 'admin/permissions', 'middleware' =>['RolePermission']
 
 /**测试权限**/
 Route::group(['prefix' => 'admin/test11', 'middleware' =>['RolePermission']],function(){
-    Route::get('/', 'Admin\homeController@test11')->name('test11');
+    Route::get('/', 'Admin\HomeController@test11')->name('test11');
 });
 Route::group(['prefix' => 'admin/test12', 'middleware' =>['RolePermission']],function(){
-    Route::get('/', 'Admin\homeController@test12')->name('test12');
+    Route::get('/', 'Admin\HomeController@test12')->name('test12');
 });
 Route::group(['prefix' => 'admin/test2', 'middleware' =>['RolePermission']],function(){
-    Route::get('/', 'Admin\homeController@test2')->name('test2');
+    Route::get('/', 'Admin\HomeController@test2')->name('test2');
 });
 //Route::get('admin/companies', 'Admin\CompaniesController@index');

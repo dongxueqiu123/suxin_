@@ -22,7 +22,7 @@
               <div class="col-xs-12 col-sm-3 col-md-3">
                 <ul>
                   <li><p>@lang('common.footer.services_label')</p></li>
-                  <li><a href="<?php echo url('/').'/'.app()->getLocale().'/industrial' ?>">@lang('header.menu.industrial_lnk')</a></li>
+                  <li><a href="<?php echo url('/').'/'.app()->getLocale().'/cloud' ?>">@lang('header.menu.industrial_lnk')</a></li>
                   <li><a href="<?php echo url('/').'/'.app()->getLocale().'/analytics' ?>">@lang('header.menu.analytics_lnk')</a></li>
                 </ul>
               </div>

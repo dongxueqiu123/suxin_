@@ -47,10 +47,15 @@ class RolesController extends Controller
             'name' => 'required',
         ]);
         $input = $request->only(['name', 'description', 'permissionIdsStr']);
-        $admin = new Role();
-        $admin->name = $input['name'];
-        $admin->description = $input['description'];
-        if($state = $admin->save()){
+        $permissionIds = explode(',',$input['permissionIdsStr']);
+        $role = new Role();
+        $role->name = $input['name'];
+        $role->description = $input['description'];
+        if($state = $role->save()){
+            foreach($permissionIds as $permissionId){
+                $permission = Permission::find($permissionId);
+                $role->attachPermission($permission);
+            }
             return response()->json([
                 'state' => $state,
                 'route' => route('roles')
