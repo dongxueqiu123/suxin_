@@ -44,3 +44,30 @@ Route::group(['prefix' => 'admin/permissions'], function () {
     Route::post('/store', 'Api\PermissionsController@store')->name('api.permissions.store');
     Route::post('/delete/{id}', 'Api\PermissionsController@delete')->name('api.permissions.delete');
 });
+
+Route::group(['prefix' => 'admin/equipments'], function () {
+    Route::post('/edit/{id}', 'Api\EquipmentsController@edit')->name('api.equipments.edit');
+    //Route::get('/edit/{id}', 'Api\CompaniesController@edit')
+    Route::post('/store', 'Api\EquipmentsController@store')->name('api.equipments.store');
+    Route::post('/delete/{id}', 'Api\EquipmentsController@delete')->name('api.equipments.delete');
+});
+
+Route::group(['prefix' => 'admin/collectors'], function () {
+    Route::post('/edit/{id}', 'Api\CollectorsController@edit')->name('api.collectors.edit');
+    //Route::get('/edit/{id}', 'Api\CompaniesController@edit')
+    Route::post('/store', 'Api\CollectorsController@store')->name('api.collectors.store');
+    Route::post('/delete/{id}', 'Api\CollectorsController@delete')->name('api.collectors.delete');
+});
+
+Route::group(['prefix' => 'admin/thresholds'], function () {
+    Route::post('/edit/{id}', 'Api\ThresholdsController@edit')->name('api.thresholds.edit');
+    Route::post('/getPatterns', 'Api\ThresholdsController@getPatterns');
+    Route::post('/store', 'Api\ThresholdsController@store')->name('api.thresholds.store');
+    Route::post('/delete/{id}', 'Api\ThresholdsController@delete')->name('api.thresholds.delete');
+});
+
+Route::group(['prefix' => 'admin/liaisons'], function () {
+    Route::post('/edit/{id}', 'Api\LiaisonsController@edit')->name('api.liaisons.edit');
+    Route::post('/store', 'Api\LiaisonsController@store')->name('api.liaisons.store');
+    Route::post('/delete/{id}', 'Api\LiaisonsController@delete')->name('api.liaisons.delete');
+});

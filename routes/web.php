@@ -71,6 +71,30 @@ Route::group(['prefix' => 'admin/permissions', 'middleware' =>['RolePermission']
     Route::get('/edit/{id}', 'Admin\PermissionsController@edit')->name('permissions.edit');
 });
 
+Route::group(['prefix' => 'admin/equipments', 'middleware' =>['RolePermission']],function(){
+    Route::get('/', 'Admin\EquipmentsController@index')->name('equipments');
+    Route::get('/store', 'Admin\EquipmentsController@store')->name('equipments.store');
+    Route::get('/edit/{id}', 'Admin\EquipmentsController@edit')->name('equipments.edit');
+});
+
+Route::group(['prefix' => 'admin/collectors', 'middleware' =>['RolePermission']],function(){
+    Route::get('/', 'Admin\CollectorsController@index')->name('collectors');
+    Route::get('/store', 'Admin\CollectorsController@store')->name('collectors.store');
+    Route::get('/edit/{id}', 'Admin\CollectorsController@edit')->name('collectors.edit');
+});
+
+Route::group(['prefix' => 'admin/thresholds', 'middleware' =>['RolePermission']],function(){
+    Route::get('/', 'Admin\ThresholdsController@index')->name('thresholds');
+    Route::get('/store', 'Admin\ThresholdsController@store')->name('thresholds.store');
+    Route::get('/edit/{id}', 'Admin\ThresholdsController@edit')->name('thresholds.edit');
+});
+
+Route::group(['prefix' => 'admin/liaisons', 'middleware' =>['RolePermission']],function(){
+    Route::get('/', 'Admin\LiaisonsController@index')->name('liaisons');
+    Route::get('/store', 'Admin\LiaisonsController@store')->name('liaisons.store');
+    Route::get('/edit/{id}', 'Admin\LiaisonsController@edit')->name('liaisons.edit');
+});
+
 /**测试权限**/
 Route::group(['prefix' => 'admin/test11', 'middleware' =>['RolePermission']],function(){
     Route::get('/', 'Admin\HomeController@test11')->name('test11');
