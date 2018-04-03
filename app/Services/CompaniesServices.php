@@ -20,8 +20,29 @@ class CompaniesServices extends ServicesAdapte{
         $this->companies = new CompaniesModel();
     }
 
-
     function getAll(){
         return $this->companies::all();
+    }
+
+    public function isUserInCompany($company, $user){
+        $boole = false;
+        $companyId = $user->company->id??'';
+        if(($company->id??'') == $companyId || empty($companyId)){
+             $boole = true;
+        }
+        return $boole;
+    }
+
+    public function getModelsByCompany($models){
+        $companyId = \Auth()->user()->company->id??'';
+        foreach ($models as $model){
+            //if(($model->pattern_id == 0)||($model->company->id??'') == $companyId){
+            if(($model->company->id??'') == $companyId){
+
+                $thresholdModels[] = $model;
+
+            }
+        }
+        return $thresholdModels??[];
     }
 }

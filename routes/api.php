@@ -71,3 +71,7 @@ Route::group(['prefix' => 'admin/liaisons'], function () {
     Route::post('/store', 'Api\LiaisonsController@store')->name('api.liaisons.store');
     Route::post('/delete/{id}', 'Api\LiaisonsController@delete')->name('api.liaisons.delete');
 });
+
+Route::group(['prefix' => 'admin/alarms'], function () {
+    Route::post('/edit/{id}', 'Api\AlarmsController@edit')->name('api.alarms.edit');
+});

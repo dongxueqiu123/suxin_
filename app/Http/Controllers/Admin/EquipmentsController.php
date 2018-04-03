@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Eloquent\UsersModel;
-use App\Eloquent\Role;
-use App\Eloquent\RoleUserModel;
 use App\Eloquent\EquipmentsModel;
 use App\Eloquent\CompaniesModel;
+use App\Services\EquipmentsServices;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class EquipmentsController extends Controller
 {
@@ -19,6 +18,7 @@ class EquipmentsController extends Controller
      */
     public function __construct()
     {
+        $this->equipmentsServices = new EquipmentsServices();
         $this->equipments = new EquipmentsModel();
         $this->companies  = new CompaniesModel();
         $this->middleware('auth.user');
@@ -26,19 +26,22 @@ class EquipmentsController extends Controller
 
     public function index()
     {
-//        $companyId = \Auth()->user()->companyId;
-//        if(!empty($companyId)){
-//            $users = $this->users::where('companyId','=', $companyId)->get();
-//        }elseif(\Auth()->user()->id ===1){
-//            $users = $this->users::all();
-//        }else{
-//            $users = $this->users::where('id',"!=",'1')->get();
-//        }
+        if(!\Auth()->user()->company){
+            $equipments = $this->equipmentsServices->getAll();
+            $providerEquipments = $equipments;
+            $consumerEquipments = $equipments;
+        }else{
+            $id =\Auth()->user()->company->id;
+            $providerQueryArray['providerId'] = $id;
+            $providerEquipments = $this->equipmentsServices->getList(0,$providerQueryArray);
+            $consumerQueryArray['consumerId'] = $id;
+            $consumerEquipments = $this->equipmentsServices->getList(0,$consumerQueryArray);
+        }
 
-        $equipments = $this->equipments::all();
         return view('equipments.list',
             [
-                'equipments' => $equipments,
+                'providerEquipments' => $providerEquipments,
+                'consumerEquipments' => $consumerEquipments,
                 'boxTitle'=>'机械设备列表',
                 'active' => 'equipments'
             ]

@@ -118,64 +118,79 @@
       @endif
 
       @if( Auth::user()->id !==1 )
-        @permission(['test11','test12'])
 
-        <li class="@if (in_array($active??'', ['test11','test12'])) active @endif treeview">
+        @permission(['equipments','collectors'])
+        <li class="@if (in_array($active??'', ['equipments','collectors'])) active @endif treeview">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>测试1</span>
+            <i class="fa fa-suitcase"></i> <span>设备</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
           </a>
           <ul class="treeview-menu">
-            @permission('test11')
-            <li class="@if (($active??'') === 'test11') active @endif"><a href="{{route('test11')}}"><i class="fa fa-circle-o"></i> 测试栏目1</a></li>
+            @permission('equipments')
+            <li class="@if (($active??'') === 'equipments') active @endif"><a href="{{route('equipments')}}"><i class="fa fa-circle-o"></i> 机械设备管理</a></li>
             @endpermission
-            @permission('test12')
-            <li class="@if (($active??'') === 'test12') active @endif"><a href="{{route('test12')}}"><i class="fa fa-circle-o"></i> 测试栏目2</a></li>
+            @permission('collectors')
+            <li class="@if (($active??'') === 'collectors') active @endif"><a href="{{route('collectors')}}"><i class="fa fa-tablet"></i> 采集设备管理</a></li>
             @endpermission
           </ul>
         </li>
         @endpermission
 
-        @permission('test2')
-        <li class="@if (($active??'') === 'test2') active @endif treeview">
+        @permission(['thresholds','liaisons','alarms'])
+        <li class="@if (in_array($active??'', ['thresholds','liaisons','alarms'])) active @endif treeview">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>测试2</span>
+            <i class="fa fa-bell"></i> <span>告警</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
           </a>
           <ul class="treeview-menu">
-            <li class="@if (($active??'') === 'test2') active @endif "><a href="{{route('test2')}}"><i class="fa fa-circle-o"></i> 测试栏目1</a></li>
+            @permission('thresholds')
+            <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 告警阈值管理</a></li>
+            @endpermission
+            @permission('liaisons')
+            <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-fax"></i> 告警联系人管理</a></li>
+            @endpermission
+            @permission('alarms')
+            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-file"></i> 告警记录管理</a></li>
+            @endpermission
           </ul>
         </li>
         @endpermission
+
       @else
-      <li class="@if (in_array($active??'', ['test11','test12'])) active @endif  treeview">
-        <a href="#">
-          <i class="fa fa-dashboard"></i> <span>测试1</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          <li class="@if (($active??'') === 'test11') active @endif"><a href="{{route('test11')}}"><i class="fa fa-circle-o"></i> 测试栏目1</a></li>
-          <li class="@if (($active??'') === 'test12') active @endif"><a href="{{route('test12')}}"><i class="fa fa-circle-o"></i> 测试栏目2</a></li>
-        </ul>
-      </li>
 
-      <li class="@if (($active??'') === 'test2') active @endif treeview">
-        <a href="#">
-          <i class="fa fa-dashboard"></i> <span>测试2</span>
-          <span class="pull-right-container">
+
+
+        <li class="@if (in_array($active??'', ['equipments','collectors'])) active @endif treeview">
+          <a href="#">
+            <i class="fa fa-suitcase"></i> <span>设备</span>
+            <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
-        </a>
-        <ul class="treeview-menu">
-          <li class="active"><a href="{{route('test2')}}"><i class="fa fa-circle-o"></i> 测试栏目1</a></li>
-        </ul>
-      </li>
+          </a>
+          <ul class="treeview-menu">
+            <li class="@if (($active??'') === 'equipments') active @endif"><a href="{{route('equipments')}}"><i class="fa fa-circle-o"></i> 机械设备管理</a></li>
+            <li class="@if (($active??'') === 'collectors') active @endif"><a href="{{route('collectors')}}"><i class="fa fa-tablet"></i> 采集设备管理</a></li>
+          </ul>
+        </li>
+
+        <li class="@if (in_array($active??'', ['thresholds','liaisons','alarms'])) active @endif treeview">
+          <a href="#">
+            <i class="fa fa-bell"></i> <span>告警</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 告警阈值管理</a></li>
+            <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-phone"></i> 告警联系人管理</a></li>
+            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-file"></i> 告警记录管理</a></li>
+          </ul>
+        </li>
+
       @endif
 
     </ul>

@@ -25,6 +25,8 @@ class ThresholdsModel extends Model
         'id','pattern','pattern_id','category','grade','lowlimit','toplimit','operator_id'
     ];
 
+    public function scopeNothing($query){return $query;}
+
     public function getCategory($id){
         $category = self::CATEGORY;
         $result   = empty($id)?$category:$category[$id];
@@ -41,6 +43,22 @@ class ThresholdsModel extends Model
         $pattern = self::PATTERN;
         $result  =  empty($id)?$pattern:$pattern[$id];
         return $result;
+    }
+
+    public function scopePattern($query,$pattern){
+        $query->where('pattern' ,'=' ,$pattern);
+    }
+
+    public function company(){
+        return $this->belongsTo('App\Eloquent\CompaniesModel','pattern_id','id');
+    }
+
+    public function equipment(){
+        return $this->belongsTo('App\Eloquent\EquipmentsModel','pattern_id','id');
+    }
+
+    public function collector(){
+        return $this->belongsTo('App\Eloquent\CollectorsModel','pattern_id','id');
     }
 }
 

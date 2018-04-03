@@ -95,6 +95,11 @@ Route::group(['prefix' => 'admin/liaisons', 'middleware' =>['RolePermission']],f
     Route::get('/edit/{id}', 'Admin\LiaisonsController@edit')->name('liaisons.edit');
 });
 
+
+Route::group(['prefix' => 'admin/alarms', 'middleware' =>['RolePermission']],function(){
+    Route::get('/', 'Admin\AlarmsController@index')->name('alarms');
+});
+
 /**测试权限**/
 Route::group(['prefix' => 'admin/test11', 'middleware' =>['RolePermission']],function(){
     Route::get('/', 'Admin\HomeController@test11')->name('test11');

@@ -45,17 +45,17 @@
                                   </tr>
                                   </thead>
                                   <tbody>
-                                  @foreach($thresholds??[] as $key=>$threshold)
+                                  @foreach($companyThresholds??[] as $key=>$companyThreshold)
                                       <tr>
                                           <td>{{$key+1}}</td>
-                                          <td>{{$threshold->pattern}}</td>
-                                          <td>{{$threshold->category}}</td>
-                                          <td>{{$threshold->grade}}</td>
-                                          <td>{{$threshold->lowlimit}}~{{$threshold->toplimit}}</td>
-                                          <td>{{$threshold->operate_time}}</td>
+                                          <td>{{$companyThreshold->pattern}}({{$companyThreshold->company->name}})</td>
+                                          <td>{{$companyThreshold->category}}</td>
+                                          <td>{{$companyThreshold->grade}}</td>
+                                          <td>{{$companyThreshold->lowlimit}}~{{$companyThreshold->toplimit}}</td>
+                                          <td>{{$companyThreshold->operate_time}}</td>
                                           <td>
-                                              <a class="btn btn-primary btn-xs " href={{route('thresholds.edit',['id'=>$threshold->id])}}>编辑</a>
-                                              <a class="btn btn-danger btn-xs delete" url="{{ route('api.thresholds.delete',['id'=>$threshold->id])}}" >删除</a>
+                                              <a class="btn btn-primary btn-xs " href={{route('thresholds.edit',['id'=>$companyThreshold->id])}}>编辑</a>
+                                              <a class="btn btn-danger btn-xs delete" url="{{ route('api.thresholds.delete',['id'=>$companyThreshold->id])}}" >删除</a>
                                           </td>
                                       </tr>
                                   @endforeach
@@ -84,18 +84,20 @@
                               </tr>
                               </thead>
                               <tbody>
-{{--                              @foreach($collectors??[] as $key=>$collector)
+                              @foreach($collectorThresholds??[] as $key=>$collectorThreshold)
                                   <tr>
                                       <td>{{$key+1}}</td>
-                                      <td>{{$collector->name}}</td>
-                                      <td>{{$collector->name}}</td>
-                                      <td>{{$collector->operate_time}}</td>
+                                      <td>{{$collectorThreshold->pattern}}({{$collectorThreshold->collector->name}})</td>
+                                      <td>{{$collectorThreshold->category}}</td>
+                                      <td>{{$collectorThreshold->grade}}</td>
+                                      <td>{{$collectorThreshold->lowlimit}}~{{$collectorThreshold->toplimit}}</td>
+                                      <td>{{$collectorThreshold->operate_time}}</td>
                                       <td>
-                                          <a class="btn btn-primary btn-xs " href={{route('thresholds.edit',['id'=>$collector->id])}}>编辑</a>
-                                          <a class="btn btn-danger btn-xs delete" url="{{ route('api.thresholds.delete',['id'=>$collector->id])}}" >删除</a>
+                                          <a class="btn btn-primary btn-xs " href={{route('thresholds.edit',['id'=>$collectorThreshold->id])}}>编辑</a>
+                                          <a class="btn btn-danger btn-xs delete" url="{{ route('api.thresholds.delete',['id'=>$collectorThreshold->id])}}" >删除</a>
                                       </td>
                                   </tr>
-                              @endforeach--}}
+                              @endforeach
                               </tbody>
                           </table>
                       </div>
@@ -119,18 +121,20 @@
                           </tr>
                           </thead>
                           <tbody>
-{{--                          @foreach($collectors??[] as $key=>$collector)
+                          @foreach($equipmentThresholds??[] as $key=>$equipmentThreshold)
                               <tr>
                                   <td>{{$key+1}}</td>
-                                  <td>{{$collector->name}}</td>
-                                  <td>{{$collector->name}}</td>
-                                  <td>{{$collector->operate_time}}</td>
+                                  <td>{{$equipmentThreshold->pattern}}({{$equipmentThreshold->equipment->name}})</td>
+                                  <td>{{$equipmentThreshold->category}}</td>
+                                  <td>{{$equipmentThreshold->grade}}</td>
+                                  <td>{{$equipmentThreshold->lowlimit}}~{{$equipmentThreshold->toplimit}}</td>
+                                  <td>{{$equipmentThreshold->operate_time}}</td>
                                   <td>
-                                      <a class="btn btn-primary btn-xs " href={{route('thresholds.edit',['id'=>$collector->id])}}>编辑</a>
-                                      <a class="btn btn-danger btn-xs delete" url="{{ route('api.thresholds.delete',['id'=>$collector->id])}}" >删除</a>
+                                      <a class="btn btn-primary btn-xs " href={{route('thresholds.edit',['id'=>$equipmentThreshold->id])}}>编辑</a>
+                                      <a class="btn btn-danger btn-xs delete" url="{{ route('api.thresholds.delete',['id'=>$equipmentThreshold->id])}}" >删除</a>
                                   </td>
                               </tr>
-                          @endforeach--}}
+                          @endforeach
                           </tbody>
                       </table>
                   </div>

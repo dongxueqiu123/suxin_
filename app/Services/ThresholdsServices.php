@@ -21,6 +21,25 @@ class ThresholdsServices extends ServicesAdapte {
         $this->thresholds = new ThresholdsModel();
     }
 
+    public function getList(int $pageSize = 0,
+                            array $queryArray = [],
+                            bool $queryBelongsTo = true,
+                            bool $queryChildren = true, $ext = []){
+
+        $query = $this->thresholds->nothing();
+
+        foreach($queryArray as $key => $value){
+            if($key === 'pattern'){
+                $value && $query->pattern($value);
+            } else if ($key === 'patternId') {
+                $value && $query->patternId($value);
+            }
+        }
+
+        $lines = $query->get();
+        return $lines;
+    }
+
     function getAll(){
         return $this->thresholds::all();
     }
@@ -55,5 +74,15 @@ class ThresholdsServices extends ServicesAdapte {
         $name ='get'.($name);
         return  $this->thresholds->$name($id);
     }
+
+    public function getChName($thresholds){
+        foreach ($thresholds as $threshold){
+            $threshold->pattern  = $this->getConstant($threshold,'pattern');
+            $threshold->category = $this->getConstant($threshold,'category');
+            $threshold->grade    = $this->getConstant($threshold,'grade');
+        }
+        return $thresholds;
+    }
+
 }
 ?>

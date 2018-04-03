@@ -9,6 +9,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\LiaisonsServices;
+use App\Services\EquipmentsServices;
+use App\Services\CollectorsServices;
+use App\Services\CompaniesServices;
 use App\Services\ThresholdsServices;
 
 class LiaisonsController extends Controller {
@@ -17,18 +20,35 @@ class LiaisonsController extends Controller {
     {
         $this->liaisonsServices   = new LiaisonsServices();
         $this->thresholdsServices = new ThresholdsServices();
+        $this->equipmentsServices = new EquipmentsServices();
+        $this->collectorsServices = new CollectorsServices();
+        $this->companiesServices = new CompaniesServices();
         $this->middleware('auth.user');
     }
 
     public function index()
     {
-        $liaisons = $this->liaisonsServices->getAll();
-        foreach ($liaisons as $liaison){
-            $liaison->pattern  = $this->thresholdsServices->getConstant($liaison,'pattern');
+        $companyQueryArray['pattern'] = '1';
+        $equipmentQueryArray['pattern'] = '2';
+        $collectorQueryArray['pattern'] = '3';
+        $companyLiaisons = $this->liaisonsServices->getList(0,$companyQueryArray);
+        $equipmentLiaisons = $this->liaisonsServices->getList(0,$equipmentQueryArray);
+        $collectorLiaisons = $this->liaisonsServices->getList(0,$collectorQueryArray);
+        if($company = \Auth()->user()->company){
+            $companyLiaisons = $this->companiesServices->getModelsByCompany($companyLiaisons);
+            $equipmentLiaisons = $this->equipmentsServices->getModelsByEquipment($equipmentLiaisons);
+            $collectorLiaisons = $this->collectorsServices->getModelsByCollector($collectorLiaisons);
         }
+
+        $companyLiaisons = $this->thresholdsServices->getChName($companyLiaisons);
+        $equipmentLiaisons = $this->thresholdsServices->getChName($equipmentLiaisons);
+        $collectorLiaisons = $this->thresholdsServices->getChName($collectorLiaisons);
+
         return view('liaisons.list',
             [
-                'liaisons' => $liaisons,
+                'companyLiaisons' => $companyLiaisons,
+                'equipmentLiaisons' => $equipmentLiaisons,
+                'collectorLiaisons' => $collectorLiaisons,
                 'boxTitle'=>'告警联系人列表',
                 'active' => 'liaisons'
             ]

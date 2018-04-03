@@ -77,17 +77,33 @@ class ThresholdsController extends Controller
     public function getPatterns(Request $request){
        $pattern   = $request->input('pattern');
        $patternId = $request->input('patternId');
+       $user = \Auth()->user();
        $patternsInfo = [];
        if($pattern == '1'){
            $patternsInfo = $this->companiesServices->getAll();
+           foreach ($patternsInfo as $key => $patternInfo){
+              $boole = $this->companiesServices->isUserInCompany($patternInfo,$user);
+              if(!$boole)
+                   unset($patternsInfo[$key]);
+           }
        }elseif($pattern == '2'){
            $patternsInfo = $this->equipmentsServices->getAll();
+           foreach ($patternsInfo as $key => $patternInfo){
+               $boole = $this->equipmentsServices->isUserInEquipment($patternInfo,$user);
+               if(!$boole)
+                   unset($patternsInfo[$key]);
+           }
        }elseif($pattern == '3'){
            $patternsInfo = $this->collectorsServices->getAll();
+           foreach ($patternsInfo as $key => $patternInfo){
+               $boole = $this->collectorsServices->isUserInCollector($patternInfo,$user);
+               if(!$boole)
+                   unset($patternsInfo[$key]);
+           }
        }
        $str ='';
 
-       foreach ($patternsInfo as $patternInfo){
+       foreach ($patternsInfo??[] as $patternInfo){
            $selected =  ($patternId == $patternInfo->id)?'selected':'';
            $str.= '<option '.$selected.' value="'.$patternInfo->id.'">'.$patternInfo->name.'</option>';
        }

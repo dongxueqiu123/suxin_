@@ -52,13 +52,13 @@
                       </div>
                   </div>
 
-                  <div class="form-group company" @if(($collector->pattern??'')  !='2') style="display: none;" @endif>
+                  <div class="form-group company" >
                       <label for="abbreviation" class="col-sm-2 control-label">使用厂商</label>
                       <div class="col-sm-10">
                           <select class="form-control select2 patternId"  style="width: 100%;">
-                              @foreach($equipments??[] as $equipment)
+{{--                              @foreach($equipments??[] as $equipment)
                                   <option @if(($equipment->id??'') == ($collector->pattern_id??'')) selected @endif value="{{$equipment->id}}">{{$equipment->name}}</option>
-                              @endforeach
+                              @endforeach--}}
                           </select>
                       </div>
                   </div>
@@ -113,13 +113,35 @@
          });
          return false;
      });
+
+
      $('.pattern').on('change',function(){
          var value = $(this).val();
-         if(value == '2'){
-             $('.company').show();
-         }else if(value == '1'){
-             $('.company').hide();
-         }
-     })
+         var patternId = $('#patternId').val();
+         changePattern(value,patternId);
+     });
+
+     changePattern({{$collector->pattern??1}},$('.patternId').val());
+
+     function changePattern(pattern,patternId){
+         $.ajax({
+             url:'/api/admin/thresholds/getPatterns',
+             type:'POST',    //GET
+             data:{
+                 pattern:pattern,patternId:patternId
+             },
+             timeout:5000,    //超时时间
+             dataType:'json',
+             success:function(data){
+                 if(data.state == '0'){
+                     $(".patternId").find("option").remove();
+                     $(".patternId").append(data.text);
+                 }
+             },
+             error:function(data){
+             }
+         });
+     }
+
   </script>
 @endsection

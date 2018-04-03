@@ -59,7 +59,7 @@
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <a type="submit" href="{{route('users')}}" class="btn btn-default">返回</a>
+                <a type="submit" href="{{route('equipments')}}" class="btn btn-default">返回</a>
                 <button type="submit"  class="btn btn-info pull-right sign">确定</button>
               </div>
               <!-- /.box-footer -->

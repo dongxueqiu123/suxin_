@@ -44,16 +44,16 @@
                                   </tr>
                                   </thead>
                                   <tbody>
-                                  @foreach($liaisons??[] as $key=>$liaison)
+                                  @foreach($companyLiaisons??[] as $key=>$companyLiaison)
                                       <tr>
                                           <td>{{$key+1}}</td>
-                                          <td>{{$liaison->pattern}}</td>
-                                          <td>{{$liaison->mobile}}</td>
-                                          <td>{{$liaison->email}}</td>
-                                          <td>{{$liaison->operate_time}}</td>
+                                          <td>{{$companyLiaison->pattern}}({{$companyLiaison->company->name}})</td>
+                                          <td>{{$companyLiaison->mobile}}</td>
+                                          <td>{{$companyLiaison->email}}</td>
+                                          <td>{{$companyLiaison->operate_time}}</td>
                                           <td>
-                                              <a class="btn btn-primary btn-xs " href={{route('liaisons.edit',['id'=>$liaison->id])}}>编辑</a>
-                                              <a class="btn btn-danger btn-xs delete" url="{{ route('api.liaisons.delete',['id'=>$liaison->id])}}" >删除</a>
+                                              <a class="btn btn-primary btn-xs " href={{route('liaisons.edit',['id'=>$companyLiaison->id])}}>编辑</a>
+                                              <a class="btn btn-danger btn-xs delete" url="{{ route('api.liaisons.delete',['id'=>$companyLiaison->id])}}" >删除</a>
                                           </td>
                                       </tr>
                                   @endforeach
@@ -81,18 +81,19 @@
                               </tr>
                               </thead>
                               <tbody>
-{{--                              @foreach($collectors??[] as $key=>$collector)
+                              @foreach($collectorLiaisons??[] as $key=>$collectorLiaison)
                                   <tr>
                                       <td>{{$key+1}}</td>
-                                      <td>{{$collector->name}}</td>
-                                      <td>{{$collector->name}}</td>
-                                      <td>{{$collector->operate_time}}</td>
+                                      <td>{{$collectorLiaison->pattern}}({{$collectorLiaison->collector->name}})</td>
+                                      <td>{{$collectorLiaison->mobile}}</td>
+                                      <td>{{$collectorLiaison->email}}</td>
+                                      <td>{{$collectorLiaison->operate_time}}</td>
                                       <td>
-                                          <a class="btn btn-primary btn-xs " href={{route('thresholds.edit',['id'=>$collector->id])}}>编辑</a>
-                                          <a class="btn btn-danger btn-xs delete" url="{{ route('api.thresholds.delete',['id'=>$collector->id])}}" >删除</a>
+                                          <a class="btn btn-primary btn-xs " href={{route('liaisons.edit',['id'=>$collectorLiaison->id])}}>编辑</a>
+                                          <a class="btn btn-danger btn-xs delete" url="{{ route('api.liaisons.delete',['id'=>$collectorLiaison->id])}}" >删除</a>
                                       </td>
                                   </tr>
-                              @endforeach--}}
+                              @endforeach
                               </tbody>
                           </table>
                       </div>
@@ -115,18 +116,19 @@
                           </tr>
                           </thead>
                           <tbody>
-{{--                          @foreach($collectors??[] as $key=>$collector)
+                          @foreach($equipmentLiaisons??[] as $key=>$equipmentLiaison)
                               <tr>
                                   <td>{{$key+1}}</td>
-                                  <td>{{$collector->name}}</td>
-                                  <td>{{$collector->name}}</td>
-                                  <td>{{$collector->operate_time}}</td>
+                                  <td>{{$equipmentLiaison->pattern}}({{$equipmentLiaison->equipment->name}})</td>
+                                  <td>{{$equipmentLiaison->mobile}}</td>
+                                  <td>{{$equipmentLiaison->email}}</td>
+                                  <td>{{$equipmentLiaison->operate_time}}</td>
                                   <td>
-                                      <a class="btn btn-primary btn-xs " href={{route('thresholds.edit',['id'=>$collector->id])}}>编辑</a>
-                                      <a class="btn btn-danger btn-xs delete" url="{{ route('api.thresholds.delete',['id'=>$collector->id])}}" >删除</a>
+                                      <a class="btn btn-primary btn-xs " href={{route('liaisons.edit',['id'=>$equipmentLiaison->id])}}>编辑</a>
+                                      <a class="btn btn-danger btn-xs delete" url="{{ route('api.liaisons.delete',['id'=>$equipmentLiaison->id])}}" >删除</a>
                                   </td>
                               </tr>
-                          @endforeach--}}
+                          @endforeach
                           </tbody>
                       </table>
                   </div>

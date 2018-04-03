@@ -8,6 +8,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Services\ThresholdsServices;
+use App\Services\EquipmentsServices;
+use App\Services\CollectorsServices;
+use App\Services\CompaniesServices;
 use App\Http\Controllers\Controller;
 
 class ThresholdsController extends Controller
@@ -21,21 +24,38 @@ class ThresholdsController extends Controller
     public function __construct()
     {
         $this->thresholdsServices = new ThresholdsServices();
+        $this->equipmentsServices = new EquipmentsServices();
+        $this->collectorsServices = new CollectorsServices();
+        $this->companiesServices = new CompaniesServices();
         $this->middleware('auth.user');
     }
 
     public function index()
     {
 
-        $thresholds = $this->thresholdsServices->getAll();
-        foreach ($thresholds as $threshold){
-            $threshold->pattern  = $this->thresholdsServices->getConstant($threshold,'pattern');
-            $threshold->category = $this->thresholdsServices->getConstant($threshold,'category');
-            $threshold->grade    = $this->thresholdsServices->getConstant($threshold,'grade');
+        $companyQueryArray['pattern'] = '1';
+        $equipmentQueryArray['pattern'] = '2';
+        $collectorQueryArray['pattern'] = '3';
+        $companyThresholds = $this->thresholdsServices->getList(0,$companyQueryArray);
+        $equipmentThresholds = $this->thresholdsServices->getList(0,$equipmentQueryArray);
+        $collectorThresholds = $this->thresholdsServices->getList(0,$collectorQueryArray);
+        if($company = \Auth()->user()->company){
+
+            $companyThresholds = $this->companiesServices->getModelsByCompany($companyThresholds);
+
+            $equipmentThresholds = $this->equipmentsServices->getModelsByEquipment($equipmentThresholds);
+
+            $collectorThresholds = $this->collectorsServices->getModelsByCollector($collectorThresholds);
+
         }
+        $companyThresholds = $this->thresholdsServices->getChName($companyThresholds);
+        $equipmentThresholds = $this->thresholdsServices->getChName($equipmentThresholds);
+        $collectorThresholds = $this->thresholdsServices->getChName($collectorThresholds);
         return view('thresholds.list',
             [
-                'thresholds' => $thresholds,
+                'companyThresholds' => $companyThresholds,
+                'equipmentThresholds' => $equipmentThresholds,
+                'collectorThresholds' => $collectorThresholds,
                 'boxTitle'=>'告警阈值列表',
                 'active' => 'thresholds'
             ]

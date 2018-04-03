@@ -42,15 +42,15 @@
                                   </tr>
                                   </thead>
                                   <tbody>
-                                  @foreach($equipments as $key=>$equipment)
+                                  @foreach($consumerEquipments as $key=>$consumerEquipment)
                                       <tr>
                                           <td>{{$key+1}}</td>
-                                          <td>{{$equipment->name}}</td>
-                                          <td>{{$equipment->provider->name}}</td>
-                                          <td>{{$equipment->operate_time}}</td>
+                                          <td>{{$consumerEquipment->name}}</td>
+                                          <td>{{$consumerEquipment->provider->name}}</td>
+                                          <td>{{$consumerEquipment->operate_time}}</td>
                                           <td>
-                                              <a class="btn btn-primary btn-xs " href={{route('equipments.edit',['id'=>$equipment->id])}}>编辑</a>
-                                              <a class="btn btn-danger btn-xs delete" url="{{ route('api.equipments.delete',['id'=>$equipment->id])}}" >删除</a>
+                                              <a class="btn btn-primary btn-xs " href={{route('equipments.edit',['id'=>$consumerEquipment->id])}}>编辑</a>
+                                              <a class="btn btn-danger btn-xs delete" url="{{ route('api.equipments.delete',['id'=>$consumerEquipment->id])}}" >删除</a>
                                           </td>
                                       </tr>
                                   @endforeach
@@ -77,15 +77,15 @@
                               </tr>
                               </thead>
                               <tbody>
-                              @foreach($equipments as $key=>$equipment)
+                              @foreach($providerEquipments as $key=>$providerEquipment)
                                   <tr>
                                       <td>{{$key+1}}</td>
-                                      <td>{{$equipment->name}}</td>
-                                      <td>{{$equipment->consumer->name}}</td>
-                                      <td>{{$equipment->operate_time}}</td>
+                                      <td>{{$providerEquipment->name}}</td>
+                                      <td>{{$providerEquipment->consumer->name}}</td>
+                                      <td>{{$providerEquipment->operate_time}}</td>
                                       <td>
-                                          <a class="btn btn-primary btn-xs " href={{route('users.edit',['id'=>$equipment->id])}}>编辑</a>
-                                          <a class="btn btn-danger btn-xs delete" url="{{ route('api.users.delete',['id'=>$equipment->id])}}" >删除</a>
+                                          <a class="btn btn-primary btn-xs " href={{route('equipments.edit',['id'=>$providerEquipment->id])}}>编辑</a>
+                                          <a class="btn btn-danger btn-xs delete" url="{{ route('api.equipments.delete',['id'=>$providerEquipment->id])}}" >删除</a>
                                       </td>
                                   </tr>
                               @endforeach

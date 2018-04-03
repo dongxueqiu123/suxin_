@@ -42,15 +42,15 @@
                                   </tr>
                                   </thead>
                                   <tbody>
-                                  @foreach($collectors as $key=>$collector)
+                                  @foreach($companyCollectors as $key=>$companyCollector)
                                       <tr>
                                           <td>{{$key+1}}</td>
-                                          <td>{{$collector->name}}</td>
-                                          <td>{{$collector->name}}</td>
-                                          <td>{{$collector->operate_time}}</td>
+                                          <td>{{$companyCollector->name}}</td>
+                                          <td>{{$companyCollector->company->name??'苏欣物联'}}</td>
+                                          <td>{{$companyCollector->operate_time}}</td>
                                           <td>
-                                              <a class="btn btn-primary btn-xs " href={{route('collectors.edit',['id'=>$collector->id])}}>编辑</a>
-                                              <a class="btn btn-danger btn-xs delete" url="{{ route('api.collectors.delete',['id'=>$collector->id])}}" >删除</a>
+                                              <a class="btn btn-primary btn-xs " href={{route('collectors.edit',['id'=>$companyCollector->id])}}>编辑</a>
+                                              <a class="btn btn-danger btn-xs delete" url="{{ route('api.collectors.delete',['id'=>$companyCollector->id])}}" >删除</a>
                                           </td>
                                       </tr>
                                   @endforeach
@@ -72,20 +72,27 @@
                                   <th>序号</th>
                                   <th>采集设备名称</th>
                                   <th>机械名称</th>
+                                  <th>公司名称</th>
                                   <th>更新时间</th>
                                   <th>编辑</th>
                               </tr>
                               </thead>
                               <tbody>
-                              @foreach($collectors as $key=>$collector)
+                              @foreach($equipmentCollectors as $key=>$equipmentCollector)
+                                  <?php
+                                  $providerName = $equipmentCollector->equipment->provider->name;
+                                  $consumerName = $equipmentCollector->equipment->consumer->name;
+                                  ?>
                                   <tr>
                                       <td>{{$key+1}}</td>
-                                      <td>{{$collector->name}}</td>
-                                      <td>{{$collector->name}}</td>
-                                      <td>{{$collector->operate_time}}</td>
+                                      <td>{{$equipmentCollector->name}}</td>
+                                      <td>{{$equipmentCollector->equipment->name}}</td>
+                                      <td>{{$providerName?$providerName:$consumerName}}
+                                          （@if($providerName) 生产设备 @elseif($consumerName) 使用设备 @endif）</td>
+                                      <td>{{$equipmentCollector->operate_time}}</td>
                                       <td>
-                                          <a class="btn btn-primary btn-xs " href={{route('users.edit',['id'=>$collector->id])}}>编辑</a>
-                                          <a class="btn btn-danger btn-xs delete" url="{{ route('api.users.delete',['id'=>$collector->id])}}" >删除</a>
+                                          <a class="btn btn-primary btn-xs " href={{route('collectors.edit',['id'=>$equipmentCollector->id])}}>编辑</a>
+                                          <a class="btn btn-danger btn-xs delete" url="{{ route('api.collectors.delete',['id'=>$equipmentCollector->id])}}" >删除</a>
                                       </td>
                                   </tr>
                               @endforeach
