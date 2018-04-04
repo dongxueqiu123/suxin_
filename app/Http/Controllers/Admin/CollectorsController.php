@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Services\CollectorsServices;
 use App\Services\EquipmentsServices;
-use App\Services\companiesServices;
+use App\Services\CompaniesServices;
 use App\Eloquent\EquipmentsModel;
 use App\Eloquent\CollectorsModel;
 use App\Http\Controllers\Controller;

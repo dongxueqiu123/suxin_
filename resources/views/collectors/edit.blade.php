@@ -38,7 +38,7 @@
                   <div class="form-group">
                       <label for="mac" class="col-sm-2 control-label">mac地址</label>
                       <div class="col-sm-10">
-                          <input type="mac" class="form-control" value="{{$collector->mac??''}}" id="mac" placeholder="00-23-5A-15-99-42">
+                          <input type="mac" class="form-control" value="{{$collector->mac??''}}" id="mac" placeholder="00-23-5A-15-99-42-11-25">
                       </div>
                   </div>
 

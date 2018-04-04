@@ -19,13 +19,13 @@ class CollectorsController extends Controller
 
     public function edit($id,Request $request){
         $request->validate([
-            'mac'=>'required|between:17,17',
+            'mac'=>'required|between:23,23',
             'name' => 'required',
             'pattern' => 'required',
         ]);
         $collector = $this->collectors::find($id);
         $input = $request->only(['mac','name', 'pattern', 'patternId']);
-        $input['patternId'] = $input['pattern'] == 1 ? (Auth::user()->company->id??0):$input['patternId'];
+        //$input['patternId'] = $input['pattern'] == 1 ? (Auth::user()->company->id??0):$input['patternId'];
         $collector->mac = $input['mac'];
         $collector->name = $input['name'];
         $collector->pattern = $input['pattern'];
@@ -40,12 +40,12 @@ class CollectorsController extends Controller
 
     public function store(Request $request){
         $request->validate([
-            'mac'=>'required|between:17,17',
+            'mac'=>'required|between:23,23',
             'name' => 'required',
             'pattern' => 'required',
         ]);
         $input = $request->only(['mac','name', 'pattern', 'patternId']);
-        $input['patternId'] = $input['pattern'] == 1 ? (Auth::user()->company->id??0):$input['patternId'];
+        //$input['patternId'] = $input['pattern'] == 1 ? (Auth::user()->company->id??0):$input['patternId'];
         $this->collectors->mac = $input['mac'];
         $this->collectors->name = $input['name'];
         $this->collectors->pattern = $input['pattern'];
@@ -67,7 +67,5 @@ class CollectorsController extends Controller
             ]);
         }
     }
-
-
 
 }
