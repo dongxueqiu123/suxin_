@@ -30,114 +30,82 @@
   <section class="content">
 
     <div class="row">
-      <div id="container"></div>
+        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     </div>
 
 
   </section>
   <script type="text/javascript">
 
-
-      // Construct the chart
-      Highcharts.chart('container', {
-
-          title: {
-              text: 'Highcharts Wind Barbs'
-          },
-
-          xAxis: {
-              type: 'datetime',
-              offset: 40
-          },
-
-          plotOptions: {
-              series: {
-                  pointStart: Date.UTC(2017, 0, 29),
-                  pointInterval: 36e5
+      $.getJSON(
+          'https://data.jianshukeji.com/jsonp?filename=json/usdeur.json&callback=?',
+          function (data) {
+              data =[
+                  ["2018-04-03T17:26:32Z",28.7]];
+              var dataKey,length;
+              length = data.length;
+              for(dataKey = 0 ; dataKey < length; dataKey++){
+                  data[dataKey][0] = data[dataKey][0].replace(/T/, " ");
+                  data[dataKey][0] = data[dataKey][0].replace(/Z/, "");
               }
-          },
+              console.log(data);
 
-          series: [{
-              type: 'windbarb',
-              data: [
-                  [9.8, 177.9],
-                  [10.1, 177.2],
-                  [11.3, 179.7],
-                  [10.9, 175.5],
-                  [9.3, 159.9],
-                  [8.8, 159.6],
-                  [7.8, 162.6],
-                  [5.6, 186.2],
-                  [6.8, 146.0],
-                  [6.4, 139.9],
-                  [3.1, 180.2],
-                  [4.3, 177.6],
-                  [5.3, 191.8],
-                  [6.3, 173.1],
-                  [7.7, 140.2],
-                  [8.5, 136.1],
-                  [9.4, 142.9],
-                  [10.0, 140.4],
-                  [5.3, 142.1],
-                  [3.8, 141.0],
-                  [3.3, 116.5],
-                  [1.5, 327.5],
-                  [0.1, 1.1],
-                  [1.2, 11.1]
-              ],
-              name: 'Wind',
-              color: Highcharts.getOptions().colors[1],
-              showInLegend: false,
-              tooltip: {
-                  valueSuffix: ' m/s'
-              }
-          }, {
-              type: 'area',
-              keys: ['y', 'rotation'], // rotation is not used here
-              data: [
-                  [9.8, 177.9],
-                  [10.1, 177.2],
-                  [11.3, 179.7],
-                  [10.9, 175.5],
-                  [9.3, 159.9],
-                  [8.8, 159.6],
-                  [7.8, 162.6],
-                  [5.6, 186.2],
-                  [6.8, 146.0],
-                  [6.4, 139.9],
-                  [3.1, 180.2],
-                  [4.3, 177.6],
-                  [5.3, 191.8],
-                  [6.3, 173.1],
-                  [7.7, 140.2],
-                  [8.5, 136.1],
-                  [9.4, 142.9],
-                  [10.0, 140.4],
-                  [5.3, 142.1],
-                  [3.8, 141.0],
-                  [3.3, 116.5],
-                  [1.5, 327.5],
-                  [0.1, 1.1],
-                  [1.2, 11.1]
-              ],
-              color: Highcharts.getOptions().colors[0],
-              fillColor: {
-                  linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-                  stops: [
-                      [0, Highcharts.getOptions().colors[0]],
-                      [
-                          1,
-                          Highcharts.color(Highcharts.getOptions().colors[0])
-                              .setOpacity(0.25).get()
-                      ]
-                  ]
-              },
-              name: 'Wind speed',
-              tooltip: {
-                  valueSuffix: ' m/s'
-              }
-          }]
+              Highcharts.chart('container', {
+                  chart: {
+                      zoomType: 'x'
+                  },
+                  title: {
+                      text: 'USD to EUR exchange rate over time'
+                  },
+                  subtitle: {
+                      text: document.ontouchstart === undefined ?
+                          'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+                  },
+                  xAxis: {
+                      type: 'datetime'
+                  },
+                  yAxis: {
+                      title: {
+                          text: 'Exchange rate'
+                      }
+                  },
+                  legend: {
+                      enabled: false
+                  },
+                  plotOptions: {
+                      area: {
+                          fillColor: {
+                              linearGradient: {
+                                  x1: 0,
+                                  y1: 0,
+                                  x2: 0,
+                                  y2: 1
+                              },
+                              stops: [
+                                  [0, Highcharts.getOptions().colors[0]],
+                                  [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                              ]
+                          },
+                          marker: {
+                              radius: 2
+                          },
+                          lineWidth: 1,
+                          states: {
+                              hover: {
+                                  lineWidth: 1
+                              }
+                          },
+                          threshold: null
+                      }
+                  },
 
-      });
+                  series: [{
+                      type: 'area',
+                      name: 'USD to EUR',
+                      data: data
+                  }]
+              });
+          }
+      );
   </script>
 @endsection
