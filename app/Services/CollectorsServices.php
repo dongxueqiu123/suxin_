@@ -47,6 +47,11 @@ class CollectorsServices extends ServicesAdapte{
         return $this->collectors::all();
     }
 
+    public function get($id){
+        $collector = $this->collectors::find($id);
+        return $collector;
+    }
+
     public function isUserInCollector($collector, $user){
         $boole = false;
         $companyId = $user->company->id??'';

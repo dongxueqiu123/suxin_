@@ -40,37 +40,35 @@
       $.getJSON(
           'https://data.jianshukeji.com/jsonp?filename=json/usdeur.json&callback=?',
           function (data) {
-              data =[
-                  ["2018-04-03T17:26:32Z",28.7]];
-              var dataKey,length;
+              data =[["2018-04-03T17:26:24Z",28.7],["2018-04-03T17:26:32Z",28.7],["2018-04-03T17:26:40Z",28.7],["2018-04-03T17:26:48Z",28.6],["2018-04-03T17:26:56Z",28.7],["2018-04-03T17:27:04Z",28.7],["2018-04-03T17:27:12Z",28.7],["2018-04-03T17:27:20Z",28.7],["2018-04-03T17:27:28Z",28.6],["2018-04-03T17:27:36Z",28.7],["2018-04-03T17:27:44Z",28.7],["2018-04-03T17:27:52Z",28.7],["2018-04-03T17:28:00Z",28.7],["2018-04-03T17:28:08Z",28.7],["2018-04-03T17:28:16Z",28.7],["2018-04-03T17:28:24Z",28.7],["2018-04-03T17:28:32Z",28.7],["2018-04-03T17:28:40Z",28.6],["2018-04-03T17:28:48Z",28.6],["2018-04-03T17:28:56Z",28.6],["2018-04-03T17:29:04Z",28.7],["2018-04-03T17:29:12Z",28.7],["2018-04-03T17:29:21Z",28.7],["2018-04-03T17:29:28Z",28.6],["2018-04-03T17:29:36Z",28.7],["2018-04-03T17:29:44Z",28.7],["2018-04-03T17:29:52Z",28.6],["2018-04-03T17:30:00Z",28.7]];
+              var dataKey, length, pointDate;
               length = data.length;
               for(dataKey = 0 ; dataKey < length; dataKey++){
                   data[dataKey][0] = data[dataKey][0].replace(/T/, " ");
                   data[dataKey][0] = data[dataKey][0].replace(/Z/, "");
+                  pointDate = new Date(data[dataKey][0]);
+                  data[dataKey][0] = pointDate.getTime();
               }
-              console.log(data);
-
               Highcharts.chart('container', {
                   chart: {
                       zoomType: 'x'
                   },
                   title: {
-                      text: 'USD to EUR exchange rate over time'
-                  },
-                  subtitle: {
-                      text: document.ontouchstart === undefined ?
-                          'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+                      text: '采集器五分钟温度变化'
                   },
                   xAxis: {
                       type: 'datetime'
                   },
                   yAxis: {
                       title: {
-                          text: 'Exchange rate'
+                          text: '温度变化'
                       }
                   },
                   legend: {
                       enabled: false
+                  },
+                  credits: {
+                      enabled: false //不显示LOGO
                   },
                   plotOptions: {
                       area: {
@@ -101,7 +99,7 @@
 
                   series: [{
                       type: 'area',
-                      name: 'USD to EUR',
+                      name: '温度',
                       data: data
                   }]
               });

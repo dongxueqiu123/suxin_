@@ -100,6 +100,11 @@ Route::group(['prefix' => 'admin/alarms', 'middleware' =>['RolePermission']],fun
     Route::get('/', 'Admin\AlarmsController@index')->name('alarms');
 });
 
+Route::group(['prefix' => 'admin/charts', 'middleware' =>['RolePermission']],function(){
+    Route::get('/collectorChart/{id}', 'Admin\ChartsController@collectorChart')->name('charts.collectorChart');
+    Route::get('/collectorResponse', 'Admin\ChartsController@collectorResponse')->name('collectorResponse');
+});
+
 /**测试权限**/
 Route::group(['prefix' => 'admin/test11', 'middleware' =>['RolePermission']],function(){
     Route::get('/', 'Admin\HomeController@test11')->name('test11');

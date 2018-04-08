@@ -51,6 +51,7 @@
                                           <td>
                                               <a class="btn btn-primary btn-xs " href={{route('collectors.edit',['id'=>$companyCollector->id])}}>编辑</a>
                                               <a class="btn btn-danger btn-xs delete" url="{{ route('api.collectors.delete',['id'=>$companyCollector->id])}}" >删除</a>
+                                              <a class="btn btn-warning btn-xs " href={{route('charts.collectorChart',['id'=>$companyCollector->id])}}>图表{{--<i class="fa fa-fw fa-area-chart" style="font-size: 14px;"></i>--}}</a>
                                           </td>
                                       </tr>
                                   @endforeach
@@ -91,8 +92,9 @@
                                           （@if($providerName) 生产设备 @elseif($consumerName) 使用设备 @endif）</td>
                                       <td>{{$equipmentCollector->operate_time}}</td>
                                       <td>
-                                          <a class="btn btn-primary btn-xs " href={{route('collectors.edit',['id'=>$equipmentCollector->id])}}>编辑</a>
-                                          <a class="btn btn-danger btn-xs delete" url="{{ route('api.collectors.delete',['id'=>$equipmentCollector->id])}}" >删除</a>
+                                          <a class="btn btn-primary btn-xs" href={{route('collectors.edit',['id'=>$equipmentCollector->id])}}>修改{{--<i class="fa fa-edit" style="font-size: 14px;"></i>--}}</a>
+                                          <a class="btn btn-danger btn-xs delete" url="{{ route('api.collectors.delete',['id'=>$equipmentCollector->id])}}" >删除{{--<i class="fa fa-trash-o" style="font-size: 14px;"></i>--}}</a>
+                                          <a class="btn btn-warning btn-xs " href={{route('charts.collectorChart',['id'=>$equipmentCollector->id])}}>图表{{--<i class="fa fa-fw fa-area-chart" style="font-size: 14px;"></i>--}}</a>
                                       </td>
                                   </tr>
                               @endforeach
