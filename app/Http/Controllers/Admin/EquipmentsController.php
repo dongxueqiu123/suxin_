@@ -36,14 +36,15 @@ class EquipmentsController extends Controller
             $providerEquipments = $this->equipmentsServices->getList(0,$providerQueryArray);
             $consumerQueryArray['consumerId'] = $id;
             $consumerEquipments = $this->equipmentsServices->getList(0,$consumerQueryArray);
+            $equipments = $providerEquipments->merge($consumerEquipments)->unique();
         }
-
         return view('equipments.list',
             [
                 'providerEquipments' => $providerEquipments,
                 'consumerEquipments' => $consumerEquipments,
                 'boxTitle'=>'机械设备列表',
-                'active' => 'equipments'
+                'active' => 'equipments',
+                'equipments'=>$equipments
             ]
         );
     }
