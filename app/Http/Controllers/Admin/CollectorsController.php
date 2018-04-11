@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Services\CollectorsServices;
 use App\Services\EquipmentsServices;
 use App\Services\CompaniesServices;
-use App\Eloquent\EquipmentsModel;
-use App\Eloquent\CollectorsModel;
+use App\Services\ThresholdsServices;
 use App\Http\Controllers\Controller;
 
 class CollectorsController extends Controller
@@ -19,74 +18,24 @@ class CollectorsController extends Controller
      */
     public function __construct()
     {
-        $this->collectors = new CollectorsModel();
-        $this->equipments = new EquipmentsModel();
         $this->collectorsServices = new CollectorsServices();
         $this->equipmentsServices = new EquipmentsServices();
         $this->companiesServices = new CompaniesServices();
+        $this->thresholdsServices = new ThresholdsServices();
         $this->middleware('auth.user');
     }
 
     public function index()
     {
-        $company = \Auth()->user()->company;
-        $queryArray['pattern'] = '1';
-        $companyCollectors = $this->collectorsServices->getList(0, $queryArray);
-        $queryArray['pattern'] = '2';
-        $collectors = $this->collectorsServices->getList(0, $queryArray);
-
-        if($company){
-            $companyCollectors = $this->companiesServices->getModelsByCompany($companyCollectors);
-            $collectors = $this->equipmentsServices->getModelsByEquipment($collectors);
-        }
-
-
-//
-//        $company = \Auth()->user()->company;
-//        $queryArray['pattern'] = '2';
-//        $equipmentCollectors = $this->collectorsServices->getList(0, $queryArray);
-//        if(!$company) {
-//            $queryArray['pattern'] = '1';
-//
-//        }else{
-//            $queryArray['pattern'] = '1';
-//            $queryArray['patternId'] = $company->id;
-//            $providerQueryArray['providerId'] = $company->id;
-//            $consumerQueryArray['consumerId'] = $company->id;
-//        }
-//        $companyCollectors = $this->collectorsServices->getList(0, $queryArray);
-//
-//        $providerEquipments = $this->equipmentsServices->getList(0,$providerQueryArray??[]);
-//
-//        $collectors = collect();
-//        foreach ($providerEquipments as $key=>$providerEquipment){
-//            foreach ($equipmentCollectors as $equipmentCollector){
-//                if($providerEquipment->id == $equipmentCollector->pattern_id){
-//                    $collector = clone $equipmentCollector;
-//                    $collector->status = 'provider';
-//                    $collector->equipmentName = $providerEquipment->name;
-//                    $collector->companyName = $providerEquipment->provider->name;
-//                    $collectors->push($collector);
-//                }
-//            }
-//        }
-//
-//        $consumerEquipments = $this->equipmentsServices->getList(0,$consumerQueryArray??[]);
-//        foreach ($consumerEquipments as $key=>$consumerEquipment){
-//            foreach ($equipmentCollectors as $equipmentCollector){
-//                if($consumerEquipment->id == $equipmentCollector->pattern_id){
-//                    $equipmentCollector->status = 'consumer';
-//                    $equipmentCollector->equipmentName = $consumerEquipment->name;
-//                    $equipmentCollector->companyName = $consumerEquipment->consumer->name;
-//                    $collectors->push($equipmentCollector);
-//                }
-//            }
-//        }
-//
+        $user = \Auth()->user();
+        $collectors = $this->collectorsServices->getList(0, []);
+        $filterCollectors = $this->collectorsServices->getCompanyAndEquipmentCollectors($collectors, $user);
+        $collectors = array_merge($filterCollectors['company']??[],$filterCollectors['equipment']??[]);
         return view('collectors.list',
             [
-                'companyCollectors' => $companyCollectors,
-                'equipmentCollectors' => $collectors,
+                'companyCollectors' => $filterCollectors['company']??[],
+                'equipmentCollectors' => $filterCollectors['equipment']??[],
+                'collectors' => $collectors,
                 'boxTitle'=>'采集设备列表',
                 'active' => 'collectors'
             ]
@@ -94,27 +43,35 @@ class CollectorsController extends Controller
     }
 
     public function edit($id){
-        $collector = $this->collectors::where('id','=',$id)->first();
-        $equipments = $this->equipments::get();
+        $collector = $this->collectorsServices->get($id);
+        $companies = $this->companiesServices->getAll();
+        $patternStatus = $this->thresholdsServices->getPatternStatus($collector);
         return view('collectors.edit',
             [
                 'collector' => $collector,
                 'route' => '/api/admin/collectors/edit/'.$id,
                 'boxTitle'=> '修改采集设备',
                 'active' => 'collectors',
-                'equipments' => $equipments
+                'getEquipmentUrl' => route('api.equipments.getEquipments'),
+                'patternStatus' => $patternStatus,
+                'companies' => $companies
             ]
         );
     }
 
     public function store(){
-        $equipments = $this->equipments::get();
+        $equipments = $this->equipmentsServices->getList();
+        $companies = $this->companiesServices->getAll();
+        $patterns = $this->thresholdsServices->getPattern(['collector_id']);
         return view('collectors.edit',
             [
                 'equipments' => $equipments,
                 'route' => route('api.collectors.store'),
                 'boxTitle'=>'添加采集设备',
                 'active' => 'collectors',
+                'getEquipmentUrl' => route('api.equipments.getEquipments'),
+                'patterns' => $patterns,
+                'companies' => $companies
             ]
         );
     }

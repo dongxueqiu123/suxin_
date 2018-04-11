@@ -24,15 +24,39 @@ class CompaniesServices extends ServicesAdapte{
         return $this->companies::all();
     }
 
-    public function isUserInCompany($company, $user){
-        $boole = false;
-        $companyId = $user->company->id??'';
-        if(($company->id??'') == $companyId || empty($companyId)){
-             $boole = true;
-        }
-        return $boole;
+    public function get($id){
+        $company = $this->companies::find($id);
+        return $company;
     }
 
+    /**
+     * 用户是否属于公司
+     * @param $company
+     * @param $user
+     * @return bool
+     */
+    public function isUserInCompany(object $company, object $user){
+        $inCompany = false;
+        $companyId = $user->company->id??'';
+        if(($company->id??'') == $companyId || empty($companyId)){
+            $inCompany = true;
+        }
+        return $inCompany;
+    }
+
+    /**
+     * 是否存在FirmId
+     * @param $item
+     * @return bool
+     */
+    public function isHaveFirmId(object $item){
+        $haveFirmId = false;
+        if($item->firm_id){
+            $haveFirmId = true;
+        }
+        return $haveFirmId;
+    }
+/*
     public function getModelsByCompany($models){
         $companyId = \Auth()->user()->company->id??'';
         foreach ($models as $model){
@@ -44,5 +68,21 @@ class CompaniesServices extends ServicesAdapte{
             }
         }
         return $thresholdModels??[];
+    }*/
+
+    /**
+     * 过滤无编号和不是该厂用户的数据
+     * @param $items
+     * @return array
+     */
+    public function getHaveFirmIdAndInCompany($items, $user){
+         $result = [];
+         foreach ($items as $item){
+             if($item->firm_id && $this->isUserInCompany($item, $user)){
+                 $result[] = $item;
+             }
+         }
+         return $result;
     }
+
 }

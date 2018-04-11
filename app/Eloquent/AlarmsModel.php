@@ -27,4 +27,12 @@ class AlarmsModel extends Model{
     public function equipment(){
         return $this->belongsTo('App\Eloquent\EquipmentsModel','equipment_id','id');
     }
+
+    public function consumer(){
+        return $this->belongsTo('App\Eloquent\CompaniesModel','consumer_id','id');
+    }
+
+    public function provider(){
+        return $this->belongsTo('App\Eloquent\CompaniesModel','provider_id','id');
+    }
 }

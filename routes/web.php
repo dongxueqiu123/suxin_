@@ -44,7 +44,7 @@ Route::prefix('{locale}')->group(function () {
 
 });
 
-Route::get('admin', 'Admin\HomeController@index');
+Route::get('admin', 'Admin\HomeController@index')->name('admin');
 Route::get('admin/permission', 'Admin\HomeController@permission');
 
 Route::group(['prefix' => 'admin/companies', 'middleware' =>['RolePermission']], function () {

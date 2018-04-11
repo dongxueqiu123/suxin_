@@ -47,14 +47,14 @@ Route::group(['prefix' => 'admin/permissions'], function () {
 
 Route::group(['prefix' => 'admin/equipments'], function () {
     Route::post('/edit/{id}', 'Api\EquipmentsController@edit')->name('api.equipments.edit');
-    //Route::get('/edit/{id}', 'Api\CompaniesController@edit')
+    Route::post('/getEquipments', 'Api\EquipmentsController@getEquipments')->name('api.equipments.getEquipments');
     Route::post('/store', 'Api\EquipmentsController@store')->name('api.equipments.store');
     Route::post('/delete/{id}', 'Api\EquipmentsController@delete')->name('api.equipments.delete');
 });
 
 Route::group(['prefix' => 'admin/collectors'], function () {
     Route::post('/edit/{id}', 'Api\CollectorsController@edit')->name('api.collectors.edit');
-    //Route::get('/edit/{id}', 'Api\CompaniesController@edit')
+    Route::post('/getCollectors', 'Api\CollectorsController@getCollectors')->name('api.collectors.getCollectors');
     Route::post('/store', 'Api\CollectorsController@store')->name('api.collectors.store');
     Route::post('/delete/{id}', 'Api\CollectorsController@delete')->name('api.collectors.delete');
 });

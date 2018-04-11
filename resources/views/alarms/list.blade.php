@@ -3,28 +3,27 @@
 @section('content')
   <section class="content-header">
     <h1>
-        告警
-      <small>告警记录</small>
+      <small>告警记录管理</small>
     </h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">{{$boxTitle}}</li>
+        <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
+        <li class="active">{{$boxTitle}}</li>
     </ol>
   </section>
 
   <section class="content">
     <div class="row">
       <div class="col-xs-12">
-        <div class="box">
-          <div class="box-header">
-            <h3 class="box-title">{{$boxTitle}}</h3>
-           </div>
+        <div class="box box-solid">
+
           <!-- /.box-header -->
           <div class="box-body">
             <table id="example1" class="table table-bordered table-striped">
               <thead>
               <tr>
                 <th>序号</th>
+                <th>生产公司</th>
+                <th>消费公司</th>
                 <th>采集设备</th>
                 <th>机械设备</th>
                 <th>采集设备分类</th>
@@ -38,8 +37,10 @@
               @foreach($alarms as $key=>$alarm)
               <tr>
                 <td>{{$key+1}}</td>
-                <td>{{$alarm->collector->name??'未知'}}</td>
-                <td>{{$alarm->equipment->name??'不属于'}}</td>
+                <td>{{$alarm->provider->name??'暂无'}}</td>
+                <td>{{$alarm->consumer->name??'暂无'}}</td>
+                <td>{{$alarm->collector->name??'暂无'}}</td>
+                <td>{{$alarm->equipment->name??'暂无'}}</td>
                 <td>{{$alarm->category}}</td>
                 <td>{{$alarm->grade}}</td>
                 <td>{{$alarm->detail}}</td>

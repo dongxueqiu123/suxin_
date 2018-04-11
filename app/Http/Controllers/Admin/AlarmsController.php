@@ -27,14 +27,15 @@ class AlarmsController extends Controller{
     }
 
     public function index(){
+        $user = \Auth()->user();
         $alarms = $this->alarmsServices->getAll();
-        if($company = \Auth()->user()->company) {
-            $alarms = $this->collectorsServices->getModelsByCollector($alarms, null);
-        }
+        $filterAlarms = $this->alarmsServices->getFilterAlarms($alarms, $user);
+        $alarms = array_merge($filterAlarms['company'], $filterAlarms['equipment'], $filterAlarms['collector']);
         foreach ($alarms as $alarm){
             $alarm->category = $this->thresholdsServices->getConstant($alarm,'category');
             $alarm->grade    = $this->thresholdsServices->getConstant($alarm,'grade');
         }
+
         return view('alarms.list',
             [
                 'alarms' => $alarms,

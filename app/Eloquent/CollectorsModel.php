@@ -18,20 +18,20 @@ class CollectorsModel extends Model
 
     public function scopeNothing($query){return $query;}
 
-    public function scopePattern($query,$pattern){
-        $query->where('pattern' ,'=' ,$pattern);
+    public function scopeFirmId($query,$firmId){
+        $query->where('firm_id' ,'=' ,$firmId);
     }
 
-    public function scopePatternId($query,$patternId){
-        $query->where('pattern_id' ,'=' ,$patternId);
+    public function scopeEquipmentId($query,$equipmentId){
+        $query->where('equipment_id' ,'=' ,$equipmentId);
     }
 
     public function company(){
-        return $this->belongsTo('App\Eloquent\CompaniesModel','pattern_id','id');
+        return $this->belongsTo('App\Eloquent\CompaniesModel','firm_id','id');
     }
 
     public function equipment(){
-        return $this->belongsTo('App\Eloquent\EquipmentsModel','pattern_id','id');
+        return $this->belongsTo('App\Eloquent\EquipmentsModel','equipment_id','id');
     }
 }
 

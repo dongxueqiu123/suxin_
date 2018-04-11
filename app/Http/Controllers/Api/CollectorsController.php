@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Eloquent\CollectorsModel;
+use App\Services\CollectorsServices;
+use App\Services\ThresholdsServices;
+use App\Services\EquipmentsServices;
+use App\Services\CompaniesServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,7 +16,10 @@ class CollectorsController extends Controller
 
     public function __construct()
     {
-        $this->collectors = new CollectorsModel();
+        $this->collectorsServices = new CollectorsServices();
+        $this->thresholdsServices = new ThresholdsServices();
+        $this->equipmentsServices = new EquipmentsServices();
+        $this->companiesServices  = new CompaniesServices();
         $this->middleware('auth.user');
     }
 
@@ -21,16 +27,11 @@ class CollectorsController extends Controller
         $request->validate([
             'mac'=>'required|between:23,23',
             'name' => 'required',
-            'pattern' => 'required',
+            'companyId' => 'required',
         ]);
-        $collector = $this->collectors::find($id);
-        $input = $request->only(['mac','name', 'pattern', 'patternId']);
-        //$input['patternId'] = $input['pattern'] == 1 ? (Auth::user()->company->id??0):$input['patternId'];
-        $collector->mac = $input['mac'];
-        $collector->name = $input['name'];
-        $collector->pattern = $input['pattern'];
-        $collector->pattern_id = $input['patternId'];
-        if($state = $collector->save()){
+        $input = $request->only(['mac','name','companyId','equipmentId']);
+        $input['id'] = $id;
+        if($state = $this->collectorsServices->save($input)){
             return response()->json([
                 'state' => $state,
                 'route' => route('collectors')
@@ -42,16 +43,11 @@ class CollectorsController extends Controller
         $request->validate([
             'mac'=>'required|between:23,23',
             'name' => 'required',
-            'pattern' => 'required',
+            'companyId' => 'required',
         ]);
-        $input = $request->only(['mac','name', 'pattern', 'patternId']);
-        //$input['patternId'] = $input['pattern'] == 1 ? (Auth::user()->company->id??0):$input['patternId'];
-        $this->collectors->mac = $input['mac'];
-        $this->collectors->name = $input['name'];
-        $this->collectors->pattern = $input['pattern'];
-        $this->collectors->pattern_id = $input['patternId'];
-        $this->collectors->operator_id = Auth::user()->id;
-        if($state = $this->collectors->save()){
+        $input = $request->only(['mac','name','companyId','equipmentId']);
+        //$ids =  $this->thresholdsServices->getBelongIds($pattern,$patternId);
+        if($state = $this->collectorsServices->save($input)){
             return response()->json([
                 'state' => $state,
                 'route' => route('collectors')
@@ -60,12 +56,47 @@ class CollectorsController extends Controller
     }
 
     public function delete($id){
-        if($state = $this->collectors::where('id',$id)->delete()){
+        if($state = $this->collectorsServices->destroy($id)){
             return response()->json([
                 'state' => $state,
-                'route' => route('equipments')
+                'route' => route('collectors')
             ]);
         }
     }
 
+
+    public function getCollectors(Request $request){
+        $companyId = $request->input('companyId');
+        $equipmentId = $request->input('equipmentId');
+        $collectorId = $request->input('collectorId');
+        $company =  $this->companiesServices->get($companyId);
+        if($equipmentId){
+            $equipment = $this->equipmentsServices->get($equipmentId);
+            $collectors = $equipment->collector??[];
+        }else{
+            //公司下所有的采集器
+            $companyCollectors = $company->collector;
+            //公司设备下所有的采集器
+            $providerEquipments = $company->provider;
+            $consumerEquipments = $company->consumer;
+            $equipments = $providerEquipments->merge($consumerEquipments)->unique();
+            $equipmentCollectors = collect();
+            $equipments->each(function($equipment) use($equipmentCollectors){
+                $equipmentCollector = $equipment->collector;
+                $equipmentCollector->each(function($equipmentCollector)use($equipmentCollectors){
+                    $equipmentCollectors->push($equipmentCollector);
+                });
+            });
+            //直接绑定公司的采集器
+            $collectors = $companyCollectors->diff($equipmentCollectors);
+        }
+        /*todo 增加公司权限控制*/
+        $str ='';
+        $str.= '<option value=0 >不选择</option>';
+        foreach ($collectors??[] as $collector){
+            $selected =  ($collectorId == $collector->id)?'selected':'';
+            $str.= '<option '.$selected.' value="'.$collector->id.'">'.$collector->name.'</option>';
+        }
+        return ['state'=>0,'text' => $str];
+    }
 }

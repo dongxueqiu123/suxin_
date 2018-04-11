@@ -33,5 +33,10 @@ class EquipmentsModel extends Model
     public function consumer(){
         return $this->hasOne('App\Eloquent\CompaniesModel','id','consumer_id');
     }
+
+    public function collector(){
+        return $this->hasMany('App\Eloquent\CollectorsModel','equipment_id','id');
+    }
+
 }
 

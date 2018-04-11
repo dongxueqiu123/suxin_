@@ -28,14 +28,14 @@ class LiaisonsModel extends Model{
     }
 
     public function company(){
-        return $this->belongsTo('App\Eloquent\CompaniesModel','pattern_id','id');
+        return $this->belongsTo('App\Eloquent\CompaniesModel','firm_id','id');
     }
 
     public function equipment(){
-        return $this->belongsTo('App\Eloquent\EquipmentsModel','pattern_id','id');
+        return $this->belongsTo('App\Eloquent\EquipmentsModel','equipment_id','id');
     }
 
     public function collector(){
-        return $this->belongsTo('App\Eloquent\CollectorsModel','pattern_id','id');
+        return $this->belongsTo('App\Eloquent\CollectorsModel','collector_id','id');
     }
 }

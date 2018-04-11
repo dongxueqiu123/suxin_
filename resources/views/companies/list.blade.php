@@ -2,24 +2,22 @@
 
 @section('content')
   <section class="content-header">
-    <h1>
-      公司
-      <small>公司管理</small>
-    </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">公司列表</li>
-    </ol>
+      <h1>
+          <small>公司管理</small>
+      </h1>
+      <ol class="breadcrumb">
+          <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
+          <li class="active">{{$boxTitle}}</li>
+      </ol>
   </section>
 
   <section class="content">
     <div class="row">
       <div class="col-xs-12">
-        <div class="box">
-          <div class="box-header">
-            <h3 class="box-title">公司列表</h3>
-            <a href="{{route('companies.store')}}" class="btn btn-sm btn-default btn-flat pull-right"><i class="fa fa-fw fa-plus"></i>添加</a>
-          </div>
+        <div class="box box-solid">
+            <div class="box-header">
+                <a href="{{route('companies.store')}}" class="btn btn-default pull-left"><i class="fa fa-fw fa-plus"></i>新增公司</a>
+            </div>
           <!-- /.box-header -->
           <div class="box-body">
             <table id="example1" class="table table-bordered table-striped">

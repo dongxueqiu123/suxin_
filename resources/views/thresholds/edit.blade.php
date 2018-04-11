@@ -3,7 +3,6 @@
 @section('content')
   <section class="content-header">
     <h1>
-        告警阈值
       <small>告警阈值管理</small>
     </h1>
     <ol class="breadcrumb">
@@ -17,9 +16,12 @@
       <div class="col-xs-12">
 
           <!-- /.box-header -->
-          <div class="box box-info">
+          <div class="box box-solid">
             <div class="box-header with-border">
-              <h3 class="box-title">{{$boxTitle}}</h3>
+                <div class="box-footer">
+                    <button type="submit"  class="btn btn-default pull-left btn-flat  sign"><i class="fa fa-fw fa-plus"></i>保存</button>
+                    <a type="submit" href="{{route('thresholds')}}" class="btn btn-default btn-flat" style="margin-left: 10px"><i class="fa fa-fw fa-history"></i>返回</a>
+                </div>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -27,27 +29,35 @@
               <div class="box-body">
 
 
-                <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label">告警目标</label>
-                    <div class="col-sm-10">
-                        <select class="form-control select2 pattern"  style="width: 100%;">
-                            @foreach($patterns??[] as $key =>$pattern)
-                                <option @if(($threshold->pattern??'') == $key) selected @endif value="{{$key}}">{{$pattern}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                  <input type="hidden" id="patternId" value="{{$threshold->pattern_id??'1'}}">
                   <div class="form-group">
-                      <label for="name" class="col-sm-2 control-label">目标名称</label>
+                      <label for="name" class="col-sm-2 control-label">公司</label>
                       <div class="col-sm-10">
-                          <select class="form-control select2 patternId"  style="width: 100%;">
+                          <select class="form-control select2 company"  style="width: 100%;">
+                              @foreach($companies??[] as $key => $company)
+                                  <option @if(($company->id??'') == ($threshold->firm_id??'')) selected @endif value="{{$company->id}}">{{$company->name}}</option>
+                              @endforeach
+                          </select>
+                      </div>
+                  </div>
+
+                  <div class="form-group changeEquipment" @if(!($threshold->equipment_id??'') && !($threshold->collector_id??'')) style="display: none" @endif>
+                      <label for="name" class="col-sm-2 control-label">机械设备</label>
+                      <div class="col-sm-10">
+                          <select class="form-control select2 equipment"  style="width: 100%;">
 
                           </select>
                       </div>
                   </div>
 
-                  <div class="form-group company" >
+                  <div class="form-group changeCollector" @if(!($threshold->equipment_id??'') && !($threshold->collector_id??'')) style="display: none" @endif>
+                      <label for="name" class="col-sm-2 control-label">采集设备</label>
+                      <div class="col-sm-10">
+                          <select class="form-control select2 collector"  style="width: 100%;">
+
+                          </select>
+                      </div>
+                  </div>
+                  <div class="form-group " >
                       <label for="abbreviation" class="col-sm-2 control-label">分类</label>
                       <div class="col-sm-10">
                           <select class="form-control select2 category"  style="width: 100%;">
@@ -58,7 +68,7 @@
                       </div>
                   </div>
 
-                  <div class="form-group company" >
+                  <div class="form-group " >
                       <label for="abbreviation" class="col-sm-2 control-label">等级</label>
                       <div class="col-sm-10">
                           <select class="form-control select2 grade"  style="width: 100%;">
@@ -83,12 +93,7 @@
                       </div>
                   </div>
               </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <a type="submit" href="{{route('thresholds')}}" class="btn btn-default">返回</a>
-                <button type="submit"  class="btn btn-info pull-right sign">确定</button>
-              </div>
-              <!-- /.box-footer -->
+
             </form>
           </div>
           <!-- /.box-body -->
@@ -100,10 +105,12 @@
   </section>
   <script src="{{asset('layer/layer.js')}}"></script>
   <script>
+
      $('.sign').click(function () {
-         var pattern,patternId,category,grade,lowLimit,topLimit;
-         pattern   = $('.pattern').val();
-         patternId = $('.patternId').val();
+         var companyId,equipmentId,collectorId,category,grade,lowLimit,topLimit;
+         companyId   = $('.company').val();
+         equipmentId = $('.equipment').val();
+         collectorId = $('.collector').val();
          category  = $('.category').val();
          grade     = $('.grade').val();
          lowLimit  = $('#lowLimit').val();
@@ -112,7 +119,7 @@
              url:'{{$route}}',
              type:'POST',    //GET
              data:{
-                 pattern:pattern,patternId:patternId,category:category,grade:grade,lowLimit:lowLimit,topLimit:topLimit
+                 companyId:companyId,equipmentId:equipmentId,collectorId:collectorId,category:category,grade:grade,lowLimit:lowLimit,topLimit:topLimit
              },
              timeout:5000,    //超时时间
              dataType:'json',
@@ -124,36 +131,80 @@
                  }
              },
              error:function(data){
-                 if(data.responseJSON.errors['name']){
-                     layer.alert(data.responseJSON.errors['name']['0'])
-                 }else if(data.responseJSON.errors['providerId']){
-                     layer.alert(data.responseJSON.errors['providerId']['0'])
-                 }else if(data.responseJSON.errors['consumerId']){
-                     layer.alert(data.responseJSON.errors['consumerId']['0'])
+                 if(data.responseJSON.errors['category']){
+                     layer.alert(data.responseJSON.errors['category']['0'])
+                 }else if(data.responseJSON.errors['grade']){
+                     layer.alert(data.responseJSON.errors['grade']['0'])
+                 }else if(data.responseJSON.errors['companyId']){
+                     layer.alert(data.responseJSON.errors['companyId']['0'])
+                 }else if(data.responseJSON.errors['equipmentId']){
+                     layer.alert(data.responseJSON.errors['equipmentId']['0'])
                  }
              }
          });
          return false;
      });
-     $('.pattern').on('change',function(){
+
+     $('.company').on('change',function(){
          var value = $(this).val();
-         var patternId = $('#patternId').val();
-         changePattern(value,patternId);
+         $(".changeEquipment").show();
+         $(".changeCollector").show();
+         changeEquipments(value,'');
+         changeCollectors(value,'','');
      });
-     changePattern({{$threshold->pattern??1}},$('#patternId').val());
-     function changePattern(pattern,patternId){
+
+     $('.equipment').on('change',function(){
+         var companyId = $(".company").find("option:selected").val();
+         var value = $(this).val();
+         $(".changeCollector").show();
+         changeCollectors(companyId,value,'');
+     });
+
+     var company,equipment,collector;
+     equipment = '{{$threshold->equipment_id??''}}';
+     collector = '{{$threshold->collector_id??''}}';
+     company = '{{$threshold->firm_id??''}}';
+     if(company){
+         changeEquipments(company,equipment);
+         if(equipment){
+             changeCollectors(company,equipment,collector);
+         }
+     }
+
+
+     function changeEquipments(companyId,equipmentId){
          $.ajax({
-             url:'/api/admin/thresholds/getPatterns',
-             type:'POST',    //GET
+             url:'{{$getEquipmentUrl}}',
+             type:'POST',
              data:{
-                 pattern:pattern,patternId:patternId
+                 companyId:companyId,equipmentId:equipmentId
              },
              timeout:5000,    //超时时间
              dataType:'json',
              success:function(data){
                  if(data.state == '0'){
-                     $(".patternId").find("option").remove();
-                     $(".patternId").append(data.text);
+                     $(".equipment").find("option").remove();
+                     $(".equipment").append(data.text);
+                 }
+             },
+             error:function(data){
+             }
+         });
+     }
+
+     function changeCollectors(companyId,equipmentId,collectorId){
+         $.ajax({
+             url:'{{$getCollectorUrl}}',
+             type:'POST',
+             data:{
+                 companyId:companyId,equipmentId:equipmentId,collectorId:collectorId
+             },
+             timeout:5000,    //超时时间
+             dataType:'json',
+             success:function(data){
+                 if(data.state == '0'){
+                     $(".collector").find("option").remove();
+                     $(".collector").append(data.text);
                  }
              },
              error:function(data){

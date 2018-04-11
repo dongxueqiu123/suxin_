@@ -34,12 +34,12 @@ class ThresholdsController extends Controller
 
     public function edit($id,Request $request){
         $request->validate([
-            'pattern'=>'required',
-            'patternId' => 'required',
             'category' => 'required',
             'grade' => 'required',
+            'companyId' => 'required',
+            'equipmentId' => 'required'
         ]);
-        $input = $request->only(['pattern','patternId', 'category', 'grade', 'lowLimit', 'topLimit']);
+        $input = $request->only(['category', 'grade', 'lowLimit', 'topLimit','companyId','equipmentId','collectorId']);
         $input['id'] = $id;
         if($state = $this->thresholdsServices->save($input)){
             return response()->json([
@@ -51,12 +51,13 @@ class ThresholdsController extends Controller
 
     public function store(Request $request){
         $request->validate([
-            'pattern'=>'required',
-            'patternId' => 'required',
             'category' => 'required',
             'grade' => 'required',
+            'companyId' => 'required',
+            'equipmentId' => 'required'
         ]);
-        $input = $request->only(['pattern','patternId', 'category', 'grade', 'lowLimit', 'topLimit']);
+        $input = $request->only(['category', 'grade', 'lowLimit', 'topLimit','companyId','equipmentId','collectorId']);
+
         if($state = $this->thresholdsServices->save($input)){
             return response()->json([
                 'state' => $state,
@@ -79,21 +80,21 @@ class ThresholdsController extends Controller
        $patternId = $request->input('patternId');
        $user = \Auth()->user();
        $patternsInfo = [];
-       if($pattern == '1'){
+       if($pattern == 'firm_id'){
            $patternsInfo = $this->companiesServices->getAll();
            foreach ($patternsInfo as $key => $patternInfo){
               $boole = $this->companiesServices->isUserInCompany($patternInfo,$user);
               if(!$boole)
                    unset($patternsInfo[$key]);
            }
-       }elseif($pattern == '2'){
+       }elseif($pattern == 'equipment_id'){
            $patternsInfo = $this->equipmentsServices->getAll();
            foreach ($patternsInfo as $key => $patternInfo){
                $boole = $this->equipmentsServices->isUserInEquipment($patternInfo,$user);
                if(!$boole)
                    unset($patternsInfo[$key]);
            }
-       }elseif($pattern == '3'){
+       }elseif($pattern == 'collector_id'){
            $patternsInfo = $this->collectorsServices->getAll();
            foreach ($patternsInfo as $key => $patternInfo){
                $boole = $this->collectorsServices->isUserInCollector($patternInfo,$user);

@@ -3,11 +3,10 @@
 @section('content')
   <section class="content-header">
     <h1>
-      设备管理
       <small>机械设备管理</small>
     </h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
       <li class="active">{{$boxTitle}}</li>
     </ol>
   </section>
@@ -17,24 +16,24 @@
       <div class="col-xs-12">
 
           <!-- /.box-header -->
-          <div class="box box-info">
+          <div class="box box-solid">
             <div class="box-header with-border">
-              <h3 class="box-title">{{$boxTitle}}</h3>
+                <button type="submit"  class="btn btn-default pull-left btn-flat  sign"><i class="fa fa-fw fa-plus"></i>保存</button>
+                <a type="submit" href="{{route('equipments')}}" class="btn btn-default btn-flat" style="margin-left: 10px"><i class="fa fa-fw fa-history"></i>返回</a>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
             <form class="form-horizontal" >
               <div class="box-body">
                 <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label">设备名称</label>
-
+                  <label for="name" class="col-sm-2 control-label">机械设备名称</label>
                   <div class="col-sm-10">
-                    <input type="name" class="form-control" value="{{$equipment->name??''}}" id="name" placeholder="设备名称">
+                    <input type="name" class="form-control" value="{{$equipment->name??''}}" id="name" placeholder="机械设备名称">
                   </div>
                 </div>
 
                   <div class="form-group">
-                      <label for="abbreviation" class="col-sm-2 control-label">生产厂商</label>
+                      <label for="abbreviation" class="col-sm-2 control-label">生产公司</label>
                       <div class="col-sm-10">
                           <select class="form-control select2 providerId"  style="width: 100%;">
 
@@ -46,7 +45,7 @@
                   </div>
 
                   <div class="form-group">
-                      <label for="abbreviation" class="col-sm-2 control-label">使用厂商</label>
+                      <label for="abbreviation" class="col-sm-2 control-label">使用公司</label>
                       <div class="col-sm-10">
                           <select class="form-control select2 consumerId"  style="width: 100%;">
 
@@ -56,13 +55,9 @@
                           </select>
                       </div>
                   </div>
+
               </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <a type="submit" href="{{route('equipments')}}" class="btn btn-default">返回</a>
-                <button type="submit"  class="btn btn-info pull-right sign">确定</button>
-              </div>
-              <!-- /.box-footer -->
+
             </form>
           </div>
           <!-- /.box-body -->

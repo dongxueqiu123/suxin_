@@ -3,12 +3,11 @@
 @section('content')
   <section class="content-header">
     <h1>
-      公司
       <small>公司管理</small>
     </h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">{{$boxTitle}}</li>
+        <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
+        <li class="active">{{$boxTitle}}</li>
     </ol>
   </section>
 
@@ -17,9 +16,10 @@
       <div class="col-xs-12">
 
           <!-- /.box-header -->
-          <div class="box box-info">
+          <div class="box box-solid">
             <div class="box-header with-border">
-              <h3 class="box-title">{{$boxTitle}}</h3>
+                <button type="submit"  class="btn btn-default pull-left btn-flat  sign"><i class="fa fa-fw fa-plus"></i>保存</button>
+                <a type="submit" href="{{route('companies')}}" class="btn btn-default btn-flat" style="margin-left: 10px"><i class="fa fa-fw fa-history"></i>返回</a>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -53,10 +53,6 @@
                   @endif
               </div>
               <!-- /.box-body -->
-              <div class="box-footer">
-                <a type="submit" href="{{route('companies')}}" class="btn btn-default">返回</a>
-                <button type="submit"  class="btn btn-info pull-right sign">确定</button>
-              </div>
               <!-- /.box-footer -->
             </form>
           </div>

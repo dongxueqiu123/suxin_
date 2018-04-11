@@ -28,27 +28,13 @@ class LiaisonsController extends Controller {
 
     public function index()
     {
-        $companyQueryArray['pattern'] = '1';
-        $equipmentQueryArray['pattern'] = '2';
-        $collectorQueryArray['pattern'] = '3';
-        $companyLiaisons = $this->liaisonsServices->getList(0,$companyQueryArray);
-        $equipmentLiaisons = $this->liaisonsServices->getList(0,$equipmentQueryArray);
-        $collectorLiaisons = $this->liaisonsServices->getList(0,$collectorQueryArray);
-        if($company = \Auth()->user()->company){
-            $companyLiaisons = $this->companiesServices->getModelsByCompany($companyLiaisons);
-            $equipmentLiaisons = $this->equipmentsServices->getModelsByEquipment($equipmentLiaisons);
-            $collectorLiaisons = $this->collectorsServices->getModelsByCollector($collectorLiaisons);
-        }
-
-        $companyLiaisons = $this->thresholdsServices->getChName($companyLiaisons);
-        $equipmentLiaisons = $this->thresholdsServices->getChName($equipmentLiaisons);
-        $collectorLiaisons = $this->thresholdsServices->getChName($collectorLiaisons);
-
+        $user = \Auth()->user();
+        $liaisons = $this->liaisonsServices->getList();
+        $filterLiaisons = $this->thresholdsServices->getFilterThresholds($liaisons, $user);
+        $liaisons = array_merge($filterLiaisons['company'], $filterLiaisons['equipment'], $filterLiaisons['collector']);
         return view('liaisons.list',
             [
-                'companyLiaisons' => $companyLiaisons,
-                'equipmentLiaisons' => $equipmentLiaisons,
-                'collectorLiaisons' => $collectorLiaisons,
+                'liaisons' => $liaisons,
                 'boxTitle'=>'告警联系人列表',
                 'active' => 'liaisons'
             ]
@@ -57,26 +43,32 @@ class LiaisonsController extends Controller {
 
     public function edit($id){
         $liaison = $this->liaisonsServices->get($id);
-        $patterns = $this->thresholdsServices->getConstant(null,'pattern');
+        //$patterns = $this->thresholdsServices->getConstant(null,'pattern');
+        $companies = $this->companiesServices->getAll();
         return view('liaisons.edit',
             [
                 'route' => '/api/admin/liaisons/edit/'.$id,
+                'getEquipmentUrl' => route('api.equipments.getEquipments'),
+                'getCollectorUrl' => route('api.collectors.getCollectors'),
                 'boxTitle'=> '修改告警联系人',
                 'active' => 'liaisons',
                 'liaison' => $liaison,
-                'patterns' => $patterns,
+                'companies' => $companies,
             ]
         );
     }
 
     public function store(){
-        $patterns = $this->thresholdsServices->getConstant(null,'pattern');
+        //$patterns = $this->thresholdsServices->getConstant(null,'pattern');
+        $companies = $this->companiesServices->getAll();
         return view('liaisons.edit',
             [
                 'route' => route('api.liaisons.store'),
+                'getEquipmentUrl' => route('api.equipments.getEquipments'),
+                'getCollectorUrl' => route('api.collectors.getCollectors'),
                 'boxTitle'=>'添加告警联系人',
                 'active' => 'liaisons',
-                'patterns' => $patterns,
+                'companies' => $companies,
             ]
         );
     }

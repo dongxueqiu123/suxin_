@@ -3,11 +3,10 @@
 @section('content')
   <section class="content-header">
     <h1>
-      设备管理
       <small>采集设备管理</small>
     </h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
       <li class="active">{{$boxTitle}}</li>
     </ol>
   </section>
@@ -17,10 +16,15 @@
       <div class="col-xs-12">
 
           <!-- /.box-header -->
-          <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">{{$boxTitle}}</h3>
-            </div>
+          <div class="box box-solid">
+
+
+              <div class="box-header with-border">
+
+                  <button type="submit"  class="btn btn-default pull-left btn-flat  sign"><i class="fa fa-fw fa-plus"></i>保存</button>
+
+                  <a type="submit" href="{{route('collectors')}}" class="btn btn-default btn-flat" style="margin-left: 10px"><i class="fa fa-fw fa-history"></i>返回</a>
+              </div>
             <!-- /.box-header -->
             <!-- form start -->
             <form class="form-horizontal" >
@@ -28,10 +32,10 @@
 
 
                 <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label">设备名称</label>
+                  <label for="name" class="col-sm-2 control-label">采集设备名称</label>
 
                   <div class="col-sm-10">
-                    <input type="name" class="form-control" value="{{$collector->name??''}}" id="name" placeholder="设备名称">
+                    <input type="name" class="form-control" value="{{$collector->name??''}}" id="name" placeholder="采集设备名称">
                   </div>
                 </div>
 
@@ -42,12 +46,13 @@
                       </div>
                   </div>
 
-                  <div class="form-group">
+{{--                  <div class="form-group">
                       <label for="abbreviation" class="col-sm-2 control-label">生产厂商</label>
                       <div class="col-sm-10">
                           <select class="form-control select2 pattern"  style="width: 100%;">
-                              <option @if(($collector->pattern??'') == '1') selected @endif  value="1">厂家</option>
-                              <option @if(($collector->pattern??'')  == '2') selected @endif value="2">机械设备</option>
+                              @foreach($patterns as $parameterName => $pattern)
+                                  <option @if($collector->$parameterName??'') selected @endif value="{{$parameterName}}">{{$pattern}}</option>
+                              @endforeach
                           </select>
                       </div>
                   </div>
@@ -56,18 +61,33 @@
                       <label for="abbreviation" class="col-sm-2 control-label">使用厂商</label>
                       <div class="col-sm-10">
                           <select class="form-control select2 patternId"  style="width: 100%;">
-{{--                              @foreach($equipments??[] as $equipment)
-                                  <option @if(($equipment->id??'') == ($collector->pattern_id??'')) selected @endif value="{{$equipment->id}}">{{$equipment->name}}</option>
-                              @endforeach--}}
+
+                          </select>
+                      </div>
+                  </div>--}}
+
+                  <div class="form-group">
+                      <label for="abbreviation" class="col-sm-2 control-label">公司</label>
+                      <div class="col-sm-10">
+                          <select class="form-control select2 company"  style="width: 100%;">
+                              @foreach($companies as $key => $company)
+                                  <option @if(($collector->firm_id??'') == $company->id) selected @endif value="{{$company->id}}">{{$company->name}}</option>
+                              @endforeach
+                          </select>
+                      </div>
+                  </div>
+
+                  <div class="form-group changeEquipment" @if(($collector->equipment_id??'') == '') style="display: none;"@endif>
+                      <label for="abbreviation" class="col-sm-2 control-label">机械设备</label>
+                      <div class="col-sm-10">
+                          <select class="form-control select2 equipment"  style="width: 100%;">
+
                           </select>
                       </div>
                   </div>
               </div>
               <!-- /.box-body -->
-              <div class="box-footer">
-                <a type="submit" href="{{route('collectors')}}" class="btn btn-default">返回</a>
-                <button type="submit"  class="btn btn-info pull-right sign">确定</button>
-              </div>
+
               <!-- /.box-footer -->
             </form>
           </div>
@@ -81,16 +101,16 @@
   <script src="{{asset('layer/layer.js')}}"></script>
   <script>
      $('.sign').click(function () {
-         var mac,name,pattern,patternId;
+         var mac,name,companyId,equipmentId;
          mac = $('#mac').val();
          name = $('#name').val();
-         pattern = $('.pattern').val();
-         patternId = $('.patternId').val();
+         companyId = $('.company').val();
+         equipmentId = $('.equipment').val();
          $.ajax({
              url:'{{$route}}',
              type:'POST',    //GET
              data:{
-                 mac:mac,name:name,pattern:pattern,patternId:patternId
+                 mac:mac,name:name,companyId:companyId,equipmentId:equipmentId
              },
              timeout:5000,    //超时时间
              dataType:'json',
@@ -102,46 +122,48 @@
                  }
              },
              error:function(data){
-                 if(data.responseJSON.errors['name']){
+                 if(data.responseJSON.errors['mac']){
+                     layer.alert(data.responseJSON.errors['mac']['0'])
+                 }else if(data.responseJSON.errors['name']){
                      layer.alert(data.responseJSON.errors['name']['0'])
-                 }else if(data.responseJSON.errors['providerId']){
-                     layer.alert(data.responseJSON.errors['providerId']['0'])
-                 }else if(data.responseJSON.errors['consumerId']){
-                     layer.alert(data.responseJSON.errors['consumerId']['0'])
+                 }else if(data.responseJSON.errors['companyId']){
+                     layer.alert(data.responseJSON.errors['companyId']['0'])
                  }
              }
          });
          return false;
      });
 
-
-     $('.pattern').on('change',function(){
+     $('.company').on('change',function(){
          var value = $(this).val();
-         var patternId = $('#patternId').val();
-         changePattern(value,patternId);
+         $(".changeEquipment").show();
+         changeEquipments(value,'');
      });
 
-     changePattern({{$collector->pattern??1}},$('.patternId').val());
+     if({{$collector->firm_id??0}}){
+         changeEquipments({{$collector->firm_id??0}},{{$collector->equipment_id??0}});
+     }
 
-     function changePattern(pattern,patternId){
+     function changeEquipments(companyId,equipmentId){
          $.ajax({
-             url:'/api/admin/thresholds/getPatterns',
-             type:'POST',    //GET
+             url:'{{$getEquipmentUrl}}',
+             type:'POST',
              data:{
-                 pattern:pattern,patternId:patternId
+                 companyId:companyId,equipmentId:equipmentId
              },
              timeout:5000,    //超时时间
              dataType:'json',
              success:function(data){
                  if(data.state == '0'){
-                     $(".patternId").find("option").remove();
-                     $(".patternId").append(data.text);
+                     $(".equipment").find("option").remove();
+                     $(".equipment").append(data.text);
                  }
              },
              error:function(data){
              }
          });
      }
+
 
   </script>
 @endsection

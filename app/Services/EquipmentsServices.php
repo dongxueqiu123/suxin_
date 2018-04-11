@@ -43,34 +43,48 @@ class EquipmentsServices extends ServicesAdapte{
         return $lines;
     }
 
-    function getAll(){
+    public function getAll(){
         return $this->equipments::all();
     }
 
-    public function isUserInEquipment($equipment, $user){
-        $boole = false;
-        $companyId = $user->company->id??'';
-        if($equipment->provider->id == $companyId|| empty($companyId)){
-            $boole = true;
-        }elseif($equipment->consumer->id == $companyId|| empty($companyId)){
-            $boole = true;
-        }
-        return $boole;
+    public function destroy($id)
+    {
+       return $this->equipments::where('id',$id)->delete();
     }
 
-    public function getModelsByEquipment($items){
-        $companyId = \Auth()->user()->company->id??'';
-        foreach ($items as $item){
-            $pattern = $item->pattern;
-            $providerCompanyId = $item->equipment->provider->id??'';
-            $consumerCompanyId = $item->equipment->consumer->id??'';
-            if($pattern == 2 && $providerCompanyId == $companyId){
-                $providerItems[] = $item;
-            }
-            if($pattern == 2 && $consumerCompanyId == $companyId){
-                $consumerItems[] = $item;
-            }
-        }
-        return  array_merge($providerItems??[],$consumerItems??[]);
+    public function get($id){
+        $equipment = $this->equipments::find($id);
+        return $equipment;
     }
+
+    /**
+     * 是否是一个公司的机械设备下
+     * @param $equipment
+     * @param $user
+     * @return bool
+     */
+    public function isUserInEquipment($equipment, $user){
+        $inEquipment= false;
+        $companyId = $user->company->id??'';
+        if(($equipment->provider->id??'') == $companyId|| empty($companyId)){
+            $inEquipment = true;
+        }elseif(($equipment->consumer->id??'') == $companyId|| empty($companyId)){
+            $inEquipment = true;
+        }
+        return $inEquipment;
+    }
+
+    /**
+     * 是否存在机械编号
+     * @param $item
+     * @return bool
+     */
+    public function isHaveEquipmentId($item){
+        $haveEquipmentId = false;
+        if($item->equipment_id){
+            $haveEquipmentId = true;
+        }
+        return $haveEquipmentId;
+    }
+
 }

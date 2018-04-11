@@ -23,7 +23,7 @@ class ChartsController extends Controller{
             [
                 'collector'=>$collector,
                 'boxTitle'=>'采集器数据展示',
-                'active' => 'charts',
+                'active' => 'collectors',
             ]
         );
     }

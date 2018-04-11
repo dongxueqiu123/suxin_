@@ -21,12 +21,12 @@ class LiaisonsController extends Controller{
 
     public function edit($id,Request $request){
         $request->validate([
-            'pattern'=>'required',
-            'patternId' => 'required',
+            'companyId' => 'required',
+            'equipmentId' => 'required',
             'mobile' => 'required',
             'email' => 'required',
         ]);
-        $input = $request->only(['pattern','patternId', 'mobile', 'email']);
+        $input = $request->only(['companyId', 'equipmentId', 'collectorId', 'mobile', 'email']);
         $input['id'] = $id;
         if($state = $this->LiaisonsServices->save($input)){
             return response()->json([
@@ -38,12 +38,12 @@ class LiaisonsController extends Controller{
 
     public function store(Request $request){
         $request->validate([
-            'pattern'=>'required',
-            'patternId' => 'required',
+            'companyId' => 'required',
+            'equipmentId' => 'required',
             'mobile' => 'required',
             'email' => 'required',
         ]);
-        $input = $request->only(['pattern','patternId', 'mobile', 'email']);
+        $input = $request->only(['companyId', 'equipmentId', 'collectorId', 'mobile', 'email']);
         if($state = $this->LiaisonsServices->save($input)){
             return response()->json([
                 'state' => $state,

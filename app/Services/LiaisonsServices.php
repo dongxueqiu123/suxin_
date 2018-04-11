@@ -44,12 +44,13 @@ class LiaisonsServices extends ServicesAdapte{
         return $this->liaisons::all();
     }
 
-    public function save($modelData){
+    public function save(array $modelData){
         if(isset($modelData['id'])){
             $this->liaisons = $this->get($modelData['id']);
         }
-        $this->liaisons->pattern    = $modelData['pattern'];
-        $this->liaisons->pattern_id = $modelData['patternId'];
+        ($modelData['companyId']??'') && $this->liaisons->firm_id = $modelData['companyId'];
+        ($modelData['equipmentId']??'') && $this->liaisons->equipment_id = $modelData['equipmentId'];
+        ($modelData['collectorId']??'') && $this->liaisons->collector_id = $modelData['collectorId'];
         $this->liaisons->email      = $modelData['email'];
         $this->liaisons->mobile     = $modelData['mobile'];
         $this->liaisons->operator_id = Auth::user()->id;

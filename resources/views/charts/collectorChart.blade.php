@@ -22,12 +22,11 @@
   <script src="{{ asset('laydate/laydate.js') }}"></script>
   <section class="content-header">
     <h1>
-      Dashboard
-      <small>Chart Samples</small>
+      <small>采集器数据图</small>
     </h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Dashboard</li>
+        <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
+        <li class="active">{{$boxTitle}}</li>
     </ol>
   </section>
 
@@ -54,7 +53,7 @@
       <div class="row">
           <div class="col-xs-12">
               <!-- interactive chart -->
-              <div class="box box-primary">
+              <div class="box box-solid">
                   <div class="box-header with-border">
                       <i class="fa fa-bar-chart-o"></i>
 

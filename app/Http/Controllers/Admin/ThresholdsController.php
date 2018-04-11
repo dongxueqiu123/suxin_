@@ -32,66 +32,64 @@ class ThresholdsController extends Controller
 
     public function index()
     {
-
-        $companyQueryArray['pattern'] = '1';
-        $equipmentQueryArray['pattern'] = '2';
-        $collectorQueryArray['pattern'] = '3';
-        $companyThresholds = $this->thresholdsServices->getList(0,$companyQueryArray);
-        $equipmentThresholds = $this->thresholdsServices->getList(0,$equipmentQueryArray);
-        $collectorThresholds = $this->thresholdsServices->getList(0,$collectorQueryArray);
-        if($company = \Auth()->user()->company){
-
-            $companyThresholds = $this->companiesServices->getModelsByCompany($companyThresholds);
-
-            $equipmentThresholds = $this->equipmentsServices->getModelsByEquipment($equipmentThresholds);
-
-            $collectorThresholds = $this->collectorsServices->getModelsByCollector($collectorThresholds);
-
-        }
-        $companyThresholds = $this->thresholdsServices->getChName($companyThresholds);
-        $equipmentThresholds = $this->thresholdsServices->getChName($equipmentThresholds);
-        $collectorThresholds = $this->thresholdsServices->getChName($collectorThresholds);
+        $user = \Auth()->user();
+        $thresholds = $this->thresholdsServices->getList();
+        $filterThresholds = $this->thresholdsServices->getFilterThresholds($thresholds, $user);
+        $thresholds = array_merge($filterThresholds['company'], $filterThresholds['equipment'], $filterThresholds['collector']);
+        $categories = $this->thresholdsServices->getConstant(null,'category');
+        $grades     = $this->thresholdsServices->getConstant(null,'grade');
         return view('thresholds.list',
             [
-                'companyThresholds' => $companyThresholds,
-                'equipmentThresholds' => $equipmentThresholds,
-                'collectorThresholds' => $collectorThresholds,
+                'thresholds'   => $thresholds??[],
                 'boxTitle'=>'告警阈值列表',
-                'active' => 'thresholds'
+                'active' => 'thresholds',
+                'categories' => $categories,
+                'grades' => $grades,
             ]
         );
     }
 
     public function edit($id){
         $threshold= $this->thresholdsServices->get($id);
-        $patterns   = $this->thresholdsServices->getConstant(null,'pattern');
+        $patterns   = $this->thresholdsServices->getPattern();
         $categories = $this->thresholdsServices->getConstant(null,'category');
         $grades     = $this->thresholdsServices->getConstant(null,'grade');
+        $patternStatus = $this->thresholdsServices->getPatternStatus($threshold);
+        $companies = $this->companiesServices->getAll();
         return view('thresholds.edit',
             [
                 'route' => '/api/admin/thresholds/edit/'.$id,
+                'getEquipmentUrl' => route('api.equipments.getEquipments'),
+                'getCollectorUrl' => route('api.collectors.getCollectors'),
                 'boxTitle'=> '修改告警阈值',
                 'active' => 'thresholds',
                 'threshold' => $threshold,
                 'patterns' => $patterns,
                 'categories' => $categories,
                 'grades' => $grades,
+                'patternStatus' => $patternStatus,
+                'companies' => $companies,
             ]
         );
     }
 
     public function store(){
-        $patterns   = $this->thresholdsServices->getConstant(null,'pattern');
+        $patterns   = $this->thresholdsServices->getPattern();
         $categories = $this->thresholdsServices->getConstant(null,'category');
         $grades     = $this->thresholdsServices->getConstant(null,'grade');
+        $companies = $this->companiesServices->getAll();
+
         return view('thresholds.edit',
             [
                 'route' => route('api.thresholds.store'),
+                'getEquipmentUrl' => route('api.equipments.getEquipments'),
+                'getCollectorUrl' => route('api.collectors.getCollectors'),
                 'boxTitle'=>'添加告警阈值',
                 'active' => 'thresholds',
                 'patterns' => $patterns,
                 'categories' => $categories,
                 'grades' => $grades,
+                'companies' => $companies,
             ]
         );
     }

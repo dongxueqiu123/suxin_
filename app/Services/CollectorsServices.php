@@ -8,6 +8,9 @@
 namespace App\Services;
 
 use App\Eloquent\CollectorsModel;
+use App\Services\CompaniesServices;
+use App\Services\EquipmentsServices;
+use Illuminate\Support\Facades\Auth;
 
 class CollectorsServices extends ServicesAdapte{
 
@@ -15,9 +18,11 @@ class CollectorsServices extends ServicesAdapte{
         $this->init();
     }
 
-    private $collectors;
+    private $collectors,$companiesServices,$equipmentsServices;
     public function init(){
         $this->collectors = new CollectorsModel();
+        $this->companiesServices = new CompaniesServices();
+        $this->equipmentsServices = new EquipmentsServices();
     }
 
 
@@ -32,10 +37,10 @@ class CollectorsServices extends ServicesAdapte{
         $query = $this->collectors->nothing();
 
         foreach($queryArray as $key => $value){
-            if($key === 'pattern'){
-                $value && $query->pattern($value);
-            } else if ($key === 'patternId') {
-                $value && $query->patternId($value);
+            if($key === 'firmId'){
+                $value && $query->firmId($value);
+            } else if ($key === 'equipmentId') {
+                $value && $query->equipmentId($value);
             }
         }
 
@@ -52,42 +57,62 @@ class CollectorsServices extends ServicesAdapte{
         return $collector;
     }
 
-    public function isUserInCollector($collector, $user){
-        $boole = false;
-        $companyId = $user->company->id??'';
-        if($collector->pattern??'' == 1){
-            if(($collector->company->id??'') == $companyId || empty($companyId)){
-                $boole = true;
-            }
-        }elseif($collector->pattern??'' == 2){
-            if(($collector->company->id??'')  == $companyId || empty($companyId)){
-                $boole = true;
-            }
-            if(($collector->company->id??'')  == $companyId || empty($companyId)){
-                $boole = true;
-            }
+    public function save(array $modelData)
+    {
+        if(isset($modelData['id'])){
+            $this->collectors = $this->get($modelData['id']);
         }
-        return $boole;
+        $this->collectors->mac = $modelData['mac'];
+        $this->collectors->name = $modelData['name'];
+        $this->collectors->producer_id = '1';
+        ($modelData['companyId']??'') && $this->collectors->firm_id = $modelData['companyId'];
+        ($modelData['equipmentId']??'') && $this->collectors->equipment_id = $modelData['equipmentId'];
+        $this->collectors->operator_id = Auth::user()->id;
+        $state = $this->collectors->save();
+        return $state;
     }
 
-    public function getModelsByCollector($models, $modelPattern = 3){
-        $companyId = \Auth()->user()->company->id??'';
-        foreach ($models as $model){
-            $pattern = $model->pattern??'';
-            $collectorPattern = $model->collector->pattern??'';
-            if($pattern == $modelPattern && $collectorPattern == 1){
-                if(($model->collector->company->id??'') == $companyId){
-                    $collectorCompanyModel[] = $model;
-                }
-            }elseif($pattern == $modelPattern && $collectorPattern == 2){
-                if(($model->collector->equipment->provider->id??'') == $companyId){
-                    $collectorProviderModel[] = $model;
-                }
-                if(($model->collector->equipment->consumer->id??'') == $companyId){
-                    $collectorConsumerModel[] = $model;
-                }
+    public function destroy($id)
+    {
+        return $this->collectors::where('id',$id)->delete();
+    }
+
+    /**
+     * 获取工厂和机械设备下得采集器
+     * @param $items $user
+     * @return array
+     */
+    public function getCompanyAndEquipmentCollectors($collectors, $user){
+        $result = [];
+        foreach ($collectors as $collector){
+            if($this->equipmentsServices->isHaveEquipmentId($collector) && $this->equipmentsServices->isUserInEquipment($collector->equipment, $user)){
+                $result['equipment'][] = $collector;
+            }elseif($this->companiesServices->isHaveFirmId($collector) && $this->companiesServices->isUserInCompany($collector->company, $user)){
+                $result['company'][] = $collector;
             }
         }
-        return array_merge($collectorCompanyModel??[],$collectorProviderModel??[],$collectorConsumerModel??[]);
+        return $result;
     }
+
+    public function isUserInCollector($collector, $user){
+        $inCollector = false;
+        $companyId = $user->company->id??'';
+        if(($collector->company->id??'') == $companyId || empty($companyId)){
+            $inCollector = true;
+        }elseif(($collector->equipment->provider->id??'')  == $companyId || empty($companyId)){
+            $inCollector = true;
+        }elseif(($collector->equipment->consumer->id??'')  == $companyId || empty($companyId)){
+            $inCollector = true;
+        }
+        return $inCollector;
+    }
+
+    public function isHaveCollector($item){
+        $haveCollector = false;
+        if($item->collector_id){
+            $haveCollector = true;
+        }
+        return $haveCollector;
+    }
+
 }

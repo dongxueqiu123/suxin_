@@ -3,22 +3,20 @@
 @section('content')
   <section class="content-header">
     <h1>
-      用户
       <small>用户管理</small>
     </h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">{{$boxTitle}}</li>
+        <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
+        <li class="active">{{$boxTitle}}</li>
     </ol>
   </section>
 
   <section class="content">
     <div class="row">
       <div class="col-xs-12">
-        <div class="box">
+        <div class="box box-solid">
           <div class="box-header">
-            <h3 class="box-title">{{$boxTitle}}</h3>
-            <a href="{{route('users.store')}}" class="btn btn-sm btn-default btn-flat pull-right"><i class="fa fa-fw fa-plus"></i>添加</a>
+              <a href="{{route('users.store')}}" class="btn btn-default pull-left"><i class="fa fa-fw fa-plus"></i>新增角色</a>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -40,7 +38,7 @@
                 <td>{{$user->name}}
                 </td>
                 <td>{{$user->email}}</td>
-                  <td>{{$user->company->name??'苏芯物联'}}</td>
+                  <td>{{$user->company->name??'管理平台'}}</td>
                 <td>{{$user->updated_at}}</td>
                 <td>
                   <a class="btn btn-primary btn-xs " href={{route('users.edit',['id'=>$user->id])}}>编辑</a>
