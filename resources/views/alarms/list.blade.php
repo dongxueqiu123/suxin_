@@ -56,6 +56,7 @@
               @endforeach
               </tbody>
             </table>
+              {!! $alarms->links() !!}
           </div>
           <!-- /.box-body -->
         </div>

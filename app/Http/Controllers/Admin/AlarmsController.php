@@ -35,7 +35,7 @@ class AlarmsController extends Controller{
             $alarm->category = $this->thresholdsServices->getConstant($alarm,'category');
             $alarm->grade    = $this->thresholdsServices->getConstant($alarm,'grade');
         }
-
+        $alarms = $alarm->paginate(10);
         return view('alarms.list',
             [
                 'alarms' => $alarms,

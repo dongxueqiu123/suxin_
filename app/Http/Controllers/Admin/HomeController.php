@@ -19,7 +19,11 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('admin.highchart');
+        $user = \Auth()->user();
+        $company = $user->company;
+        return view('admin.index',[
+            'company'=>$company,
+        ]);
     }
 
     public function highcharts(){

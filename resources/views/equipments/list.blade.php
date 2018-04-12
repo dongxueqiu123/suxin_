@@ -19,14 +19,8 @@
                   <a href="{{route('equipments.store')}}" class="btn btn-default pull-left"><i class="fa fa-fw fa-plus"></i>新增机械</a>
               </div>
       <div class="nav-tabs-custom">
-      {{--    <ul class="nav nav-tabs">
-              <li class="active"><a href="#activity" data-toggle="tab">使用设备</a></li>
-              <li><a href="#timeline" data-toggle="tab">生产设备</a></li>
-          </ul>--}}
           <div class="tab-content">
-
               <div class="active tab-pane" id="timeline">
-
                       <!-- /.box-header -->
                       <div class="">
                           <table id="example1" class="table table-bordered table-striped">
@@ -45,8 +39,8 @@
                                   <tr>
                                       <td>{{$key+1}}</td>
                                       <td>{{$equipment->name}}</td>
-                                      <td>{{$equipment->provider->name}}</td>
-                                      <td>{{$equipment->consumer->name}}</td>
+                                      <td>{{$equipment->provider->name??''}}</td>
+                                      <td>{{$equipment->consumer->name??''}}</td>
                                       <td>{{$equipment->operate_time}}</td>
                                       <td>
                                           <a class="btn btn-primary btn-xs " href={{route('equipments.edit',['id'=>$equipment->id])}}>编辑</a>
