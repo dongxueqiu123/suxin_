@@ -3,7 +3,7 @@
 @section('content')
   <section class="content-header">
       <h1>
-          <small>告警联系人管理</small>
+          <small>告警联系人</small>
       </h1>
     <ol class="breadcrumb">
         <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
@@ -29,11 +29,11 @@
                                   <thead>
                                   <tr>
                                       <th>序号</th>
-                                      <th>公司</th>
-                                      <th>机械设备</th>
-                                      <th>采集设备</th>
-                                      <th>手机号码</th>
                                       <th>电子邮箱</th>
+                                      <th>手机号码</th>
+                                      <th>采集器</th>
+                                      <th>机械设备</th>
+                                      <th>公司</th>
                                       <th>更新时间</th>
                                       <th>编辑</th>
                                   </tr>
@@ -42,11 +42,11 @@
                                   @foreach($liaisons??[] as $key=>$liaison)
                                       <tr>
                                           <td>{{$key+1}}</td>
-                                          <td>{{$liaison->company->name??'暂无'}}</td>
-                                          <td>{{$liaison->equipment->name??'暂无'}}</td>
-                                          <td>{{$liaison->collector->name??'暂无'}}</td>
-                                          <td>{{$liaison->mobile}}</td>
                                           <td>{{$liaison->email}}</td>
+                                          <td>{{$liaison->mobile}}</td>
+                                          <td>{{$liaison->collector->name??'暂无'}}</td>
+                                          <td>{{$liaison->equipment->name??'暂无'}}</td>
+                                          <td>{{$liaison->company->name??'暂无'}}</td>
                                           <td>{{$liaison->operate_time}}</td>
                                           <td>
                                               <a class="btn btn-primary btn-xs " href={{route('liaisons.edit',['id'=>$liaison->id])}}>编辑</a>

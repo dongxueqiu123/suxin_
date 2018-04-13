@@ -3,7 +3,7 @@
 @section('content')
   <section class="content-header">
     <h1>
-      <small>采集设备管理</small>
+      <small>采集器</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
@@ -17,7 +17,7 @@
 
           <!-- /.box-header -->
           <div class="box box-solid">
-
+              <form class="form-horizontal" >
 
               <div class="box-header with-border">
 
@@ -27,44 +27,24 @@
               </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form class="form-horizontal" >
+
               <div class="box-body">
 
 
                 <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label">采集设备名称</label>
+                  <label for="name" class="col-sm-2 control-label">名称</label>
 
                   <div class="col-sm-10">
-                    <input type="name" class="form-control" value="{{$collector->name??''}}" id="name" placeholder="采集设备名称">
+                    <input type="name" class="form-control" value="{{$collector->name??''}}" id="name" placeholder="名称" datatype="*" errormsg="请填写信息" >
                   </div>
                 </div>
 
                   <div class="form-group">
                       <label for="mac" class="col-sm-2 control-label">mac地址</label>
                       <div class="col-sm-10">
-                          <input type="mac" class="form-control" value="{{$collector->mac??''}}" id="mac" placeholder="00-23-5A-15-99-42-11-25">
+                          <input type="mac" class="form-control" value="{{$collector->mac??''}}" id="mac" placeholder="00-23-5A-15-99-42-11-25"  datatype="*23-23" errormsg="请填写正确的mac地址" >
                       </div>
                   </div>
-
-{{--                  <div class="form-group">
-                      <label for="abbreviation" class="col-sm-2 control-label">生产厂商</label>
-                      <div class="col-sm-10">
-                          <select class="form-control select2 pattern"  style="width: 100%;">
-                              @foreach($patterns as $parameterName => $pattern)
-                                  <option @if($collector->$parameterName??'') selected @endif value="{{$parameterName}}">{{$pattern}}</option>
-                              @endforeach
-                          </select>
-                      </div>
-                  </div>
-
-                  <div class="form-group company" >
-                      <label for="abbreviation" class="col-sm-2 control-label">使用厂商</label>
-                      <div class="col-sm-10">
-                          <select class="form-control select2 patternId"  style="width: 100%;">
-
-                          </select>
-                      </div>
-                  </div>--}}
 
                   <div class="form-group">
                       <label for="abbreviation" class="col-sm-2 control-label">公司</label>
@@ -99,40 +79,51 @@
     <!-- /.row -->
   </section>
   <script src="{{asset('layer/layer.js')}}"></script>
+  <script src="{{asset('vaildform/validform_min.js')}}"></script>
   <script>
-     $('.sign').click(function () {
-         var mac,name,companyId,equipmentId;
-         mac = $('#mac').val();
-         name = $('#name').val();
-         companyId = $('.company').val();
-         equipmentId = $('.equipment').val();
-         $.ajax({
-             url:'{{$route}}',
-             type:'POST',    //GET
-             data:{
-                 mac:mac,name:name,companyId:companyId,equipmentId:equipmentId
-             },
-             timeout:5000,    //超时时间
-             dataType:'json',
-             success:function(data){
-                 if(data.state === '201'){
-                     layer.alert(data.info)
-                 }else{
-                     window.location.href = data.route
-                 }
-             },
-             error:function(data){
-                 if(data.responseJSON.errors['mac']){
-                     layer.alert(data.responseJSON.errors['mac']['0'])
-                 }else if(data.responseJSON.errors['name']){
-                     layer.alert(data.responseJSON.errors['name']['0'])
-                 }else if(data.responseJSON.errors['companyId']){
-                     layer.alert(data.responseJSON.errors['companyId']['0'])
-                 }
-             }
-         });
-         return false;
-     });
+
+      $(".form-horizontal").Validform({
+          btnSubmit: ".sign",
+          tipSweep: true,
+          tiptype: function (msg, o, cssctl) {
+              if (o.type == 3) {//失败
+                  layer.alert(msg);
+              }
+          },
+          callback: function (data) {//异步回调函数
+              var mac,name,companyId,equipmentId;
+              mac = $('#mac').val();
+              name = $('#name').val();
+              companyId = $('.company').val();
+              equipmentId = $('.equipment').val();
+              $.ajax({
+                  url:'{{$route}}',
+                  type:'POST',    //GET
+                  data:{
+                      mac:mac,name:name,companyId:companyId,equipmentId:equipmentId
+                  },
+                  timeout:5000,    //超时时间
+                  dataType:'json',
+                  success:function(data){
+                      if(data.state === '201'){
+                          layer.alert(data.info)
+                      }else{
+                          window.location.href = data.route
+                      }
+                  },
+                  error:function(data){
+                      if(data.responseJSON.errors['mac']){
+                          layer.alert(data.responseJSON.errors['mac']['0'])
+                      }else if(data.responseJSON.errors['name']){
+                          layer.alert(data.responseJSON.errors['name']['0'])
+                      }else if(data.responseJSON.errors['companyId']){
+                          layer.alert(data.responseJSON.errors['companyId']['0'])
+                      }
+                  }
+              });
+              return false;
+          }
+      });
 
      $('.company').on('change',function(){
          var value = $(this).val();

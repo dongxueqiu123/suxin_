@@ -147,7 +147,7 @@
     <script type="text/javascript">
         var companyId, url, allEquipmentUrl, onlineEquipmentUrl,
         allCollectorUrl, onlineCollectorUrl,allWarnTempNum,unManageWarnTempNum;
-        companyId = '{{ $companyId->id??'1' }}';
+        companyId = '{{ $company->id??'1' }}';
         url = '/console';
         allEquipmentUrl = url+'/equipment/count?firmId='+companyId;
         $.getJSON(allEquipmentUrl, function(data) {
@@ -177,7 +177,7 @@
             }
         });
 
-        allWarnTempNum = url+'/collector/1?firmId='+companyId;
+        allWarnTempNum = url+'/alarm/more/1?firmId='+companyId;
         $.getJSON(allWarnTempNum, function(data) {
             if(data['code'] == 0){
                 $('.allWarnTempNum').html(data['data']);
@@ -185,21 +185,21 @@
         });
 
 
-        unManageWarnTempNum = url+'/collector/1?firmId='+companyId+'&status=0';
+        unManageWarnTempNum = url+'/alarm/more/1?firmId='+companyId+'&status=0';
         $.getJSON(unManageWarnTempNum, function(data) {
             if(data['code'] == 0){
                 $('.unManageWarnTempNum').html(data['data']);
             }
         });
 
-        allWarnShakeNum = url+'/collector/2?firmId='+companyId;
+        allWarnShakeNum = url+'/alarm/more/2?firmId='+companyId;
         $.getJSON(allWarnShakeNum, function(data) {
             if(data['code'] == 0){
                 $('.allWarnShakeNum').html(data['data']);
             }
         });
 
-        unManageWarnShakeNum = url+'/collector/2?firmId='+companyId+'&status=0';
+        unManageWarnShakeNum = url+'/alarm/more/2?firmId='+companyId+'&status=0';
         $.getJSON(unManageWarnShakeNum, function(data) {
             if(data['code'] == 0){
                 $('.unManageWarnShakeNum').html(data['data']);

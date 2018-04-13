@@ -75,10 +75,10 @@ class CollectorsController extends Controller
             $collectors = $equipment->collector??[];
         }else{
             //公司下所有的采集器
-            $companyCollectors = $company->collector;
+            $companyCollectors = $company->collector??collect();
             //公司设备下所有的采集器
-            $providerEquipments = $company->provider;
-            $consumerEquipments = $company->consumer;
+            $providerEquipments = $company->provider??collect();
+            $consumerEquipments = $company->consumer??collect();
             $equipments = $providerEquipments->merge($consumerEquipments)->unique();
             $equipmentCollectors = collect();
             $equipments->each(function($equipment) use($equipmentCollectors){

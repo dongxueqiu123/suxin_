@@ -3,7 +3,7 @@
 @section('content')
   <section class="content-header">
     <h1>
-      <small>告警记录管理</small>
+      <small>告警记录</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
@@ -22,29 +22,29 @@
               <thead>
               <tr>
                 <th>序号</th>
+                  <th>分类</th>
+                  <th>等级</th>
+                  <th>告警详情</th>
+                  <th>操作说明</th>
+                  <th>采集器</th>
+                  <th>机械设备</th>
                 <th>生产公司</th>
-                <th>消费公司</th>
-                <th>采集设备</th>
-                <th>机械设备</th>
-                <th>采集设备分类</th>
-                <th>采集设备等级</th>
-                <th>详细信息</th>
-                <th>操作说明</th>
+                <th>使用公司</th>
                 <th>编辑</th>
               </tr>
               </thead>
               <tbody>
               @foreach($alarms as $key=>$alarm)
               <tr>
-                <td>{{$key+1}}</td>
-                <td>{{$alarm->provider->name??'暂无'}}</td>
-                <td>{{$alarm->consumer->name??'暂无'}}</td>
-                <td>{{$alarm->collector->name??'暂无'}}</td>
-                <td>{{$alarm->equipment->name??'暂无'}}</td>
-                <td>{{$alarm->category}}</td>
-                <td>{{$alarm->grade}}</td>
-                <td>{{$alarm->detail}}</td>
-                <td>{{$alarm->remark}}</td>
+                  <td>{{$key+1}}</td>
+                  <td>{{$alarm->category}}</td>
+                  <td>{{$alarm->grade}}</td>
+                  <td>{{$alarm->detail}}</td>
+                  <td>{{$alarm->collector->name??'暂无'}}</td>
+                  <td>{{$alarm->equipment->name??'暂无'}}</td>
+                  <td>{{$alarm->provider->name??'暂无'}}</td>
+                  <td>{{$alarm->consumer->name??'暂无'}}</td>
+                  <td>{{$alarm->remark}}</td>
                 <td>
                     @if($alarm->status == 2)
                         <a class="btn btn-danger btn-xs restore" url="{{ route('api.alarms.edit',['id'=>$alarm->id])}}">恢复(已删除)</a>

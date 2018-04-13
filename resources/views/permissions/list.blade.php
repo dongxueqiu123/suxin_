@@ -3,7 +3,7 @@
 @section('content')
   <section class="content-header">
     <h1>
-      <small>权限管理</small>
+      <small>权限</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
@@ -24,9 +24,9 @@
               <thead>
               <tr>
                 <th>序号</th>
-                <th>权限名称</th>
-                <th>权限说明</th>
-                <th>权限路由</th>
+                <th>名称</th>
+                <th>描述</th>
+                <th>路由</th>
                 <th>更新时间</th>
                 <th>编辑</th>
               </tr>

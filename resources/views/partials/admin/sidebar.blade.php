@@ -54,20 +54,20 @@
       @permission(['users','roles','permissions'])
       <li class="@if (in_array($active??'', ['users','roles','permissions'])) active @endif treeview">
         <a href="#">
-          <i class="fa fa-users"></i> <span>成员管理</span>
+          <i class="fa fa-users"></i> <span>用户管理</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </a>
         <ul class="treeview-menu">
           @permission('users')
-          <li class="@if (($active??'') === 'users') active @endif"><a href="{{route('users')}}"><i class="fa fa-user"></i> 系统成员</a></li>
+          <li class="@if (($active??'') === 'users') active @endif"><a href="{{route('users')}}"><i class="fa fa-user"></i> 用户</a></li>
           @endpermission
           @permission('roles')
-          <li class="@if (($active??'') === 'roles') active @endif"><a href="{{route('roles')}}"><i class="fa ffa-user-plus"></i> 系统角色</a></li>
+          <li class="@if (($active??'') === 'roles') active @endif"><a href="{{route('roles')}}"><i class="fa ffa-user-plus"></i> 角色</a></li>
           @endpermission
           @permission('permissions')
-          <li class="@if (($active??'') === 'permissions') active @endif"><a href="{{route('permissions')}}"><i class="fa fa-lock"></i> 权限管理</a></li>
+          <li class="@if (($active??'') === 'permissions') active @endif"><a href="{{route('permissions')}}"><i class="fa fa-lock"></i> 权限</a></li>
           @endpermission
         </ul>
       </li>
@@ -75,15 +75,15 @@
         @else
         <li class="@if (in_array($active??'', ['users','roles','permissions'])) active @endif treeview">
           <a href="#">
-            <i class="fa fa-users"></i> <span>成员管理</span>
+            <i class="fa fa-users"></i> <span>用户管理</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
           </a>
           <ul class="treeview-menu">
-            <li class="@if (($active??'') === 'users') active @endif"><a href="{{route('users')}}"><i class="fa fa-user"></i> 系统成员</a></li>
-            <li class="@if (($active??'') === 'roles') active @endif"><a href="{{route('roles')}}"><i class="fa fa-user-plus"></i> 系统角色</a></li>
-            <li class="@if (($active??'') === 'permissions') active @endif"><a href="{{route('permissions')}}"><i class="fa fa-lock"></i> 权限管理</a></li>
+            <li class="@if (($active??'') === 'users') active @endif"><a href="{{route('users')}}"><i class="fa fa-user"></i> 用户</a></li>
+            <li class="@if (($active??'') === 'roles') active @endif"><a href="{{route('roles')}}"><i class="fa fa-user-plus"></i> 角色</a></li>
+            <li class="@if (($active??'') === 'permissions') active @endif"><a href="{{route('permissions')}}"><i class="fa fa-lock"></i> 权限</a></li>
           </ul>
         </li>
       @endif
@@ -99,7 +99,7 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li class="@if (($active??'') === 'companies') active @endif "><a href="{{route('companies')}}"><i class="fa fa-sticky-note-o"></i> 公司列表</a></li>
+          <li class="@if (($active??'') === 'companies') active @endif "><a href="{{route('companies')}}"><i class="fa fa-sticky-note-o"></i> 公司</a></li>
         </ul>
       </li>
       @endpermission
@@ -112,7 +112,7 @@
           </span>
           </a>
           <ul class="treeview-menu">
-            <li class="@if (($active??'') === 'companies') active @endif"><a href="{{route('companies')}}"><i class="fa fa-sticky-note-o"></i> 公司列表</a></li>
+            <li class="@if (($active??'') === 'companies') active @endif"><a href="{{route('companies')}}"><i class="fa fa-sticky-note-o"></i> 公司</a></li>
           </ul>
         </li>
       @endif
@@ -132,7 +132,7 @@
             <li class="@if (($active??'') === 'equipments') active @endif"><a href="{{route('equipments')}}"><i class="fa fa-circle-o"></i> 机械设备</a></li>
             @endpermission
             @permission('collectors')
-            <li class="@if (($active??'') === 'collectors') active @endif"><a href="{{route('collectors')}}"><i class="fa fa-tablet"></i> 采集设备</a></li>
+            <li class="@if (($active??'') === 'collectors') active @endif"><a href="{{route('collectors')}}"><i class="fa fa-tablet"></i> 采集器</a></li>
             @endpermission
           </ul>
         </li>
@@ -147,15 +147,16 @@
           </span>
           </a>
           <ul class="treeview-menu">
+            @permission('alarms')
+            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-file"></i> 告警记录</a></li>
+            @endpermission
             @permission('thresholds')
-            <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 告警阈值</a></li>
+            <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 阈值设置</a></li>
             @endpermission
             @permission('liaisons')
             <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-fax"></i> 告警联系人</a></li>
             @endpermission
-            @permission('alarms')
-            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-file"></i> 告警记录</a></li>
-            @endpermission
+
           </ul>
         </li>
         @endpermission
@@ -173,7 +174,7 @@
           </a>
           <ul class="treeview-menu">
             <li class="@if (($active??'') === 'equipments') active @endif"><a href="{{route('equipments')}}"><i class="fa fa-circle-o"></i> 机械设备</a></li>
-            <li class="@if (($active??'') === 'collectors') active @endif"><a href="{{route('collectors')}}"><i class="fa fa-tablet"></i> 采集设备</a></li>
+            <li class="@if (($active??'') === 'collectors') active @endif"><a href="{{route('collectors')}}"><i class="fa fa-tablet"></i> 采集器</a></li>
           </ul>
         </li>
 
@@ -185,9 +186,9 @@
           </span>
           </a>
           <ul class="treeview-menu">
-            <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 告警阈值</a></li>
-            <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-phone"></i> 告警联系人</a></li>
             <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-file"></i> 告警记录</a></li>
+            <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 阈值设置</a></li>
+            <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-phone"></i> 告警联系人</a></li>
           </ul>
         </li>
 

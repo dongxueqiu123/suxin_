@@ -35,4 +35,8 @@ class User extends Authenticatable
     public function company(){
         return $this->hasOne('App\Eloquent\CompaniesModel','id','companyId');
     }
+
+    public function roleUser(){
+        return $this->belongsTo('App\Eloquent\RoleUserModel','id','user_id');
+    }
 }

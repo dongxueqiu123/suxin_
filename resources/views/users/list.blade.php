@@ -3,7 +3,7 @@
 @section('content')
   <section class="content-header">
     <h1>
-      <small>用户管理</small>
+      <small>用户</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
@@ -16,7 +16,7 @@
       <div class="col-xs-12">
         <div class="box box-solid">
           <div class="box-header">
-              <a href="{{route('users.store')}}" class="btn btn-default pull-left"><i class="fa fa-fw fa-plus"></i>新增角色</a>
+              <a href="{{route('users.store')}}" class="btn btn-default pull-left"><i class="fa fa-fw fa-plus"></i>新增成员</a>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -24,9 +24,10 @@
               <thead>
               <tr>
                 <th>序号</th>
-                <th>用户名称</th>
-                <th>用户邮箱</th>
-                  <th>所属公司</th>
+                <th>名称</th>
+                <th>邮箱</th>
+                <th>所属公司</th>
+                <th>角色</th>
                 <th>更新时间</th>
                 <th>编辑</th>
               </tr>
@@ -38,7 +39,8 @@
                 <td>{{$user->name}}
                 </td>
                 <td>{{$user->email}}</td>
-                  <td>{{$user->company->name??'管理平台'}}</td>
+                <td>{{$user->company->name??'管理平台'}}</td>
+                <td>{{$user->roleUser->roles->name??''}}</td>
                 <td>{{$user->updated_at}}</td>
                 <td>
                   <a class="btn btn-primary btn-xs " href={{route('users.edit',['id'=>$user->id])}}>编辑</a>

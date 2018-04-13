@@ -38,6 +38,7 @@ class CompaniesController extends Controller
         $request->validate([
             'name' => 'required',
             'abbreviation' => 'required',
+            'userId' => 'required',
         ]);
         $input = $request->only(['name', 'abbreviation','userId']);
         $this->companies->name = $input['name'];

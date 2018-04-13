@@ -3,7 +3,7 @@
 @section('content')
   <section class="content-header">
       <h1>
-          <small>机械设备管理</small>
+          <small>机械设备</small>
       </h1>
       <ol class="breadcrumb">
           <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
@@ -16,7 +16,7 @@
           <div class="col-xs-12">
           <div class="box box-solid">
               <div class="box-header">
-                  <a href="{{route('equipments.store')}}" class="btn btn-default pull-left"><i class="fa fa-fw fa-plus"></i>新增机械</a>
+                  <a href="{{route('equipments.store')}}" class="btn btn-default pull-left"><i class="fa fa-fw fa-plus"></i>新增机械设备</a>
               </div>
       <div class="nav-tabs-custom">
           <div class="tab-content">
@@ -27,7 +27,7 @@
                               <thead>
                               <tr>
                                   <th>序号</th>
-                                  <th>机械设备</th>
+                                  <th>名称</th>
                                   <th>生产公司</th>
                                   <th>使用公司</th>
                                   <th>更新时间</th>

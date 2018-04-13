@@ -72,8 +72,8 @@ class EquipmentsController extends Controller
         $companyId = $request->input('companyId');
         $equipmentId = $request->input('equipmentId');
         $company =  $this->companiesServices->get($companyId);
-        $providerEquipments = $company->provider;
-        $consumerEquipments = $company->consumer;
+        $providerEquipments = $company->provider??collect();
+        $consumerEquipments = $company->consumer??collect();
         $equipments = $providerEquipments->merge($consumerEquipments)->unique();
         /*todo 增加公司权限控制*/
         $str ='';

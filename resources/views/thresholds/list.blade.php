@@ -3,7 +3,7 @@
 @section('content')
   <section class="content-header">
       <h1>
-          <small>告警阈值管理</small>
+          <small>阈值设置</small>
       </h1>
       <ol class="breadcrumb">
           <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
@@ -30,12 +30,12 @@
                                   <thead>
                                   <tr>
                                       <th>序号</th>
-                                      <th>公司</th>
-                                      <th>机械设备</th>
-                                      <th>采集设备</th>
+                                      <th>阈值</th>
                                       <th>分类</th>
                                       <th>等级</th>
-                                      <th>限制</th>
+                                      <th>公司</th>
+                                      <th>机械设备</th>
+                                      <th>采集器</th>
                                       <th>更新时间</th>
                                       <th>编辑</th>
                                   </tr>
@@ -44,12 +44,12 @@
                                   @foreach($thresholds??[] as $key=>$threshold)
                                       <tr>
                                           <td>{{$key+1}}</td>
+                                          <td>{{$threshold->lowlimit}}~{{$threshold->toplimit}}</td>
+                                          <td>{{$categories[$threshold->category]}}</td>
+                                          <td>{{$grades[$threshold->grade]}}</td>
                                           <td>{{$threshold->company->name??'暂无'}}</td>
                                           <td>{{$threshold->equipment->name??'暂无'}}</td>
                                           <td>{{$threshold->collector->name??'暂无'}}</td>
-                                          <td>{{$categories[$threshold->category]}}</td>
-                                          <td>{{$grades[$threshold->grade]}}</td>
-                                          <td>{{$threshold->lowlimit}}~{{$threshold->toplimit}}</td>
                                           <td>{{$threshold->operate_time}}</td>
                                           <td>
                                               <a class="btn btn-primary btn-xs " href={{route('thresholds.edit',['id'=>$threshold->id])}}>编辑</a>

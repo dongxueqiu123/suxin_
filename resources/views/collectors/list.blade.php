@@ -3,7 +3,7 @@
 @section('content')
   <section class="content-header">
       <h1>
-          <small>采集设备管理</small>
+          <small>采集器</small>
       </h1>
       <ol class="breadcrumb">
           <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
@@ -27,7 +27,7 @@
                               <thead>
                               <tr>
                                   <th>序号</th>
-                                  <th>采集设备</th>
+                                  <th>名称</th>
                                   <th>机械设备</th>
                                   <th>公司</th>
                                   <th>更新时间</th>
