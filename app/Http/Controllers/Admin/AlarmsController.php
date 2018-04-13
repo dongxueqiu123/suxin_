@@ -23,19 +23,15 @@ class AlarmsController extends Controller{
         $this->alarmsServices = new AlarmsServices();
         $this->thresholdsServices = new ThresholdsServices();
         $this->collectorsServices = new CollectorsServices();
-        $this->middleware('auth.user');
     }
 
     public function index(){
-        $user = \Auth()->user();
-        $alarms = $this->alarmsServices->getAll();
-        $filterAlarms = $this->alarmsServices->getFilterAlarms($alarms, $user);
-        $alarms = array_merge($filterAlarms['company'], $filterAlarms['equipment'], $filterAlarms['collector']);
-        foreach ($alarms as $alarm){
+        $queryArray['firmId'] = \Auth()->user()->company->id??'';
+        $alarms = $this->alarmsServices->getList(static::PAGE_SIZE_DEFAULT,$queryArray);
+        $alarms->each(function($alarm){
             $alarm->category = $this->thresholdsServices->getConstant($alarm,'category');
             $alarm->grade    = $this->thresholdsServices->getConstant($alarm,'grade');
-        }
-        $alarms = $alarm->paginate(10);
+        });
         return view('alarms.list',
             [
                 'alarms' => $alarms,

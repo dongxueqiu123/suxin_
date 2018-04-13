@@ -45,8 +45,8 @@
                                       <tr>
                                           <td>{{$key+1}}</td>
                                           <td>{{$threshold->lowlimit}}~{{$threshold->toplimit}}</td>
-                                          <td>{{$categories[$threshold->category]}}</td>
-                                          <td>{{$grades[$threshold->grade]}}</td>
+                                          <td>{{$threshold->category??'暂无'}}</td>
+                                          <td>{{$threshold->grade??'暂无'}}</td>
                                           <td>{{$threshold->company->name??'暂无'}}</td>
                                           <td>{{$threshold->equipment->name??'暂无'}}</td>
                                           <td>{{$threshold->collector->name??'暂无'}}</td>
@@ -59,6 +59,7 @@
                                   @endforeach
                                   </tbody>
                               </table>
+                              {!! $thresholds->links() !!}
                           </div>
                           <!-- /.box-body -->
                       </div>

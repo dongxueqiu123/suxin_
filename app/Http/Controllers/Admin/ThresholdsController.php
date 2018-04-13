@@ -27,24 +27,21 @@ class ThresholdsController extends Controller
         $this->equipmentsServices = new EquipmentsServices();
         $this->collectorsServices = new CollectorsServices();
         $this->companiesServices = new CompaniesServices();
-        $this->middleware('auth.user');
     }
 
     public function index()
     {
-        $user = \Auth()->user();
-        $thresholds = $this->thresholdsServices->getList();
-        $filterThresholds = $this->thresholdsServices->getFilterThresholds($thresholds, $user);
-        $thresholds = array_merge($filterThresholds['company'], $filterThresholds['equipment'], $filterThresholds['collector']);
-        $categories = $this->thresholdsServices->getConstant(null,'category');
-        $grades     = $this->thresholdsServices->getConstant(null,'grade');
+        $queryArray['firmId'] = \Auth()->user()->company->id??'';
+        $thresholds = $this->thresholdsServices->getList(static::PAGE_SIZE_DEFAULT,$queryArray);
+        $thresholds->each(function($threshold){
+            $threshold->category = $this->thresholdsServices->getConstant($threshold,'category');
+            $threshold->grade    = $this->thresholdsServices->getConstant($threshold,'grade');
+        });
         return view('thresholds.list',
             [
                 'thresholds'   => $thresholds??[],
                 'boxTitle'=>'告警阈值列表',
                 'active' => 'thresholds',
-                'categories' => $categories,
-                'grades' => $grades,
             ]
         );
     }

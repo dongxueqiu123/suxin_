@@ -56,19 +56,18 @@ class CompaniesServices extends ServicesAdapte{
         }
         return $haveFirmId;
     }
-/*
-    public function getModelsByCompany($models){
-        $companyId = \Auth()->user()->company->id??'';
-        foreach ($models as $model){
-            //if(($model->pattern_id == 0)||($model->company->id??'') == $companyId){
-            if(($model->company->id??'') == $companyId){
 
-                $thresholdModels[] = $model;
-
-            }
+    /**
+     * 是否具有权限
+     * @param $id
+     */
+    public function isHavePermission($id = null){
+        $havePermission = false;
+        if(empty($id)||$id == 1){
+            $havePermission = true;
         }
-        return $thresholdModels??[];
-    }*/
+        return $havePermission;
+    }
 
     /**
      * 过滤无编号和不是该厂用户的数据

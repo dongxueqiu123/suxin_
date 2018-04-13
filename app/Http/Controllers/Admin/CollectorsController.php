@@ -22,19 +22,14 @@ class CollectorsController extends Controller
         $this->equipmentsServices = new EquipmentsServices();
         $this->companiesServices = new CompaniesServices();
         $this->thresholdsServices = new ThresholdsServices();
-        $this->middleware('auth.user');
     }
 
     public function index()
     {
-        $user = \Auth()->user();
-        $collectors = $this->collectorsServices->getList(0, []);
-        $filterCollectors = $this->collectorsServices->getCompanyAndEquipmentCollectors($collectors, $user);
-        $collectors = array_merge($filterCollectors['company']??[],$filterCollectors['equipment']??[]);
+        $queryArray['firmId'] = \Auth()->user()->company->id??'';
+        $collectors = $this->collectorsServices->getList(static::PAGE_SIZE_DEFAULT, $queryArray);
         return view('collectors.list',
             [
-                'companyCollectors' => $filterCollectors['company']??[],
-                'equipmentCollectors' => $filterCollectors['equipment']??[],
                 'collectors' => $collectors,
                 'boxTitle'=>'采集设备列表',
                 'active' => 'collectors'

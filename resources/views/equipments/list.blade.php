@@ -50,6 +50,7 @@
                               @endforeach
                               </tbody>
                           </table>
+                          {!! $equipments->links() !!}
                       </div>
                       <!-- /.box-body -->
                   </div>

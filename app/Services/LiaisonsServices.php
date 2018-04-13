@@ -19,6 +19,7 @@ class LiaisonsServices extends ServicesAdapte{
     private $thresholds;
     public function init(){
         $this->liaisons = new LiaisonsModel();
+        $this->companiesServices = new CompaniesServices();
     }
 
     public function getList(int $pageSize = 0,
@@ -29,15 +30,16 @@ class LiaisonsServices extends ServicesAdapte{
         $query = $this->liaisons->nothing();
 
         foreach($queryArray as $key => $value){
-            if($key === 'pattern'){
-                $value && $query->pattern($value);
-            } else if ($key === 'patternId') {
-                $value && $query->patternId($value);
+            if($key === 'firmId'){
+                //没有特殊权限的正常判断
+                if(!$this->companiesServices->isHavePermission($value)){
+                    $value && $query->firmId($value);
+                }
             }
         }
 
-        $lines = $query->get();
-        return $lines;
+        $liaisons = $pageSize === 0?$query->get(): $query->paginate($pageSize);
+        return $liaisons;
     }
 
     function getAll(){

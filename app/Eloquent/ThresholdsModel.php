@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 
-class ThresholdsModel extends Model
+class ThresholdsModel extends AppModel
 {
     public $timestamps = false;
     protected $table = 'threshold';
@@ -27,8 +27,6 @@ class ThresholdsModel extends Model
     protected $fillable = [
         'id','pattern','pattern_id','category','grade','lowlimit','toplimit','operator_id'
     ];
-
-    public function scopeNothing($query){return $query;}
 
     public function getCategory($id){
         $category = self::CATEGORY;

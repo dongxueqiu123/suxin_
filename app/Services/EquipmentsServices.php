@@ -19,6 +19,7 @@ class EquipmentsServices extends ServicesAdapte{
     private $equipments;
     public function init(){
         $this->equipments = new EquipmentsModel();
+        $this->companiesServices = new CompaniesServices();
     }
 
     /**
@@ -36,11 +37,16 @@ class EquipmentsServices extends ServicesAdapte{
                 $value && $query->providerId($value);
             } else if ($key === 'consumerId') {
                 $value && $query->consumerId($value);
+            } else  if($key === 'firmId'){
+                //没有特殊权限的正常判断
+                if(!$this->companiesServices->isHavePermission($value)){
+                    $value && $query->firmId($value);
+                }
             }
         }
 
-        $lines = $query->get();
-        return $lines;
+        $equipments = $pageSize === 0?$query->get(): $query->paginate($pageSize);
+        return $equipments;
     }
 
     public function getAll(){

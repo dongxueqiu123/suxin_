@@ -5,7 +5,7 @@ namespace App\Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class CompaniesModel extends Model
+class CompaniesModel extends AppModel
 {
     protected $table = 'companies';
     protected $primaryKey = 'id';

@@ -10,7 +10,7 @@ namespace App\Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class LiaisonsModel extends Model{
+class LiaisonsModel extends AppModel{
 
     public $timestamps = false;
     protected $table = 'liaison';
@@ -20,8 +20,6 @@ class LiaisonsModel extends Model{
     protected $fillable = [
         'id','pattern','pattern_id','mobile','email','operator_id'
     ];
-
-    public function scopeNothing($query){return $query;}
 
     public function scopePattern($query,$pattern){
         $query->where('pattern' ,'=' ,$pattern);

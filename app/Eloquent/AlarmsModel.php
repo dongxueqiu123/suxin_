@@ -10,7 +10,7 @@ namespace APP\Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class AlarmsModel extends Model{
+class AlarmsModel extends AppModel {
 
     public $timestamps = false;
     protected $table = 'alarm';
@@ -19,6 +19,10 @@ class AlarmsModel extends Model{
     protected $fillable = [
         'id' ,'collector_id' ,'equipment_id' ,'category' ,'grade' ,'detail' ,'status' ,'remark' ,'operator_id' ,'operate_time'
     ];
+
+    public function scopeFirmId($query,$firmId){
+        $query->where('firm_id' ,'=' ,$firmId);
+    }
 
     public function collector(){
         return $this->belongsTo('App\Eloquent\CollectorsModel','collector_id','id');

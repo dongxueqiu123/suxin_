@@ -177,7 +177,7 @@
             }
         });
 
-        allWarnTempNum = url+'/alarm/more/1?firmId='+companyId;
+        allWarnTempNum = url+'/alarm/count/1?firmId='+companyId;
         $.getJSON(allWarnTempNum, function(data) {
             if(data['code'] == 0){
                 $('.allWarnTempNum').html(data['data']);
@@ -185,21 +185,21 @@
         });
 
 
-        unManageWarnTempNum = url+'/alarm/more/1?firmId='+companyId+'&status=0';
+        unManageWarnTempNum = url+'/alarm/count/1?firmId='+companyId+'&status=0';
         $.getJSON(unManageWarnTempNum, function(data) {
             if(data['code'] == 0){
                 $('.unManageWarnTempNum').html(data['data']);
             }
         });
 
-        allWarnShakeNum = url+'/alarm/more/2?firmId='+companyId;
+        allWarnShakeNum = url+'/alarm/count/2?firmId='+companyId;
         $.getJSON(allWarnShakeNum, function(data) {
             if(data['code'] == 0){
                 $('.allWarnShakeNum').html(data['data']);
             }
         });
 
-        unManageWarnShakeNum = url+'/alarm/more/2?firmId='+companyId+'&status=0';
+        unManageWarnShakeNum = url+'/alarm/count/2?firmId='+companyId+'&status=0';
         $.getJSON(unManageWarnShakeNum, function(data) {
             if(data['code'] == 0){
                 $('.unManageWarnShakeNum').html(data['data']);

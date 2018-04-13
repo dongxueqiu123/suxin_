@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 
-class CollectorsModel extends Model
+
+class CollectorsModel extends AppModel
 {
     public $timestamps = false;
     protected $table = 'collector';
@@ -15,8 +16,6 @@ class CollectorsModel extends Model
     protected $fillable = [
         'id','name','mac','pattern','pattern_id','operator_id'
     ];
-
-    public function scopeNothing($query){return $query;}
 
     public function scopeFirmId($query,$firmId){
         $query->where('firm_id' ,'=' ,$firmId);

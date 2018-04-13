@@ -63,6 +63,7 @@
                               @endforeach
                               </tbody>
                           </table>
+                          {!! $collectors->links() !!}
                       </div>
                       <!-- /.box-body -->
                   </div>

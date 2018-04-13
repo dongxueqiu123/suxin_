@@ -23,15 +23,12 @@ class LiaisonsController extends Controller {
         $this->equipmentsServices = new EquipmentsServices();
         $this->collectorsServices = new CollectorsServices();
         $this->companiesServices = new CompaniesServices();
-        $this->middleware('auth.user');
     }
 
     public function index()
     {
-        $user = \Auth()->user();
-        $liaisons = $this->liaisonsServices->getList();
-        $filterLiaisons = $this->thresholdsServices->getFilterThresholds($liaisons, $user);
-        $liaisons = array_merge($filterLiaisons['company'], $filterLiaisons['equipment'], $filterLiaisons['collector']);
+        $queryArray['firmId'] = \Auth()->user()->company->id??'';
+        $liaisons = $this->liaisonsServices->getList(static::PAGE_SIZE_DEFAULT,$queryArray);
         return view('liaisons.list',
             [
                 'liaisons' => $liaisons,

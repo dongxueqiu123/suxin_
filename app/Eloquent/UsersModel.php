@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
-class UsersModel extends Model
+class UsersModel extends AppModel
 {
     use EntrustUserTrait;
 

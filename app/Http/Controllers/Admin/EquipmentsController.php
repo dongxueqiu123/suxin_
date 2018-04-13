@@ -21,12 +21,13 @@ class EquipmentsController extends Controller
         $this->equipmentsServices = new EquipmentsServices();
         $this->equipments = new EquipmentsModel();
         $this->companies  = new CompaniesModel();
-        $this->middleware('auth.user');
     }
 
     public function index()
     {
-        if(!\Auth()->user()->company){
+        $queryArray['firmId'] = \Auth()->user()->company->id??'';
+        $equipments = $this->equipmentsServices->getList(static::PAGE_SIZE_DEFAULT, $queryArray);
+/*        if(!\Auth()->user()->company){
             $equipments = $this->equipmentsServices->getAll();
             $providerEquipments = $equipments;
             $consumerEquipments = $equipments;
@@ -37,11 +38,9 @@ class EquipmentsController extends Controller
             $consumerQueryArray['consumerId'] = $id;
             $consumerEquipments = $this->equipmentsServices->getList(0,$consumerQueryArray);
             $equipments = $providerEquipments->merge($consumerEquipments)->unique();
-        }
+        }*/
         return view('equipments.list',
             [
-                'providerEquipments' => $providerEquipments,
-                'consumerEquipments' => $consumerEquipments,
                 'boxTitle'=>'机械设备列表',
                 'active' => 'equipments',
                 'equipments'=>$equipments

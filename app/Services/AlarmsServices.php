@@ -9,9 +9,6 @@ namespace App\Services;
 
 use App\Eloquent\AlarmsModel;
 use Illuminate\Support\Facades\Auth;
-use App\Services\CompaniesServices;
-use App\Services\EquipmentsServices;
-use App\Services\CollectorsServices;
 
 class AlarmsServices extends ServicesAdapte{
     public function __construct(){
@@ -24,6 +21,28 @@ class AlarmsServices extends ServicesAdapte{
         $this->companiesServices = new CompaniesServices();
         $this->equipmentsServices = new EquipmentsServices();
         $this->collectorsServices = new CollectorsServices();
+    }
+
+    /**
+     * 获取posts列表
+     */
+    public function getList(int $pageSize = 0,
+                            array $queryArray = [],
+                            bool $queryBelongsTo = true,
+                            bool $queryChildren = true, $ext = []){
+        $query = $this->alarms->nothing();
+
+        foreach($queryArray as $key => $value){
+            if($key === 'firmId'){
+                //没有特殊权限的正常判断
+                if(!$this->companiesServices->isHavePermission($value)){
+                    $value && $query->firmId($value);
+                }
+            }
+        }
+
+        $alarms = $pageSize === 0?$query->get(): $query->paginate($pageSize);
+        return $alarms;
     }
 
     function getAll(){

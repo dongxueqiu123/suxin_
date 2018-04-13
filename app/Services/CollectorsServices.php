@@ -8,8 +8,6 @@
 namespace App\Services;
 
 use App\Eloquent\CollectorsModel;
-use App\Services\CompaniesServices;
-use App\Services\EquipmentsServices;
 use Illuminate\Support\Facades\Auth;
 
 class CollectorsServices extends ServicesAdapte{
@@ -38,14 +36,17 @@ class CollectorsServices extends ServicesAdapte{
 
         foreach($queryArray as $key => $value){
             if($key === 'firmId'){
-                $value && $query->firmId($value);
+                //没有特殊权限的正常判断
+                if(!$this->companiesServices->isHavePermission($value)) {
+                    $value && $query->firmId($value);
+                }
             } else if ($key === 'equipmentId') {
                 $value && $query->equipmentId($value);
             }
         }
 
-        $lines = $query->get();
-        return $lines;
+        $collectors = $pageSize === 0?$query->get(): $query->paginate($pageSize);
+        return $collectors;
     }
 
     function getAll(){
