@@ -21,25 +21,35 @@
             <table id="example1" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>序号</th>
+                  <th>序号</th>
                   <th>分类</th>
                   <th>等级</th>
                   <th>告警详情</th>
+                  <th>状态</th>
                   <th>操作说明</th>
                   <th>无线节点</th>
                   <th>机械设备</th>
-                <th>生产公司</th>
-                <th>使用公司</th>
-                <th>编辑</th>
+                  <th>生产公司</th>
+                  <th>使用公司</th>
+                  <th>操作</th>
               </tr>
               </thead>
               <tbody>
               @foreach($alarms as $key=>$alarm)
-              <tr>
+
+              <tr @if($alarm->status ==0)style="color: red;"@else style="color:green;" @endif>
                   <td>{{$key+1}}</td>
                   <td>{{$alarm->category}}</td>
                   <td>{{$alarm->grade}}</td>
                   <td>{{$alarm->detail}}</td>
+                  <td>@if($alarm->status == 0)
+                          待处理
+                      @elseif($alarm->status == 1)
+                          恢复
+                      @elseif($alarm->status == 2)
+                          删除
+                      @endif
+                  </td>
                   <td>{{$alarm->remark}}</td>
                   <td>{{$alarm->collector->name??'暂无'}}</td>
                   <td>{{$alarm->equipment->name??'暂无'}}</td>
