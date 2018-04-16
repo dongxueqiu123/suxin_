@@ -48,7 +48,7 @@
         <div class="small-box bg-green">
           <div class="inner">
             <h3 class="collectorNum">0</h3>
-            <p>采集设备总数</p>
+            <p>采集器总数</p>
           </div>
           <div class="icon">
             <i class="ion ion-laptop"></i>
@@ -61,7 +61,7 @@
         <div class="small-box bg-green">
           <div class="inner">
             <h3 class="collectorOnlineNum">0</h3>
-            <p>采集设备在线数</p>
+            <p>采集器在线数</p>
           </div>
           <div class="icon">
             <i class="ion ion-wifi"></i>
@@ -133,7 +133,9 @@
         <div class="nav-tabs-custom">
           <ul class="nav nav-tabs pull-right">
             <li class="pull-left header"><i class="fa fa-map-marker"></i> 地图</li>
-            <div id="allmap" style="height: 500px;"></div>
+            <div  style="height: 500px;">
+                <img src="{{ asset('images/WordMap.gif') }}">
+            </div>
           </ul>
 
         </div>

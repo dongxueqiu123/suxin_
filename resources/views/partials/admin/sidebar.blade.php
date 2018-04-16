@@ -50,6 +50,26 @@
           <li><a href="#"><i class="fa fa-circle-o"></i> Pace Page</a></li>
         </ul>
       </li>--}}
+
+      <li class="@if (($active??'') === 'home') active @endif ">
+        <a href="{{route('admin')}}">
+          <i class="fa fa-television"></i> <span>首页</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+      </li>
+
+      <li class="@if (($active??'') === 'realTime') active @endif">
+        <a href="{{route('charts.collectorChartRealTime',['id'=>3])}}">
+          <i class="fa fa-television"></i> <span>实时数据</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+
+      </li>
+
       @if( Auth::user()->id !==1 )
       @permission(['users','roles','permissions'])
       <li class="@if (in_array($active??'', ['users','roles','permissions'])) active @endif treeview">

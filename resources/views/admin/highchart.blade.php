@@ -1,7 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')
-  <style type="text/css">
+    <style type="text/css">
+        body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+
     #container {
       min-width: 300px;
       max-width: 800px;
@@ -27,83 +29,125 @@
     </ol>
   </section>
 
-  <section class="content">
 
-    <div class="row">
-        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+  <section class="content">
+      <div class="row">
+
+        <div id="container" style="min-width: 310px; width: 800px; height: 00px; margin: 0 auto"></div>
+
+          <div style="display:none;" id="containerData">{{$data}}</div>
     </div>
 
 
   </section>
   <script type="text/javascript">
 
-      $.getJSON(
-          'https://data.jianshukeji.com/jsonp?filename=json/usdeur.json&callback=?',
-          function (data) {
-              data =[["2018-04-03T17:26:24Z",28.7],["2018-04-03T17:26:32Z",28.7],["2018-04-03T17:26:40Z",28.7],["2018-04-03T17:26:48Z",28.6],["2018-04-03T17:26:56Z",28.7],["2018-04-03T17:27:04Z",28.7],["2018-04-03T17:27:12Z",28.7],["2018-04-03T17:27:20Z",28.7],["2018-04-03T17:27:28Z",28.6],["2018-04-03T17:27:36Z",28.7],["2018-04-03T17:27:44Z",28.7],["2018-04-03T17:27:52Z",28.7],["2018-04-03T17:28:00Z",28.7],["2018-04-03T17:28:08Z",28.7],["2018-04-03T17:28:16Z",28.7],["2018-04-03T17:28:24Z",28.7],["2018-04-03T17:28:32Z",28.7],["2018-04-03T17:28:40Z",28.6],["2018-04-03T17:28:48Z",28.6],["2018-04-03T17:28:56Z",28.6],["2018-04-03T17:29:04Z",28.7],["2018-04-03T17:29:12Z",28.7],["2018-04-03T17:29:21Z",28.7],["2018-04-03T17:29:28Z",28.6],["2018-04-03T17:29:36Z",28.7],["2018-04-03T17:29:44Z",28.7],["2018-04-03T17:29:52Z",28.6],["2018-04-03T17:30:00Z",28.7]];
-              var dataKey, length, pointDate;
-              length = data.length;
-              for(dataKey = 0 ; dataKey < length; dataKey++){
-                  data[dataKey][0] = data[dataKey][0].replace(/T/, " ");
-                  data[dataKey][0] = data[dataKey][0].replace(/Z/, "");
-                  pointDate = new Date(data[dataKey][0]);
-                  data[dataKey][0] = pointDate.getTime()+8*60*60*1000;
-              }
-              Highcharts.chart('container', {
-                  chart: {
-                      zoomType: 'x'
-                  },
-                  title: {
-                      text: '采集器五分钟温度变化'
-                  },
-                  xAxis: {
-                      type: 'datetime'
-                  },
-                  yAxis: {
-                      title: {
-                          text: '温度变化'
-                      }
-                  },
-                  legend: {
-                      enabled: false
-                  },
-                  credits: {
-                      enabled: false //不显示LOGO
-                  },
-                  plotOptions: {
-                      area: {
-                          fillColor: {
-                              linearGradient: {
-                                  x1: 0,
-                                  y1: 0,
-                                  x2: 0,
-                                  y2: 1
-                              },
-                              stops: [
-                                  [0, Highcharts.getOptions().colors[0]],
-                                  [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                              ]
-                          },
-                          marker: {
-                              radius: 2
-                          },
-                          lineWidth: 1,
-                          states: {
-                              hover: {
-                                  lineWidth: 1
-                              }
-                          },
-                          threshold: null
-                      }
-                  },
 
-                  series: [{
-                      type: 'area',
-                      name: '温度',
-                      data: data
-                  }]
-              });
+      var myTime ,time ,curTime ,max ,startDateTime ,collectorId ,status ,name;
+
+      myTime = $.myTime;
+      Highcharts.setOptions({
+          global: {
+              useUTC: false
           }
-      );
+      });
+
+      Highcharts.chart('container', {
+          chart: {
+              type: 'spline',
+              animation: Highcharts.svg, // don't animate in old IE
+              marginRight: 10,
+              events: {
+                  load: function () {
+                      // set up the updating of the chart each second
+                      var series = this.series[0];
+                      setInterval(function (){
+                          collectorId = 3;
+                          status = 'ex_temp';
+                          time = new Date();
+                          curTime = myTime.CurTime();
+                          max = myTime.UnixToDate(curTime,true,(new Date().getTimezoneOffset()/-60));
+                          startDateTime = myTime.UnixToDate(curTime-8,true,(new Date().getTimezoneOffset()/-60));
+                          $('.startTime').val(startDateTime);
+                          url =  getUrl(status,collectorId,startDateTime,max,myTime);
+                          $.getJSON(
+                              url,
+                              function (data) {
+                                  var newData = getData(data['data']);
+
+                                  var length = newData.length;
+
+                                  for(dataKey = 0 ; dataKey < length; dataKey++){
+                                      console.log(newData[dataKey][0]);
+                                      console.log(newData[dataKey][1]);
+                                      series.addPoint([newData[dataKey][0], newData[dataKey][1]], true, true);
+                                  }
+                              }
+                          );
+                      }, 9000);
+                  }
+              }
+          },
+          title: {
+              text: 'Live random data'
+          },
+          xAxis: {
+              type: 'datetime',
+              tickPixelInterval: 150
+          },
+          yAxis: {
+              title: {
+                  text: 'Value'
+              },
+              plotLines: [{
+                  value: 0,
+                  width: 1,
+                  color: '#808080'
+              }]
+          },
+          tooltip: {
+              formatter: function () {
+                  return '<b>' + this.series.name + '</b><br/>' +
+                      Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                      Highcharts.numberFormat(this.y, 2);
+              }
+          },
+          legend: {
+              enabled: false
+          },
+          exporting: {
+              enabled: false
+          },
+          series: [{
+              name: 'Random data',
+              data: (function () {
+                  // generate an array of random data
+                  data =$('#containerData').html();
+
+                  return getData(JSON.parse( data));
+              }())
+          }]
+      });
+
+
+      function getData(data) {
+          var dataKey, length, pointDate;
+          length = data.length;
+         for(dataKey = 0 ; dataKey < length; dataKey++){
+             data[dataKey][0] = data[dataKey][0].replace(/T/, " ");
+             data[dataKey][0] = data[dataKey][0].replace(/Z/, "");
+             pointDate = new Date(data[dataKey][0]);
+             data[dataKey][0] = pointDate.getTime()-2*new Date().getTimezoneOffset()*60*1000-8*60*60*1000;
+         }
+         return data;
+      }
+
+      function getUrl(status,collectorId,startTime,endTime,myTime){
+          var startUnix = myTime.DateToUnix(startTime);
+          var endUnix = myTime.DateToUnix(endTime);
+          var startDate = myTime.UnixToDate(startUnix,true,8);
+          var endDate = myTime.UnixToDate(endUnix,true,8);
+          return '/console/influx/timeseries/'+status+'/'+collectorId+'/'+startDate+'/'+endDate+'/';
+      }
   </script>
 @endsection

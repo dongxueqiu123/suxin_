@@ -152,7 +152,7 @@
                       data[dataKey][0] = data[dataKey][0].replace(/T/, " ");
                       data[dataKey][0] = data[dataKey][0].replace(/Z/, "");
                       pointDate = new Date(data[dataKey][0]);
-                      data[dataKey][0] = pointDate.getTime()+new Date().getTimezoneOffset()*-60;
+                      data[dataKey][0] = pointDate.getTime()-2*new Date().getTimezoneOffset()*60*1000-8*60*60*1000;
                   }
                   Highcharts.chart('container', {
                       chart: {
