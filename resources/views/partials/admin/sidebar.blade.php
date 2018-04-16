@@ -152,7 +152,7 @@
             <li class="@if (($active??'') === 'equipments') active @endif"><a href="{{route('equipments')}}"><i class="fa fa-circle-o"></i> 机械设备</a></li>
             @endpermission
             @permission('collectors')
-            <li class="@if (($active??'') === 'collectors') active @endif"><a href="{{route('collectors')}}"><i class="fa fa-tablet"></i> 采集器</a></li>
+            <li class="@if (($active??'') === 'collectors') active @endif"><a href="{{route('collectors')}}"><i class="fa fa-tablet"></i> 无线节点</a></li>
             @endpermission
           </ul>
         </li>
@@ -194,7 +194,7 @@
           </a>
           <ul class="treeview-menu">
             <li class="@if (($active??'') === 'equipments') active @endif"><a href="{{route('equipments')}}"><i class="fa fa-circle-o"></i> 机械设备</a></li>
-            <li class="@if (($active??'') === 'collectors') active @endif"><a href="{{route('collectors')}}"><i class="fa fa-tablet"></i> 采集器</a></li>
+            <li class="@if (($active??'') === 'collectors') active @endif"><a href="{{route('collectors')}}"><i class="fa fa-tablet"></i> 无线节点</a></li>
           </ul>
         </li>
 

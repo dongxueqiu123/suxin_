@@ -49,7 +49,7 @@
                   </div>
 
                   <div class="form-group changeCollector" @if(!($threshold->equipment_id??'') && !($threshold->collector_id??'')) style="display: none" @endif>
-                      <label for="name" class="col-sm-2 control-label">采集器</label>
+                      <label for="name" class="col-sm-2 control-label">无线节点</label>
                       <div class="col-sm-10">
                           <select class="form-control select2 collector"  style="width: 100%;">
 

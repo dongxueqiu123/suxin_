@@ -74,9 +74,9 @@ class CollectorsController extends Controller
             $equipment = $this->equipmentsServices->get($equipmentId);
             $collectors = $equipment->collector??[];
         }else{
-            //公司下所有的采集器
+            //公司下所有的无线节点
             $companyCollectors = $company->collector??collect();
-            //公司设备下所有的采集器
+            //公司设备下所有的无线节点
             $providerEquipments = $company->provider??collect();
             $consumerEquipments = $company->consumer??collect();
             $equipments = $providerEquipments->merge($consumerEquipments)->unique();
@@ -87,7 +87,7 @@ class CollectorsController extends Controller
                     $equipmentCollectors->push($equipmentCollector);
                 });
             });
-            //直接绑定公司的采集器
+            //直接绑定公司的无线节点
             $collectors = $companyCollectors->diff($equipmentCollectors);
         }
         /*todo 增加公司权限控制*/

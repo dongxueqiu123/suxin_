@@ -48,7 +48,7 @@
         <div class="small-box bg-green">
           <div class="inner">
             <h3 class="collectorNum">0</h3>
-            <p>采集器总数</p>
+            <p>无线节点总数</p>
           </div>
           <div class="icon">
             <i class="ion ion-laptop"></i>
@@ -61,7 +61,7 @@
         <div class="small-box bg-green">
           <div class="inner">
             <h3 class="collectorOnlineNum">0</h3>
-            <p>采集器在线数</p>
+            <p>无线节点在线数</p>
           </div>
           <div class="icon">
             <i class="ion ion-wifi"></i>

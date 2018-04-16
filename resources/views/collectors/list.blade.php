@@ -3,7 +3,7 @@
 @section('content')
   <section class="content-header">
       <h1>
-          <small>采集器</small>
+          <small>无线节点</small>
       </h1>
       <ol class="breadcrumb">
           <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
@@ -16,7 +16,7 @@
           <div class="col-xs-12">
           <div class="box box-solid">
               <div class="box-header">
-                  <a href="{{route('collectors.store')}}" class="btn btn-default pull-left"><i class="fa fa-fw fa-plus"></i>新增采集器</a>
+                  <a href="{{route('collectors.store')}}" class="btn btn-default pull-left"><i class="fa fa-fw fa-plus"></i>新增无线节点</a>
               </div>
       <div class="nav-tabs-custom">
           <div class="tab-content">

@@ -22,7 +22,7 @@
   <script src="{{ asset('laydate/laydate.js') }}"></script>
   <section class="content-header">
     <h1>
-      <small>采集器数据图</small>
+      <small>无线节点数据图</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
@@ -58,7 +58,7 @@
                   <div class="box-header with-border">
                       <i class="fa fa-bar-chart-o"></i>
 
-                      <h3 class="box-title">采集器加速度数据图</h3>
+                      <h3 class="box-title">无线节点加速度数据图</h3>
 
                       <div class="box-tools pull-right">
 
@@ -87,7 +87,7 @@
                   <div class="box-header with-border">
                       <i class="fa fa-bar-chart-o"></i>
 
-                      <h3 class="box-title">采集器温度数据图</h3>
+                      <h3 class="box-title">无线节点温度数据图</h3>
 
                       <div class="box-tools pull-right">
 
@@ -117,7 +117,7 @@
                   <div class="box-header with-border">
                       <i class="fa fa-bar-chart-o"></i>
 
-                      <h3 class="box-title">采集器湿度数据图</h3>
+                      <h3 class="box-title">无线节点湿度数据图</h3>
 
                       <div class="box-tools pull-right">
 
@@ -225,7 +225,7 @@
                   // generate an array of random data
                   data =$('#containerData').html();
 
-                  return getData(JSON.parse( data),2);
+                  return getData(JSON.parse( data),1);
               }())
           }]
       });
@@ -303,7 +303,7 @@
                   // generate an array of random data
                   data =$('#containerSpeedData').html();
 
-                  return getData(JSON.parse( data),2);
+                  return getData(JSON.parse( data),1);
               }())
           }]
       });
@@ -381,7 +381,7 @@
                   // generate an array of random data
                   data =$('#containerHumidityData').html();
 
-                  return getData(JSON.parse( data),2);
+                  return getData(JSON.parse( data),1);
               }())
           }]
       });
@@ -471,7 +471,7 @@
                   var data = result['data'];
                   var dataKey, length, pointDate, title, yAxisTitle, seriesName;
                   length = data.length;
-                  title = '采集器五分钟'+name+'变化';
+                  title = '无线节点五分钟'+name+'变化';
                   yAxisTitle = name+'变化';
                   seriesName = name;
                   for(dataKey = 0 ; dataKey < length; dataKey++){

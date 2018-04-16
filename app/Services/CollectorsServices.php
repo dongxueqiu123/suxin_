@@ -79,7 +79,7 @@ class CollectorsServices extends ServicesAdapte{
     }
 
     /**
-     * 获取工厂和机械设备下得采集器
+     * 获取工厂和机械设备下得无线节点
      * @param $items $user
      * @return array
      */

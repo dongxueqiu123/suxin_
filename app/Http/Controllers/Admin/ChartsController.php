@@ -33,7 +33,7 @@ class ChartsController extends Controller{
                 'speedData'=>json_encode($speedData['data'])??'',
                 'humidityData'=>json_encode($humidityData['data'])??'',
                 'collector'=>$collector,
-                'boxTitle'=>'采集器数据展示',
+                'boxTitle'=>'无线节点数据展示',
                 'active' => 'collectors',
             ]
         );
