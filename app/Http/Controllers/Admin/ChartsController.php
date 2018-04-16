@@ -19,13 +19,19 @@ class ChartsController extends Controller{
 
     public function collectorChart($id){
         $collector = $this->collectorsServices->get($id);
+        $endDate    = date("Y-m-d H:i:s",time()+8*60*60);
         $http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
-        $url = $http_type.$_SERVER['HTTP_HOST'].'/admin/charts/collectorResponse';
+        $speedData = $this->getSpeedData($http_type,'acc_peak',$collector->id??'',$endDate);
+        $temperatureData = $this->getTemperatureData($http_type,'ex_temp',$collector->id??'',$endDate);
+        $humidityData = $this->getHumidityData($http_type,'in_hum',$collector->id??'',$endDate);
+/*        $url = $http_type.$_SERVER['HTTP_HOST'].'/admin/charts/collectorResponse';
         $data = $this->httpGet($url,[]);
-        $collectorData = json_decode($data);
+        $collectorData = json_decode($data);*/
         return view('charts.collectorChart',
             [
-                'data' => $collectorData['data'],
+                'data' => $speedData['data']??'',
+                'speedData'=>$temperatureData['data']??'',
+                'humidityData'=>$humidityData['data']??'',
                 'collector'=>$collector,
                 'boxTitle'=>'采集器数据展示',
                 'active' => 'collectors',
@@ -33,15 +39,25 @@ class ChartsController extends Controller{
         );
     }
 
+
     public function collectorChartRealTime($id){
         $collector = $this->collectorsServices->get($id);
+        $endDate    = date("Y-m-d H:i:s",time()+8*60*60);
         $http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
-        $url = $http_type.$_SERVER['HTTP_HOST'].'/admin/charts/collectorResponse';
-        $data = $this->httpGet($url,[]);
-        $collectorData = json_decode($data);
+
+        $speedData = $this->getSpeedData($http_type,'acc_peak',$collector->id??'',$endDate);
+
+        $temperatureData = $this->getTemperatureData($http_type,'ex_temp',$collector->id??'',$endDate);
+
+        $humidityData = $this->getHumidityData($http_type,'in_hum',$collector->id??'',$endDate);
+        /*        $url = $http_type.$_SERVER['HTTP_HOST'].'/admin/charts/collectorResponse';
+                $data = $this->httpGet($url,[]);
+                $collectorData = json_decode($data);*/
         return view('charts.collectorChart',
             [
-                'data' => $collectorData['data'],
+                'data' => $speedData['data']??'',
+                'speedData'=>$temperatureData['data']??'',
+                'humidityData'=>$humidityData['data']??'',
                 'collector'=>$collector,
                 'boxTitle'=>'实时数据展示',
                 'active' => 'realTime',
@@ -49,23 +65,33 @@ class ChartsController extends Controller{
         );
     }
 
+    public function getTemperatureData($http_type,$state,$id,$endDate){
+        $url = $http_type.$_SERVER['HTTP_HOST'].'/console/influx/timeseries/'.$state.'/'.$id.'?endTime='.urlencode($endDate);
+        $data = $this->httpGet($url,[]);
+        return $data;
+    }
+
+    public function getSpeedData($http_type,$state,$id,$endDate){
+        $url = $http_type.$_SERVER['HTTP_HOST'].'/console/influx/timeseries/'.$state.'/'.$id.'?endTime='.urlencode($endDate);
+        $data = $this->httpGet($url,[]);
+        return $data;
+    }
+
+    public function getHumidityData($http_type,$state,$id,$endDate){
+        $url = $http_type.$_SERVER['HTTP_HOST'].'/console/influx/timeseries/'.$state.'/'.$id.'?endTime='.urlencode($endDate);
+        $data = $this->httpGet($url,[]);
+        return $data;
+    }
+
     private function httpGet($url,$params = array()) {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_MAXREDIRS, 200);
-        @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-        if(!empty($params)){
-            curl_setopt($ch, CURLOPT_POSTFIELDS,self::json_encode($params));
-            curl_setopt($ch, CURLOPT_POST, TRUE);
+        try{
+            $html = @file_get_contents($url);
+        }catch (Exception $e){
+            return $data['data'] = [];
         }
-        $r = curl_exec($ch);
-        if ($ch != null)
-            curl_close($ch);
-        return $r;
+
+        $collectorData = json_decode($html,true);
+        return $collectorData;
     }
 
     public function  collectorResponse(){

@@ -35,21 +35,22 @@
 {{--    <div class="row">
         <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     </div>--}}
-      <div class="row">
+{{--      <div class="row">
           <div class="col-xs-12">
               <div class="box box-solid">
                   <div class="box-body">
                       <input type="hidden" class="collectorId" value="{{$collector->id}}">
                       <input type="text" class="demo-input startTime" placeholder="开始时间" readonly="readonly"  >
                       <input type="text" class="demo-input endTime" placeholder="截止时间" id="test1">
-{{--                      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+--}}{{--                      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
                           查询
-                      </button>--}}
+                      </button>--}}{{--
                       <a class="btn btn-default btn-xs find" >查询</a>
                   </div>
               </div>
           </div>
-      </div>
+      </div>--}}
+
       <div class="row">
           <div class="col-xs-12">
               <!-- interactive chart -->
@@ -57,18 +58,48 @@
                   <div class="box-header with-border">
                       <i class="fa fa-bar-chart-o"></i>
 
-                      <h3 class="box-title">采集器数据图</h3>
+                      <h3 class="box-title">采集器加速度数据图</h3>
 
                       <div class="box-tools pull-right">
 
-                          <div class="btn-group changeButton"  data-toggle="btn-toggle">
+                          {{--                          <div class="btn-group changeButton"  data-toggle="btn-toggle">
+                                                        <button type="button" class="btn btn-default btn-xs temperature active" value="ex_temp">温度</button>
+                                                        <button type="button" class="btn btn-default btn-xs speed" value="acc_peak" >加速度</button>
+                                                    </div>--}}
+                      </div>
+                  </div>
+                  <div class="box-body">
+                      <div id="containerSpeed" style="height: 300px;"></div>
+                      <div style="display:none;" id="containerSpeedData">{{$speedData}}</div>
+                  </div>
+                  <!-- /.box-body-->
+              </div>
+              <!-- /.box -->
+
+          </div>
+          <!-- /.col -->
+      </div>
+
+      <div class="row">
+          <div class="col-xs-12">
+              <!-- interactive chart -->
+              <div class="box box-solid">
+                  <div class="box-header with-border">
+                      <i class="fa fa-bar-chart-o"></i>
+
+                      <h3 class="box-title">采集器温度数据图</h3>
+
+                      <div class="box-tools pull-right">
+
+{{--                          <div class="btn-group changeButton"  data-toggle="btn-toggle">
                               <button type="button" class="btn btn-default btn-xs temperature active" value="ex_temp">温度</button>
                               <button type="button" class="btn btn-default btn-xs speed" value="acc_peak" >加速度</button>
-                          </div>
+                          </div>--}}
                       </div>
                   </div>
                   <div class="box-body">
                       <div id="container" style="height: 300px;"></div>
+                      <div style="display:none;" id="containerData">{{$data}}</div>
                   </div>
                   <!-- /.box-body-->
               </div>
@@ -79,8 +110,303 @@
       </div>
       <!-- /.row -->
 
+      <div class="row">
+          <div class="col-xs-12">
+              <!-- interactive chart -->
+              <div class="box box-solid">
+                  <div class="box-header with-border">
+                      <i class="fa fa-bar-chart-o"></i>
+
+                      <h3 class="box-title">采集器湿度数据图</h3>
+
+                      <div class="box-tools pull-right">
+
+                          {{--                          <div class="btn-group changeButton"  data-toggle="btn-toggle">
+                                                        <button type="button" class="btn btn-default btn-xs temperature active" value="ex_temp">温度</button>
+                                                        <button type="button" class="btn btn-default btn-xs speed" value="acc_peak" >加速度</button>
+                                                    </div>--}}
+                      </div>
+                  </div>
+                  <div class="box-body">
+                      <div id="containerHumidity" style="height: 300px;"></div>
+                      <div style="display:none;" id="containerHumidityData">{{$humidityData}}</div>
+                  </div>
+                  <!-- /.box-body-->
+              </div>
+              <!-- /.box -->
+
+          </div>
+          <!-- /.col -->
+      </div>
+
   </section>
+
   <script type="text/javascript">
+
+
+      var myTime ,time ,curTime ,max ,startDateTime ,collectorId ,status ,name;
+
+      myTime = $.myTime;
+      Highcharts.setOptions({
+          global: {
+              useUTC: false
+          }
+      });
+
+      Highcharts.chart('container', {
+          chart: {
+              type: 'spline',
+              animation: Highcharts.svg, // don't animate in old IE
+              marginRight: 10,
+              events: {
+                  load: function () {
+                      // set up the updating of the chart each second
+                      var series = this.series[0];
+                      setInterval(function (){
+                          collectorId = 3;
+                          status = 'ex_temp';
+                          time = new Date();
+                          curTime = myTime.CurTime();
+                          max = myTime.UnixToDate(curTime,true,(new Date().getTimezoneOffset()/-60));
+                          startDateTime = myTime.UnixToDate(curTime-8,true,(new Date().getTimezoneOffset()/-60));
+                          $('.startTime').val(startDateTime);
+                          url =  getUrl(status,collectorId,startDateTime,max,myTime);
+                          $.getJSON(
+                              url,
+                              function (data) {
+                                  var newData = getData(data['data'],1);
+
+                                  var length = newData.length;
+
+                                  for(dataKey = 0 ; dataKey < length; dataKey++){
+                                      console.log(newData[dataKey][0]);
+                                      console.log(newData[dataKey][1]);
+                                      series.addPoint([newData[dataKey][0], newData[dataKey][1]], true, true);
+                                  }
+                              }
+                          );
+                      }, 9000);
+                  }
+              }
+          },
+          title: {
+              text: 'Live random data'
+          },
+          xAxis: {
+              type: 'datetime',
+              tickPixelInterval: 150
+          },
+          yAxis: {
+              title: {
+                  text: 'Value'
+              },
+              plotLines: [{
+                  value: 0,
+                  width: 1,
+                  color: '#808080'
+              }]
+          },
+          tooltip: {
+              formatter: function () {
+                  return '<b>' + this.series.name + '</b><br/>' +
+                      Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                      Highcharts.numberFormat(this.y, 1);
+              }
+          },
+          legend: {
+              enabled: false
+          },
+          exporting: {
+              enabled: false
+          },
+          series: [{
+              name: 'Random data',
+              data: (function () {
+                  // generate an array of random data
+                  data =$('#containerData').html();
+
+                  return getData(JSON.parse( data),2);
+              }())
+          }]
+      });
+
+
+      Highcharts.chart('containerSpeed', {
+          chart: {
+              type: 'spline',
+              animation: Highcharts.svg, // don't animate in old IE
+              marginRight: 10,
+              events: {
+                  load: function () {
+                      // set up the updating of the chart each second
+                      var series = this.series[0];
+                      setInterval(function (){
+                          collectorId = 3;
+                          status = 'acc_peak';
+                          time = new Date();
+                          curTime = myTime.CurTime();
+                          max = myTime.UnixToDate(curTime,true,(new Date().getTimezoneOffset()/-60));
+                          startDateTime = myTime.UnixToDate(curTime-8,true,(new Date().getTimezoneOffset()/-60));
+                          $('.startTime').val(startDateTime);
+                          url =  getUrl(status,collectorId,startDateTime,max,myTime);
+                          $.getJSON(
+                              url,
+                              function (data) {
+                                  var newData = getData(data['data'],1);
+
+                                  var length = newData.length;
+
+                                  for(dataKey = 0 ; dataKey < length; dataKey++){
+                                      console.log(newData[dataKey][0]);
+                                      console.log(newData[dataKey][1]);
+                                      series.addPoint([newData[dataKey][0], newData[dataKey][1]], true, true);
+                                  }
+                              }
+                          );
+                      }, 9000);
+                  }
+              }
+          },
+          title: {
+              text: 'Live random data'
+          },
+          xAxis: {
+              type: 'datetime',
+              tickPixelInterval: 150
+          },
+          yAxis: {
+              title: {
+                  text: 'Value'
+              },
+              plotLines: [{
+                  value: 0,
+                  width: 1,
+                  color: '#808080'
+              }]
+          },
+          tooltip: {
+              formatter: function () {
+                  return '<b>' + this.series.name + '</b><br/>' +
+                      Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                      Highcharts.numberFormat(this.y, 1);
+              }
+          },
+          legend: {
+              enabled: false
+          },
+          exporting: {
+              enabled: false
+          },
+          series: [{
+              name: 'Random data',
+              data: (function () {
+                  // generate an array of random data
+                  data =$('#containerData').html();
+
+                  return getData(JSON.parse( data),2);
+              }())
+          }]
+      });
+
+
+      Highcharts.chart('containerHumidity', {
+          chart: {
+              type: 'spline',
+              animation: Highcharts.svg, // don't animate in old IE
+              marginRight: 10,
+              events: {
+                  load: function () {
+                      // set up the updating of the chart each second
+                      var series = this.series[0];
+                      setInterval(function (){
+                          collectorId = 3;
+                          status = 'in_hum';
+                          time = new Date();
+                          curTime = myTime.CurTime();
+                          max = myTime.UnixToDate(curTime,true,(new Date().getTimezoneOffset()/-60));
+                          startDateTime = myTime.UnixToDate(curTime-8,true,(new Date().getTimezoneOffset()/-60));
+                          $('.startTime').val(startDateTime);
+                          url =  getUrl(status,collectorId,startDateTime,max,myTime);
+                          $.getJSON(
+                              url,
+                              function (data) {
+                                  var newData = getData(data['data'],1);
+
+                                  var length = newData.length;
+
+                                  for(dataKey = 0 ; dataKey < length; dataKey++){
+                                      console.log(newData[dataKey][0]);
+                                      console.log(newData[dataKey][1]);
+                                      series.addPoint([newData[dataKey][0], newData[dataKey][1]], true, true);
+                                  }
+                              }
+                          );
+                      }, 9000);
+                  }
+              }
+          },
+          title: {
+              text: 'Live random data'
+          },
+          xAxis: {
+              type: 'datetime',
+              tickPixelInterval: 150
+          },
+          yAxis: {
+              title: {
+                  text: 'Value'
+              },
+              plotLines: [{
+                  value: 0,
+                  width: 1,
+                  color: '#808080'
+              }]
+          },
+          tooltip: {
+              formatter: function () {
+                  return '<b>' + this.series.name + '</b><br/>' +
+                      Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                      Highcharts.numberFormat(this.y, 1);
+              }
+          },
+          legend: {
+              enabled: false
+          },
+          exporting: {
+              enabled: false
+          },
+          series: [{
+              name: 'Random data',
+              data: (function () {
+                  // generate an array of random data
+                  data =$('#containerData').html();
+
+                  return getData(JSON.parse( data),2);
+              }())
+          }]
+      });
+
+      function getData(data,n) {
+          var dataKey, length, pointDate;
+          length = data.length;
+          for(dataKey = 0 ; dataKey < length; dataKey++){
+              data[dataKey][0] = data[dataKey][0].replace(/T/, " ");
+              data[dataKey][0] = data[dataKey][0].replace(/Z/, "");
+              pointDate = new Date(data[dataKey][0]);
+              data[dataKey][0] = pointDate.getTime()-n*new Date().getTimezoneOffset()*60*1000-8*60*60*1000;
+          }
+          return data;
+      }
+
+      function getUrl(status,collectorId,startTime,endTime,myTime){
+          var startUnix = myTime.DateToUnix(startTime);
+          var endUnix = myTime.DateToUnix(endTime);
+          var startDate = myTime.UnixToDate(startUnix,true,8);
+          var endDate = myTime.UnixToDate(endUnix,true,8);
+          return '/console/influx/timeseries/'+status+'/'+collectorId+'/'+startDate+'/'+endDate+'/';
+      }
+  </script>
+{{--  <script type="text/javascript">
       var myTime ,time ,curTime ,max ,startDateTime ,collectorId ,status ,name;
       collectorId = $('.collectorId').val();
       status =  $('.changeButton').find('.active').val();
@@ -212,5 +538,5 @@
           );
       }
 
-  </script>
+  </script>--}}
 @endsection

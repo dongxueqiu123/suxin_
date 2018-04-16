@@ -73,7 +73,7 @@
                           $.getJSON(
                               url,
                               function (data) {
-                                  var newData = getData(data['data']);
+                                  var newData = getData(data['data'],1);
 
                                   var length = newData.length;
 
@@ -124,20 +124,20 @@
                   // generate an array of random data
                   data =$('#containerData').html();
 
-                  return getData(JSON.parse( data));
+                  return getData(JSON.parse( data),2);
               }())
           }]
       });
 
 
-      function getData(data) {
+      function getData(data,n) {
           var dataKey, length, pointDate;
           length = data.length;
          for(dataKey = 0 ; dataKey < length; dataKey++){
              data[dataKey][0] = data[dataKey][0].replace(/T/, " ");
              data[dataKey][0] = data[dataKey][0].replace(/Z/, "");
              pointDate = new Date(data[dataKey][0]);
-             data[dataKey][0] = pointDate.getTime()-2*new Date().getTimezoneOffset()*60*1000-8*60*60*1000;
+             data[dataKey][0] = pointDate.getTime()-n*new Date().getTimezoneOffset()*60*1000-8*60*60*1000;
          }
          return data;
       }
