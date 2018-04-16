@@ -301,7 +301,7 @@
               name: 'Random data',
               data: (function () {
                   // generate an array of random data
-                  data =$('#containerData').html();
+                  data =$('#containerSpeedData').html();
 
                   return getData(JSON.parse( data),2);
               }())
@@ -379,7 +379,7 @@
               name: 'Random data',
               data: (function () {
                   // generate an array of random data
-                  data =$('#containerData').html();
+                  data =$('#containerHumidityData').html();
 
                   return getData(JSON.parse( data),2);
               }())
@@ -403,7 +403,7 @@
           var endUnix = myTime.DateToUnix(endTime);
           var startDate = myTime.UnixToDate(startUnix,true,8);
           var endDate = myTime.UnixToDate(endUnix,true,8);
-          return '/console/influx/timeseries/'+status+'/'+collectorId+'/'+startDate+'/'+endDate+'/';
+          return '/console/influx/timeseries/'+status+'/'+collectorId+'?startTime='+startDate+'&endTime='+endDate+'/';
       }
   </script>
 {{--  <script type="text/javascript">

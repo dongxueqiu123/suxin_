@@ -29,9 +29,9 @@ class ChartsController extends Controller{
         $collectorData = json_decode($data);*/
         return view('charts.collectorChart',
             [
-                'data' => $speedData['data']??'',
-                'speedData'=>$temperatureData['data']??'',
-                'humidityData'=>$humidityData['data']??'',
+                'data' => json_encode($temperatureData['data'])??'',
+                'speedData'=>json_encode($speedData['data'])??'',
+                'humidityData'=>json_encode($humidityData['data'])??'',
                 'collector'=>$collector,
                 'boxTitle'=>'采集器数据展示',
                 'active' => 'collectors',
@@ -55,9 +55,9 @@ class ChartsController extends Controller{
                 $collectorData = json_decode($data);*/
         return view('charts.collectorChart',
             [
-                'data' => $speedData['data']??'',
-                'speedData'=>$temperatureData['data']??'',
-                'humidityData'=>$humidityData['data']??'',
+                'data' => json_encode($temperatureData['data'])??'',
+                'speedData'=>json_encode($speedData['data'])??'',
+                'humidityData'=>json_encode($humidityData['data'])??'',
                 'collector'=>$collector,
                 'boxTitle'=>'实时数据展示',
                 'active' => 'realTime',
