@@ -149,7 +149,7 @@
         allCollectorUrl, onlineCollectorUrl,allWarnTempNum,unManageWarnTempNum;
         companyId = '{{ $company->id??'1' }}';
         url = '/console';
-        allEquipmentUrl = url+'/equipment/count?firmId='+companyId;
+        allEquipmentUrl = url+'/equipment/countAll?firmId='+companyId;
         $.getJSON(allEquipmentUrl, function(data) {
             if(data['code'] == 0){
                $('.equipmentNum').html(data['data']);

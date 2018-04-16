@@ -88,10 +88,10 @@
       myTime = $.myTime;
       time = new Date();
       curTime = myTime.CurTime();
-      max = myTime.UnixToDate(curTime,true,8);
-      startDateTime = myTime.UnixToDate(curTime-300,true,8);
+      max = myTime.UnixToDate(curTime,true,(new Date().getTimezoneOffset()/-60));
+      startDateTime = myTime.UnixToDate(curTime-300,true,(new Date().getTimezoneOffset()/-60));
       $('.startTime').val(startDateTime);
-      highCharts(getUrl(status,collectorId,startDateTime,max),name);
+      highCharts(getUrl(status,collectorId,startDateTime,max,myTime),name);
       //执行一个laydate实例
       laydate.render({
           elem: '#test1' //指定元素
@@ -119,7 +119,7 @@
           status = $(this).val();
           startTime = $('.startTime').val();
           endTime = $('.endTime').val();
-          highCharts(getUrl(status,collectorId,startTime,endTime),name);
+          highCharts(getUrl(status,collectorId,startTime,endTime,myTime),name);
 
       });
 
@@ -129,11 +129,15 @@
           endTime = $('.endTime').val();
           status =  $('.changeButton').find('.active').val();
           name = $('.changeButton').find('.active').html();
-          highCharts(getUrl(status,collectorId,startTime,endTime),name);
+          highCharts(getUrl(status,collectorId,startTime,endTime,myTime),name);
       });
 
-      function getUrl(status,collectorId,startTime,endTime){
-          return '/console/influx/timeseries/'+status+'/'+collectorId+'/'+startTime+'/'+endTime+'/';
+      function getUrl(status,collectorId,startTime,endTime,myTime){
+          var startUnix = myTime.DateToUnix(startTime);
+          var endUnix = myTime.DateToUnix(endTime);
+          var startDate = myTime.UnixToDate(startUnix,true,8);
+          var endDate = myTime.UnixToDate(endUnix,true,8);
+          return '/console/influx/timeseries/'+status+'/'+collectorId+'/'+startDate+'/'+endDate+'/';
       }
 
       function highCharts(route,name){
@@ -148,7 +152,7 @@
                       data[dataKey][0] = data[dataKey][0].replace(/T/, " ");
                       data[dataKey][0] = data[dataKey][0].replace(/Z/, "");
                       pointDate = new Date(data[dataKey][0]);
-                      data[dataKey][0] = pointDate.getTime()+8*60*60*1000;
+                      data[dataKey][0] = pointDate.getTime()+new Date().getTimezoneOffset()*-60;
                   }
                   Highcharts.chart('container', {
                       chart: {

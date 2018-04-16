@@ -5,7 +5,7 @@
  * Date: 18/4/2
  * Time: 上午9:34
  */
-namespace APP\Eloquent;
+namespace App\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;

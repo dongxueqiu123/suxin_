@@ -30,6 +30,7 @@
                                   <th>名称</th>
                                   <th>机械设备</th>
                                   <th>公司</th>
+                                  <th>网络状态</th>
                                   <th>更新时间</th>
                                   <th>编辑</th>
                               </tr>
@@ -53,6 +54,7 @@
                                               {{$name}}
                                               @endif
                                           {{--@if($providerName)（生产设备）@elseif($consumerName)（使用设备）@endif--}}</td>
+                                      <td>@if($collector->online_flag??'')（在线）@else（离线）@endif</td>
                                       <td>{{$collector->operate_time}}</td>
                                       <td>
                                           <a class="btn btn-primary btn-xs" href={{route('collectors.edit',['id'=>$collector->id])}}>修改{{--<i class="fa fa-edit" style="font-size: 14px;"></i>--}}</a>

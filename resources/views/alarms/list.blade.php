@@ -40,11 +40,11 @@
                   <td>{{$alarm->category}}</td>
                   <td>{{$alarm->grade}}</td>
                   <td>{{$alarm->detail}}</td>
+                  <td>{{$alarm->remark}}</td>
                   <td>{{$alarm->collector->name??'暂无'}}</td>
                   <td>{{$alarm->equipment->name??'暂无'}}</td>
                   <td>{{$alarm->provider->name??'暂无'}}</td>
                   <td>{{$alarm->consumer->name??'暂无'}}</td>
-                  <td>{{$alarm->remark}}</td>
                 <td>
                     @if($alarm->status == 2)
                         <a class="btn btn-danger btn-xs restore" url="{{ route('api.alarms.edit',['id'=>$alarm->id])}}">恢复(已删除)</a>
