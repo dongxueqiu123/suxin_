@@ -53,7 +53,7 @@
 
       <li class="@if (($active??'') === 'home') active @endif ">
         <a href="{{route('admin')}}">
-          <i class="fa fa-television"></i> <span>后台首页</span>
+          <i class="fa fa-dashboard"></i> <span>后台首页</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
@@ -62,7 +62,7 @@
 
       <li class="@if (($active??'') === 'realTime') active @endif">
         <a href="{{route('charts.collectorChartRealTime',['id'=>3])}}">
-          <i class="fa fa-television"></i> <span>实时数据</span>
+          <i class="fa fa-calendar-o"></i> <span>实时数据</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
@@ -72,7 +72,7 @@
 
       <li class="@if (($active??'') === 'intelligents') active @endif">
         <a href="{{route('intelligents')}}">
-          <i class="fa fa-television"></i> <span>智能诊断</span>
+          <i class="fa fa-plus"></i> <span>智能诊断</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>

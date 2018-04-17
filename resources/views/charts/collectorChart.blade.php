@@ -32,24 +32,6 @@
 
   <section class="content">
 
-{{--    <div class="row">
-        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-    </div>--}}
-{{--      <div class="row">
-          <div class="col-xs-12">
-              <div class="box box-solid">
-                  <div class="box-body">
-                      <input type="hidden" class="collectorId" value="{{$collector->id}}">
-                      <input type="text" class="demo-input startTime" placeholder="开始时间" readonly="readonly"  >
-                      <input type="text" class="demo-input endTime" placeholder="截止时间" id="test1">
---}}{{--                      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
-                          查询
-                      </button>--}}{{--
-                      <a class="btn btn-default btn-xs find" >查询</a>
-                  </div>
-              </div>
-          </div>
-      </div>--}}
 
       <div class="row">
           <div class="col-xs-12">
@@ -62,14 +44,10 @@
 
                       <div class="box-tools pull-right">
 
-                          {{--                          <div class="btn-group changeButton"  data-toggle="btn-toggle">
-                                                        <button type="button" class="btn btn-default btn-xs temperature active" value="ex_temp">温度</button>
-                                                        <button type="button" class="btn btn-default btn-xs speed" value="acc_peak" >加速度</button>
-                                                    </div>--}}
                       </div>
                   </div>
                   <div class="box-body">
-                      <div id="containerSpeed" style="height: 300px;"></div>
+                      <div id="containerSpeed"  style="height: 300px; width: 800px;  margin: auto;"></div>
                       <div style="display:none;" id="containerSpeedData">{{$speedData}}</div>
                   </div>
                   <!-- /.box-body-->
@@ -91,14 +69,10 @@
 
                       <div class="box-tools pull-right">
 
-{{--                          <div class="btn-group changeButton"  data-toggle="btn-toggle">
-                              <button type="button" class="btn btn-default btn-xs temperature active" value="ex_temp">温度</button>
-                              <button type="button" class="btn btn-default btn-xs speed" value="acc_peak" >加速度</button>
-                          </div>--}}
                       </div>
                   </div>
                   <div class="box-body">
-                      <div id="container" style="height: 300px;"></div>
+                      <div id="container"  style="height: 300px; width: 800px;  margin: auto;"></div>
                       <div style="display:none;" id="containerData">{{$data}}</div>
                   </div>
                   <!-- /.box-body-->
@@ -128,7 +102,7 @@
                       </div>
                   </div>
                   <div class="box-body">
-                      <div id="containerHumidity" style="height: 300px;"></div>
+                      <div id="containerHumidity"  style="height: 300px; width: 800px;  margin: auto;"></div>
                       <div style="display:none;" id="containerHumidityData">{{$humidityData}}</div>
                   </div>
                   <!-- /.box-body-->
@@ -163,7 +137,7 @@
                       // set up the updating of the chart each second
                       var series = this.series[0];
                       setInterval(function (){
-                          collectorId = 3;
+                          collectorId = '{{$collector->name}}';
                           status = 'ex_temp';
                           time = new Date();
                           curTime = myTime.CurTime();
@@ -198,7 +172,7 @@
           },
           yAxis: {
               title: {
-                  text: 'Value'
+                  text: '℃'
               },
               plotLines: [{
                   value: 0,
@@ -244,7 +218,7 @@
                       // set up the updating of the chart each second
                       var series = this.series[0];
                       setInterval(function (){
-                          collectorId = 3;
+                          collectorId = '{{$collector->name}}';
                           status = 'acc_peak';
                           time = new Date();
                           curTime = myTime.CurTime();
@@ -279,7 +253,7 @@
           },
           yAxis: {
               title: {
-                  text: 'Value'
+                  text: 'm/s²'
               },
               plotLines: [{
                   value: 0,
@@ -325,7 +299,7 @@
                       // set up the updating of the chart each second
                       var series = this.series[0];
                       setInterval(function (){
-                          collectorId = 3;
+                          collectorId = '{{$collector->name}}';
                           status = 'in_hum';
                           time = new Date();
                           curTime = myTime.CurTime();
@@ -360,7 +334,7 @@
           },
           yAxis: {
               title: {
-                  text: 'Value'
+                  text: '%rh'
               },
               plotLines: [{
                   value: 0,
