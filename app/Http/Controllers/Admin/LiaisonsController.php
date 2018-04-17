@@ -32,7 +32,7 @@ class LiaisonsController extends Controller {
         return view('liaisons.list',
             [
                 'liaisons' => $liaisons,
-                'boxTitle'=>'告警联系人列表',
+                'boxTitle'=>'告警方式列表',
                 'active' => 'liaisons'
             ]
         );
@@ -47,7 +47,7 @@ class LiaisonsController extends Controller {
                 'route' => '/api/admin/liaisons/edit/'.$id,
                 'getEquipmentUrl' => route('api.equipments.getEquipments'),
                 'getCollectorUrl' => route('api.collectors.getCollectors'),
-                'boxTitle'=> '修改告警联系人',
+                'boxTitle'=> '修改告警方式',
                 'active' => 'liaisons',
                 'liaison' => $liaison,
                 'companies' => $companies,
@@ -63,7 +63,7 @@ class LiaisonsController extends Controller {
                 'route' => route('api.liaisons.store'),
                 'getEquipmentUrl' => route('api.equipments.getEquipments'),
                 'getCollectorUrl' => route('api.collectors.getCollectors'),
-                'boxTitle'=>'添加告警联系人',
+                'boxTitle'=>'添加告警方式',
                 'active' => 'liaisons',
                 'companies' => $companies,
             ]

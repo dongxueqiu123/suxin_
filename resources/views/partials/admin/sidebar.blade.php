@@ -53,7 +53,7 @@
 
       <li class="@if (($active??'') === 'home') active @endif ">
         <a href="{{route('admin')}}">
-          <i class="fa fa-television"></i> <span>首页</span>
+          <i class="fa fa-television"></i> <span>后台首页</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
@@ -184,7 +184,7 @@
             <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 阈值设置</a></li>
             @endpermission
             @permission('liaisons')
-            <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-fax"></i> 告警联系人</a></li>
+            <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-fax"></i> 告警方式</a></li>
             @endpermission
 
           </ul>
@@ -218,7 +218,7 @@
           <ul class="treeview-menu">
             <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-file"></i> 告警记录</a></li>
             <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 阈值设置</a></li>
-            <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-phone"></i> 告警联系人</a></li>
+            <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-phone"></i> 告警方式</a></li>
           </ul>
         </li>
 

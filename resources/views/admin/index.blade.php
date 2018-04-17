@@ -102,7 +102,7 @@
         <div class="small-box bg-red">
           <div class="inner">
             <h3 class="allWarnShakeNum">0</h3>
-            <p>震动告警总数</p>
+            <p>振动告警总数</p>
           </div>
           <div class="icon">
             <i class="ion ion-speedometer"></i>
@@ -115,7 +115,7 @@
         <div class="small-box bg-red">
           <div class="inner">
             <h3 class="unManageWarnShakeNum">0</h3>
-            <p>震动告警待处理数</p>
+            <p>振动告警待处理数</p>
           </div>
           <div class="icon">
             <i class="ion ion-ios-gear"></i>

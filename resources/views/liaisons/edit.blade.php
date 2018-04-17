@@ -3,7 +3,7 @@
 @section('content')
   <section class="content-header">
     <h1>
-      <small>告警联系人</small>
+      <small>告警方式</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
