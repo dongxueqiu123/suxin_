@@ -16,7 +16,7 @@
       <div class="col-xs-12">
         <div class="box box-solid">
           <div class="box-header">
-              <a href="{{route('users.store')}}" class="btn btn-default pull-left"><i class="fa fa-fw fa-plus"></i>新增成员</a>
+              <a href="{{route('users.store')}}" class="btn btn-default pull-left"><i class="fa fa-fw fa-plus"></i>新增用户</a>
           </div>
           <!-- /.box-header -->
           <div class="box-body">

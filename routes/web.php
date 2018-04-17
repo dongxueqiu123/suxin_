@@ -106,6 +106,11 @@ Route::group(['prefix' => 'admin/charts', 'middleware' =>['auth.user','RolePermi
     Route::get('/collectorResponse', 'Admin\ChartsController@collectorResponse')->name('collectorResponse');
 });
 
+Route::group(['prefix' => 'admin/intelligent', 'middleware' =>['auth.user','RolePermission']],function(){
+    Route::get('/', 'Admin\IntelligentsController@index')->name('intelligents');
+
+});
+
 /**测试权限**/
 Route::group(['prefix' => 'admin/test11', 'middleware' =>['auth.user','RolePermission']],function(){
     Route::get('/', 'Admin\HomeController@test11')->name('test11');

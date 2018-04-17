@@ -58,7 +58,7 @@
                   <div class="box-header with-border">
                       <i class="fa fa-bar-chart-o"></i>
 
-                      <h3 class="box-title">无线节点加速度数据图</h3>
+                      <h3 class="box-title">{{$collector->name}}加速度数据图</h3>
 
                       <div class="box-tools pull-right">
 
@@ -87,7 +87,7 @@
                   <div class="box-header with-border">
                       <i class="fa fa-bar-chart-o"></i>
 
-                      <h3 class="box-title">无线节点温度数据图</h3>
+                      <h3 class="box-title">{{$collector->name}}温度数据图</h3>
 
                       <div class="box-tools pull-right">
 
@@ -117,7 +117,7 @@
                   <div class="box-header with-border">
                       <i class="fa fa-bar-chart-o"></i>
 
-                      <h3 class="box-title">无线节点湿度数据图</h3>
+                      <h3 class="box-title">{{$collector->name}}湿度数据图</h3>
 
                       <div class="box-tools pull-right">
 
@@ -190,7 +190,7 @@
               }
           },
           title: {
-              text: 'Live random data'
+              text: ''
           },
           xAxis: {
               type: 'datetime',
@@ -206,6 +206,9 @@
                   color: '#808080'
               }]
           },
+          credits: {
+              enabled: false //不显示LOGO
+          },
           tooltip: {
               formatter: function () {
                   return '<b>' + this.series.name + '</b><br/>' +
@@ -220,7 +223,7 @@
               enabled: false
           },
           series: [{
-              name: 'Random data',
+              name: '',
               data: (function () {
                   // generate an array of random data
                   data =$('#containerData').html();
@@ -268,7 +271,7 @@
               }
           },
           title: {
-              text: 'Live random data'
+              text: ''
           },
           xAxis: {
               type: 'datetime',
@@ -284,6 +287,9 @@
                   color: '#808080'
               }]
           },
+          credits: {
+              enabled: false //不显示LOGO
+          },
           tooltip: {
               formatter: function () {
                   return '<b>' + this.series.name + '</b><br/>' +
@@ -298,7 +304,7 @@
               enabled: false
           },
           series: [{
-              name: 'Random data',
+              name: '',
               data: (function () {
                   // generate an array of random data
                   data =$('#containerSpeedData').html();
@@ -346,7 +352,7 @@
               }
           },
           title: {
-              text: 'Live random data'
+              text: ''
           },
           xAxis: {
               type: 'datetime',
@@ -362,6 +368,9 @@
                   color: '#808080'
               }]
           },
+          credits: {
+              enabled: false //不显示LOGO
+          },
           tooltip: {
               formatter: function () {
                   return '<b>' + this.series.name + '</b><br/>' +
@@ -376,7 +385,7 @@
               enabled: false
           },
           series: [{
-              name: 'Random data',
+              name: '',
               data: (function () {
                   // generate an array of random data
                   data =$('#containerHumidityData').html();

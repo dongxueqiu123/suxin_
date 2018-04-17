@@ -70,6 +70,16 @@
 
       </li>
 
+      <li class="@if (($active??'') === 'intelligents') active @endif">
+        <a href="{{route('intelligents')}}">
+          <i class="fa fa-television"></i> <span>智能诊断</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+
+      </li>
+
       @if( Auth::user()->id !==1 )
       @permission(['users','roles','permissions'])
       <li class="@if (in_array($active??'', ['users','roles','permissions'])) active @endif treeview">
