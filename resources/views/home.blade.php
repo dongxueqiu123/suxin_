@@ -52,27 +52,33 @@
             <div class="col-sm-12">
                 <div class="bottom_slick_slider" id="bottom_slick_slider">
                     <div class="item">
-                        <img src="{{ asset('images/slider/home/bus-1.jpg') }}" />
+                        <img src="{{ asset('images/slider/home/yawei-1.jpg') }}" />
+                        <p>
+                            <a href="http://www.yawei.cc" target="_blank">@lang('common.home.app.l4')</a>
+                        </p>
+                    </div>
+                    <div class="item">
+                        <img src="{{ asset('images/slider/home/yawei-2.jpg') }}" />
+                        <p>
+                            <a href="http://www.yawei.cc" target="_blank">@lang('common.home.app.l4')</a>
+                        </p>
+                    </div>
+                    <div class="item">
+                        <img src="{{ asset('images/slider/home/nangaochi.jpg') }}" />
                         <p>
                             <a href="http://www.ngctransmission.com/zh/home.html" target="_blank">@lang('common.home.app.l1')</a>
                         </p>
                     </div>
                     <div class="item">
-                        <img src="{{ asset('images/slider/home/1.jpg') }}" />
+                        <img src="{{ asset('images/slider/home/xugong.jpg') }}" />
                         <p>
                             <a href="http://www.xcmg.com/" target="_blank">@lang('common.home.app.l2')</a>
                         </p>
                     </div>
                     <div class="item">
-                        <img src="{{ asset('images/slider/home/2.jpg') }}" />
+                        <img src="{{ asset('images/slider/home/guomao.jpg') }}" />
                         <p>
                             <a href="http://www.jsgmjsj.cn/" target="_blank">@lang('common.home.app.l3')</a>
-                        </p>
-                    </div>
-                    <div class="item">
-                        <img src="{{ asset('images/slider/home/4.jpg') }}" />
-                        <p>
-                            <a href="http://www.yawei.cc" target="_blank">@lang('common.home.app.l4')</a>
                         </p>
                     </div>
                 </div>

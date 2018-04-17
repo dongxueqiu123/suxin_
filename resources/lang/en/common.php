@@ -50,7 +50,7 @@ return [
       "4" => "Vibration Analysis"
     ],
     "cloud" => [
-      "title" => "Industrial Cloud",
+      "title" => "Diagnosis Cloud",
       "1" => "Cloud Server",
       "2" => "Cloud Gateway",
       "3" => "Cloud Server-room",
