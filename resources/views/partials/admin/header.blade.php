@@ -26,8 +26,29 @@
               <img src="{{ asset('bower_components/admin-lte/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
               <p>{{ Auth::user()->name }}</p>
             </li>
+
+            <li class="user-body">
+              <div class="row">
+                <div class="col-xs-4 text-center">
+                  <a href="{{route('admin')}}">后台主页</a>
+                </div>
+
+                <div class="col-xs-4 text-center">
+                  <a href="{{route('charts.collectorChartRealTime',['id'=>3])}}">实时数据</a>
+                </div>
+
+                <div class="col-xs-4 text-center">
+                  <a href="{{route('intelligents')}}">智能诊断</a>
+                </div>
+              </div>
+              <!-- /.row -->
+            </li>
+
             <!-- Menu Footer-->
             <li class="user-footer">
+              <div class="pull-left">
+                <a href="{{route('users.edit',['id'=>Auth::user()->id])}}" class="btn btn-default btn-flat">修改</a>
+              </div>
               <div class="pull-right">
                 <a class="btn btn-default btn-flat" href="<?php echo url('/').'/'.app()->getLocale().'/logout' ?>"
                     onclick="event.preventDefault();

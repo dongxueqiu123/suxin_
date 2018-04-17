@@ -30,7 +30,7 @@ Route::prefix('{locale}')->group(function () {
     Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
     // === account routes
-    Route::get('account', 'AccountController@index');
+    Route::get('account', 'HomeController@index');
 
     // === admin routes
     Route::get('admin', 'AdminController@index');

@@ -28,5 +28,7 @@ return [
     'register_lnk' => 'Register',
     'logout_lnk' => 'Logout',
     'dashboard_lnk' => 'Dashboard',
+    'live_data' => 'Live Data',
+    'change_password' => 'Change Password',
     'or' => 'or'
 ];

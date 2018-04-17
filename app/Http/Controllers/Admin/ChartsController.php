@@ -9,6 +9,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\CollectorsServices;
+use Illuminate\Support\Facades\Auth;
 
 class ChartsController extends Controller{
 
@@ -18,6 +19,8 @@ class ChartsController extends Controller{
     }
 
     public function collectorChart($id){
+        $queryArray['firmId'] = Auth::user()->company->id??'';
+        $collectors = $this->collectorsServices->getList(0,$queryArray);
         $collector = $this->collectorsServices->get($id);
         $endDate    = date("Y-m-d H:i:s",time()+8*60*60);
         $http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
@@ -33,6 +36,7 @@ class ChartsController extends Controller{
                 'speedData'=>json_encode($speedData['data'])??'',
                 'humidityData'=>json_encode($humidityData['data'])??'',
                 'collector'=>$collector,
+                'collectors'=>$collectors,
                 'boxTitle'=>'无线节点数据展示',
                 'active' => 'collectors',
             ]
@@ -41,6 +45,8 @@ class ChartsController extends Controller{
 
 
     public function collectorChartRealTime($id){
+        $queryArray['firmId'] = Auth::user()->company->id??'';
+        $collectors = $this->collectorsServices->getList(0,$queryArray);
         $collector = $this->collectorsServices->get($id);
         $endDate    = date("Y-m-d H:i:s",time()+8*60*60);
         $http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
@@ -59,6 +65,7 @@ class ChartsController extends Controller{
                 'speedData'=>json_encode($speedData['data'])??'',
                 'humidityData'=>json_encode($humidityData['data'])??'',
                 'collector'=>$collector,
+                'collectors'=>$collectors,
                 'boxTitle'=>'实时数据展示',
                 'active' => 'realTime',
             ]

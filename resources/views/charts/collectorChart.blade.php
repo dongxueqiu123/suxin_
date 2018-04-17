@@ -31,7 +31,22 @@
   </section>
 
   <section class="content">
+      <div class="row">
+          <div class="col-xs-12">
+              <div class="box box-solid">
+                  <div class="box-body">
 
+                      <div class="col-sm-3">
+                      <select class="form-control select2 collector"  style="width: 100%;">
+                          @foreach($collectors??[] as $collectorValue)
+                              <option @if(($collectorValue->id??'') == $collector->id) selected @endif value="{{route('charts.collectorChartRealTime',['id'=>$collectorValue->id])}}">{{$collectorValue->name}}</option>
+                          @endforeach
+                      </select>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
 
       <div class="row">
           <div class="col-xs-12">
@@ -137,7 +152,7 @@
                       // set up the updating of the chart each second
                       var series = this.series[0];
                       setInterval(function (){
-                          collectorId = '{{$collector->name}}';
+                          collectorId = '{{$collector->id}}';
                           status = 'ex_temp';
                           time = new Date();
                           curTime = myTime.CurTime();
@@ -197,7 +212,8 @@
               enabled: false
           },
           series: [{
-              name: '',
+              name: '温度',
+              lineWidth: 1,
               data: (function () {
                   // generate an array of random data
                   data =$('#containerData').html();
@@ -218,7 +234,7 @@
                       // set up the updating of the chart each second
                       var series = this.series[0];
                       setInterval(function (){
-                          collectorId = '{{$collector->name}}';
+                          collectorId = '{{$collector->id}}';
                           status = 'acc_peak';
                           time = new Date();
                           curTime = myTime.CurTime();
@@ -278,7 +294,8 @@
               enabled: false
           },
           series: [{
-              name: '',
+              lineWidth: 1,
+              name: '加速度',
               data: (function () {
                   // generate an array of random data
                   data =$('#containerSpeedData').html();
@@ -299,7 +316,7 @@
                       // set up the updating of the chart each second
                       var series = this.series[0];
                       setInterval(function (){
-                          collectorId = '{{$collector->name}}';
+                          collectorId = '{{$collector->id}}';
                           status = 'in_hum';
                           time = new Date();
                           curTime = myTime.CurTime();
@@ -359,7 +376,8 @@
               enabled: false
           },
           series: [{
-              name: '',
+              name: '湿度',
+              lineWidth: 1,
               data: (function () {
                   // generate an array of random data
                   data =$('#containerHumidityData').html();
@@ -388,138 +406,10 @@
           var endDate = myTime.UnixToDate(endUnix,true,8);
           return '/console/influx/timeseries/'+status+'/'+collectorId+'?startTime='+startDate+'&endTime='+endDate+'/';
       }
+
+      $('.collector').on('change',function(){
+
+          window.location.href = $(this).val();
+      });
   </script>
-{{--  <script type="text/javascript">
-      var myTime ,time ,curTime ,max ,startDateTime ,collectorId ,status ,name;
-      collectorId = $('.collectorId').val();
-      status =  $('.changeButton').find('.active').val();
-      name = $('.changeButton').find('.active').html();
-      myTime = $.myTime;
-      time = new Date();
-      curTime = myTime.CurTime();
-      max = myTime.UnixToDate(curTime,true,(new Date().getTimezoneOffset()/-60));
-      startDateTime = myTime.UnixToDate(curTime-300,true,(new Date().getTimezoneOffset()/-60));
-      $('.startTime').val(startDateTime);
-      highCharts(getUrl(status,collectorId,startDateTime,max,myTime),name);
-      //执行一个laydate实例
-      laydate.render({
-          elem: '#test1' //指定元素
-          ,type: 'datetime'
-          ,value: time
-          ,max : max
-          ,done: function(value, date, endDate){
-
-              var unixTime = myTime.DateToUnix(value);
-              var dateTime = myTime.UnixToDate(unixTime-300,true,8);
-              if(!value){
-                  dateTime = '';
-              }
-              $('.startTime').val(dateTime);
-          }
-      });
-
-      $("button").on('click',function(){
-          var name ,status ,startTime ,endTime;
-          if(!$(this).hasClass('active')){
-              $(this).addClass('active')
-          }
-          $(this).siblings().removeClass('active');
-          name = $(this).html();
-          status = $(this).val();
-          startTime = $('.startTime').val();
-          endTime = $('.endTime').val();
-          highCharts(getUrl(status,collectorId,startTime,endTime,myTime),name);
-
-      });
-
-      $('.find').on('click',function(){
-          var startTime ,endTime ,status ,name;
-          startTime = $('.startTime').val();
-          endTime = $('.endTime').val();
-          status =  $('.changeButton').find('.active').val();
-          name = $('.changeButton').find('.active').html();
-          highCharts(getUrl(status,collectorId,startTime,endTime,myTime),name);
-      });
-
-      function getUrl(status,collectorId,startTime,endTime,myTime){
-          var startUnix = myTime.DateToUnix(startTime);
-          var endUnix = myTime.DateToUnix(endTime);
-          var startDate = myTime.UnixToDate(startUnix,true,8);
-          var endDate = myTime.UnixToDate(endUnix,true,8);
-          return '/console/influx/timeseries/'+status+'/'+collectorId+'/'+startDate+'/'+endDate+'/';
-      }
-
-      function highCharts(route,name){
-          $.getJSON(route, function (result)  {
-                  var data = result['data'];
-                  var dataKey, length, pointDate, title, yAxisTitle, seriesName;
-                  length = data.length;
-                  title = '无线节点五分钟'+name+'变化';
-                  yAxisTitle = name+'变化';
-                  seriesName = name;
-                  for(dataKey = 0 ; dataKey < length; dataKey++){
-                      data[dataKey][0] = data[dataKey][0].replace(/T/, " ");
-                      data[dataKey][0] = data[dataKey][0].replace(/Z/, "");
-                      pointDate = new Date(data[dataKey][0]);
-                      data[dataKey][0] = pointDate.getTime()-2*new Date().getTimezoneOffset()*60*1000-8*60*60*1000;
-                  }
-                  Highcharts.chart('container', {
-                      chart: {
-                          zoomType: 'x'
-                      },
-                      title: {
-                          text: title
-                      },
-                      xAxis: {
-                          type: 'datetime'
-                      },
-                      yAxis: {
-                          title: {
-                              text: yAxisTitle
-                          }
-                      },
-                      legend: {
-                          enabled: false
-                      },
-                      credits: {
-                          enabled: false //不显示LOGO
-                      },
-                      plotOptions: {
-                          area: {
-                              fillColor: {
-                                  linearGradient: {
-                                      x1: 0,
-                                      y1: 0,
-                                      x2: 0,
-                                      y2: 1
-                                  },
-                                  stops: [
-                                      [0, Highcharts.getOptions().colors[0]],
-                                      [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                                  ]
-                              },
-                              marker: {
-                                  radius: 2
-                              },
-                              lineWidth: 1,
-                              states: {
-                                  hover: {
-                                      lineWidth: 1
-                                  }
-                              },
-                              threshold: null
-                          }
-                      },
-
-                      series: [{
-                          type: 'area',
-                          name: seriesName,
-                          data: data
-                      }]
-                  });
-              }
-          );
-      }
-
-  </script>--}}
 @endsection

@@ -41,6 +41,20 @@
                             @endif
                             </li>
                             <li>
+                                @if (Auth::user()->role === 1)
+                                    <a href="{{route('charts.collectorChartRealTime',['id'=>3])}}">@lang('auth.live_data')</a>
+                                @else
+                                    <a href="{{route('charts.collectorChartRealTime',['id'=>3])}}">@lang('auth.live_data')</a>
+                                @endif
+                            </li>
+                            <li>
+                                @if (Auth::user()->role === 1)
+                                    <a href="{{route('users.edit',['id'=>Auth::user()->id])}}">@lang('auth.change_password')</a>
+                                @else
+                                    <a href="{{route('users.edit',['id'=>Auth::user()->id])}}">@lang('auth.change_password')</a>
+                                @endif
+                            </li>
+                            <li>
                                 <a href="<?php echo url('/').'/'.app()->getLocale().'/logout' ?>"
                                     onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">

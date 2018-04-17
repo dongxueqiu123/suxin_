@@ -50,6 +50,14 @@
           <li><a href="#"><i class="fa fa-circle-o"></i> Pace Page</a></li>
         </ul>
       </li>--}}
+      <li >
+        <a href="{{ url('/') }}">
+          <i class="fa fa-home"></i> <span>网站首页</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+      </li>
 
       <li class="@if (($active??'') === 'home') active @endif ">
         <a href="{{route('admin')}}">
@@ -67,7 +75,6 @@
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </a>
-
       </li>
 
       <li class="@if (($active??'') === 'intelligents') active @endif">
@@ -77,75 +84,7 @@
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </a>
-
       </li>
-
-      @if( Auth::user()->id !==1 )
-      @permission(['users','roles','permissions'])
-      <li class="@if (in_array($active??'', ['users','roles','permissions'])) active @endif treeview">
-        <a href="#">
-          <i class="fa fa-users"></i> <span>用户管理</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          @permission('users')
-          <li class="@if (($active??'') === 'users') active @endif"><a href="{{route('users')}}"><i class="fa fa-user"></i> 用户</a></li>
-          @endpermission
-          @permission('roles')
-          <li class="@if (($active??'') === 'roles') active @endif"><a href="{{route('roles')}}"><i class="fa ffa-user-plus"></i> 角色</a></li>
-          @endpermission
-          @permission('permissions')
-          <li class="@if (($active??'') === 'permissions') active @endif"><a href="{{route('permissions')}}"><i class="fa fa-lock"></i> 权限</a></li>
-          @endpermission
-        </ul>
-      </li>
-      @endpermission
-        @else
-        <li class="@if (in_array($active??'', ['users','roles','permissions'])) active @endif treeview">
-          <a href="#">
-            <i class="fa fa-users"></i> <span>用户管理</span>
-            <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="@if (($active??'') === 'users') active @endif"><a href="{{route('users')}}"><i class="fa fa-user"></i> 用户</a></li>
-            <li class="@if (($active??'') === 'roles') active @endif"><a href="{{route('roles')}}"><i class="fa fa-user-plus"></i> 角色</a></li>
-            <li class="@if (($active??'') === 'permissions') active @endif"><a href="{{route('permissions')}}"><i class="fa fa-lock"></i> 权限</a></li>
-          </ul>
-        </li>
-      @endif
-
-
-      @if( Auth::user()->id !==1 )
-      @permission('companies')
-      <li class="@if (($active??'') === 'companies') active @endif treeview">
-        <a href="#">
-          <i class="fa fa-television"></i> <span>公司管理</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          <li class="@if (($active??'') === 'companies') active @endif "><a href="{{route('companies')}}"><i class="fa fa-sticky-note-o"></i> 公司</a></li>
-        </ul>
-      </li>
-      @endpermission
-      @else
-        <li class="@if (($active??'') === 'companies') active @endif treeview">
-          <a href="#">
-            <i class="fa fa-television"></i> <span>公司管理</span>
-            <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="@if (($active??'') === 'companies') active @endif"><a href="{{route('companies')}}"><i class="fa fa-sticky-note-o"></i> 公司</a></li>
-          </ul>
-        </li>
-      @endif
 
       @if( Auth::user()->id !==1 )
 
@@ -177,14 +116,15 @@
           </span>
           </a>
           <ul class="treeview-menu">
-            @permission('alarms')
-            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-file"></i> 告警记录</a></li>
-            @endpermission
+
             @permission('thresholds')
             <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 阈值设置</a></li>
             @endpermission
             @permission('liaisons')
             <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-fax"></i> 告警方式</a></li>
+            @endpermission
+            @permission('alarms')
+            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-file"></i> 告警记录</a></li>
             @endpermission
 
           </ul>
@@ -216,14 +156,79 @@
           </span>
           </a>
           <ul class="treeview-menu">
-            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-file"></i> 告警记录</a></li>
             <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 阈值设置</a></li>
             <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-phone"></i> 告警方式</a></li>
+            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-file"></i> 告警记录</a></li>
           </ul>
         </li>
 
       @endif
 
+      @if( Auth::user()->id !==1 )
+        @permission('companies')
+        <li class="@if (($active??'') === 'companies') active @endif treeview">
+          <a href="#">
+            <i class="fa fa-television"></i> <span>公司管理</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="@if (($active??'') === 'companies') active @endif "><a href="{{route('companies')}}"><i class="fa fa-sticky-note-o"></i> 公司</a></li>
+          </ul>
+        </li>
+        @endpermission
+      @else
+        <li class="@if (($active??'') === 'companies') active @endif treeview">
+          <a href="#">
+            <i class="fa fa-television"></i> <span>公司管理</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="@if (($active??'') === 'companies') active @endif"><a href="{{route('companies')}}"><i class="fa fa-sticky-note-o"></i> 公司</a></li>
+          </ul>
+        </li>
+      @endif
+
+      @if( Auth::user()->id !==1 )
+        @permission(['users','roles','permissions'])
+        <li class="@if (in_array($active??'', ['users','roles','permissions'])) active @endif treeview">
+          <a href="#">
+            <i class="fa fa-users"></i> <span>用户管理</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+          </a>
+          <ul class="treeview-menu">
+            @permission('users')
+            <li class="@if (($active??'') === 'users') active @endif"><a href="{{route('users')}}"><i class="fa fa-user"></i> 用户</a></li>
+            @endpermission
+            @permission('roles')
+            <li class="@if (($active??'') === 'roles') active @endif"><a href="{{route('roles')}}"><i class="fa ffa-user-plus"></i> 角色</a></li>
+            @endpermission
+            @permission('permissions')
+            <li class="@if (($active??'') === 'permissions') active @endif"><a href="{{route('permissions')}}"><i class="fa fa-lock"></i> 权限</a></li>
+            @endpermission
+          </ul>
+        </li>
+        @endpermission
+      @else
+        <li class="@if (in_array($active??'', ['users','roles','permissions'])) active @endif treeview">
+          <a href="#">
+            <i class="fa fa-users"></i> <span>用户管理</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="@if (($active??'') === 'users') active @endif"><a href="{{route('users')}}"><i class="fa fa-user"></i> 用户</a></li>
+            <li class="@if (($active??'') === 'roles') active @endif"><a href="{{route('roles')}}"><i class="fa fa-user-plus"></i> 角色</a></li>
+            <li class="@if (($active??'') === 'permissions') active @endif"><a href="{{route('permissions')}}"><i class="fa fa-lock"></i> 权限</a></li>
+          </ul>
+        </li>
+      @endif
     </ul>
   </section>
 

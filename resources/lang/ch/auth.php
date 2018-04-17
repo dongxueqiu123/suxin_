@@ -27,6 +27,8 @@ return [
     'login_lnk' => '登录',
     'register_lnk' => '注册',
     'logout_lnk' => '登出',
-    'dashboard_lnk' => '仪表板',
+    'dashboard_lnk' => '后台主页',
+    'live_data' => '实时数据',
+    'change_password' => '修改密码',
     'or' => '或者'
 ];
