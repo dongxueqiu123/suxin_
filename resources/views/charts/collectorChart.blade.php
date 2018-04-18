@@ -137,6 +137,8 @@
 
       myTime = $.myTime;
       dateTime = $('a');
+      divTime = $('div');
+      h3Time = $('h3');
       Highcharts.setOptions({
           global: {
               useUTC: false
@@ -155,16 +157,13 @@
                       setInterval(function (){
                           collectorId = '{{$collector->id}}';
                           status = 'ex_temp';
-                          time = new Date();
-                          curTime = myTime.CurTime();
-                          max = myTime.UnixToDate(curTime,true,(new Date().getTimezoneOffset()/-60));
-                          startDateTime = myTime.UnixToDate(curTime-8,true,(new Date().getTimezoneOffset()/-60));
-                          $('.startTime').val(startDateTime);
-                          url =  getUrl(status,collectorId,startDateTime,max,myTime);
+                          curTime = dateTime.data('timeValue');
+                          startDateTime = myTime.UnixToDate(curTime,true,(new Date().getTimezoneOffset()/-60));
+                          url =  getUrl(status,collectorId,startDateTime,'0',myTime);
                           $.getJSON(
                               url,
                               function (data) {
-                                  var newData = getData(data['data'],1,'');
+                                  var newData = getData(data['data'],1,divTime);
 
                                   var length = newData.length;
 
@@ -175,7 +174,7 @@
                                   }
                               }
                           );
-                      }, 3000);
+                      }, 4000);
                   }
               }
           },
@@ -229,7 +228,7 @@
                   // generate an array of random data
                   data =$('#containerData').html();
 
-                  return getData(JSON.parse( data),1,'');
+                  return getData(JSON.parse( data),1,divTime);
               }())
           }]
       });
@@ -246,17 +245,14 @@
                       var series = this.series[0];
                       setInterval(function (){
                           collectorId = '{{$collector->id}}';
-                          status = 'acc_peak';
-                          time = new Date();
-                          curTime = myTime.CurTime();
-                          max = myTime.UnixToDate(curTime,true,(new Date().getTimezoneOffset()/-60));
-                          startDateTime = myTime.UnixToDate(curTime-8,true,(new Date().getTimezoneOffset()/-60));
-                          $('.startTime').val(startDateTime);
-                          url =  getUrl(status,collectorId,startDateTime,max,myTime);
+                          status = 'acc_orig';
+                          curTime = dateTime.data('timeValue');
+                          startDateTime = myTime.UnixToDate(curTime,true,(new Date().getTimezoneOffset()/-60));
+                          url =  getUrl(status,collectorId,startDateTime,'0',myTime);
                           $.getJSON(
                               url,
                               function (data) {
-                                  var newData = getData(data['data'],1,'');
+                                  var newData = getData(data['data'],1,h3Time);
 
                                   var length = newData.length;
 
@@ -267,7 +263,7 @@
                                   }
                               }
                           );
-                      }, 3000);
+                      }, 4000);
                   }
               }
           },
@@ -321,7 +317,7 @@
                   // generate an array of random data
                   data =$('#containerSpeedData').html();
 
-                  return getData(JSON.parse( data),1,'');
+                  return getData(JSON.parse( data),1,h3Time);
               }())
           }]
       });
@@ -353,7 +349,7 @@
                                   }
                               }
                           );
-                      }, 3000);
+                      }, 4000);
                   }
               }
           },
