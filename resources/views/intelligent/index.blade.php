@@ -31,7 +31,22 @@
   </section>
 
   <section class="content">
-
+      <div class="row">
+          <div class="col-xs-12">
+              <div class="box box-solid">
+                  <div class="box-body">
+                      <div style="margin:auto;">
+                      <div style="float: left;">
+                      <img style="height: 200px" src="{{ asset('/images/iamgea.jpg') }}">
+                      </div>
+                      <div style="float: left; margin-left: 10px;">
+                          <img style="height: 200px" src="{{ asset('/images/iamgeee.png') }}">
+                      </div>
+                  </div>
+                  </div>
+              </div>
+          </div>
+      </div>
 
       <div class="row">
           <div class="col-xs-12">
@@ -200,7 +215,7 @@
                   },
                   xAxis: {
                       title: {
-                          text: '时间(min)'
+                          text: '时间 (min)'
                       },
                       type: 'datetime',
                       tickPixelInterval: 150
@@ -217,7 +232,7 @@
                   },
                       {
                           title: {
-                              text: '加速度(m/s²)'
+                              text: '加速度 (m/s²)'
                           },
                           plotLines: [{
                               value: 0,
@@ -293,7 +308,7 @@
                   },
                   xAxis: {
                       title: {
-                          text: '时间(min)'
+                          text: '时间 (min)'
                       },
                       type: 'datetime',
                       tickPixelInterval: 150
@@ -310,7 +325,7 @@
                   },
                       {
                           title: {
-                              text: '加速度(m/s²)'
+                              text: '加速度 (m/s²)'
                           },
                           plotLines: [{
                               value: 0,
@@ -388,7 +403,7 @@
                   },
                   xAxis: {
                       title: {
-                          text: '时间(min)'
+                          text: '时间 (min)'
                       },
                       type: 'datetime',
                       tickPixelInterval: 150
@@ -405,7 +420,7 @@
                   },
                       {
                           title: {
-                              text: '加速度(m/s²)'
+                              text: '加速度 (m/s²)'
                           },
                           plotLines: [{
                               value: 0,
@@ -483,7 +498,7 @@
                   },
                   xAxis: {
                       title: {
-                          text: '时间(min)'
+                          text: '时间 (min)'
                       },
                       type: 'datetime',
                       tickPixelInterval: 150
@@ -500,7 +515,7 @@
                   },
                       {
                           title: {
-                              text: '加速度(m/s²)'
+                              text: '加速度 (m/s²)'
                           },
                           plotLines: [{
                               value: 0,

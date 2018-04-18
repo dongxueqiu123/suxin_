@@ -183,14 +183,14 @@
           },
           xAxis: {
               title: {
-                  text: '时间(min)'
+                  text: '时间 (min)'
               },
               type: 'datetime',
               tickPixelInterval: 150
           },
           yAxis: {
               title: {
-                  text: '温度(℃)'
+                  text: '温度 (℃)'
               },
               plotLines: [{
                   value: 0,
@@ -275,14 +275,14 @@
           },
           xAxis: {
               title: {
-                  text: '时间(min)'
+                  text: '时间 (min)'
               },
               type: 'datetime',
               tickPixelInterval: 150
           },
           yAxis: {
               title: {
-                  text: '加速度(m/s²)'
+                  text: '加速度 (m/s²)'
               },
               plotLines: [{
                   value: 0,
@@ -350,8 +350,7 @@
                                   var newData = getData(data['data'],1);
                                   var length = newData.length;
                                   for(dataKey = 0 ; dataKey < length; dataKey++){
-                                      console.log(newData[dataKey][0]);
-                                      console.log(newData[dataKey][1]);
+
                                       series.addPoint([newData[dataKey][0], newData[dataKey][1]], true, true);
                                   }
                               }
@@ -365,14 +364,14 @@
           },
           xAxis: {
               title: {
-                  text: '时间(min)'
+                  text: '时间 (min)'
               },
               type: 'datetime',
               tickPixelInterval: 150
           },
           yAxis: {
               title: {
-                  text: '湿度(%RH)'
+                  text: '湿度 (%RH)'
               },
               plotLines: [{
                   value: 0,
