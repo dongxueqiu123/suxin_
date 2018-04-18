@@ -55,7 +55,7 @@
                   <div class="box-header with-border">
                       <i class="fa fa-bar-chart-o"></i>
 
-                      <h3 class="box-title">{{$collector->name}}加速度数据图</h3>
+                      <h3 class="box-title"></h3>
 
                       <div class="box-tools pull-right">
 
@@ -80,7 +80,7 @@
                   <div class="box-header with-border">
                       <i class="fa fa-bar-chart-o"></i>
 
-                      <h3 class="box-title">{{$collector->name}}温度数据图</h3>
+                      <h3 class="box-title"></h3>
 
                       <div class="box-tools pull-right">
 
@@ -106,7 +106,7 @@
                   <div class="box-header with-border">
                       <i class="fa fa-bar-chart-o"></i>
 
-                      <h3 class="box-title">{{$collector->name}}湿度数据图</h3>
+                      <h3 class="box-title"></h3>
 
                       <div class="box-tools pull-right">
 
@@ -179,7 +179,7 @@
               }
           },
           title: {
-              text: ''
+              text: '{{$collector->name}}温度数据图'
           },
           xAxis: {
               title: {
@@ -271,7 +271,7 @@
               }
           },
           title: {
-              text: ''
+              text: '{{$collector->name}}加速度数据图'
           },
           xAxis: {
               title: {
@@ -361,7 +361,7 @@
               }
           },
           title: {
-              text: ''
+              text: '{{$collector->name}}湿度数据图'
           },
           xAxis: {
               title: {

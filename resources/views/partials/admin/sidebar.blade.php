@@ -192,7 +192,7 @@
         @permission('companies')
         <li class="@if (($active??'') === 'companies') active @endif treeview">
           <a href="#">
-            <i class="fa fa-institution"></i> <span>公司管理</span>
+            <i class="fa fa-institution"></i> <span>机构管理</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
