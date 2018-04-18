@@ -6,7 +6,7 @@
             <small>权限</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台后台首页</a></li>
+            <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台首页</a></li>
         </ol>
     </section>
 

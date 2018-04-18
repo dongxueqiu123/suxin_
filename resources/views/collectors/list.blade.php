@@ -59,7 +59,13 @@
                                       <td>
                                           <a class="btn btn-primary btn-xs" href={{route('collectors.edit',['id'=>$collector->id])}}>修改{{--<i class="fa fa-edit" style="font-size: 14px;"></i>--}}</a>
                                           <a class="btn btn-danger btn-xs delete" url="{{ route('api.collectors.delete',['id'=>$collector->id])}}" >删除{{--<i class="fa fa-trash-o" style="font-size: 14px;"></i>--}}</a>
-                                          <a class="btn btn-warning btn-xs " href={{route('charts.collectorChart',['id'=>$collector->id])}}>图表{{--<i class="fa fa-fw fa-area-chart" style="font-size: 14px;"></i>--}}</a>
+                                          @if( Auth::user()->id !==1 )
+                                              @permission(['charts'])
+                                              <a class="btn btn-warning btn-xs " href={{route('charts.collectorChart',['id'=>$collector->id])}}>图表{{--<i class="fa fa-fw fa-area-chart" style="font-size: 14px;"></i>--}}</a>
+                                              @endpermission
+                                          @else
+                                              <a class="btn btn-warning btn-xs " href={{route('charts.collectorChart',['id'=>$collector->id])}}>图表{{--<i class="fa fa-fw fa-area-chart" style="font-size: 14px;"></i>--}}</a>
+                                          @endif
                                       </td>
                                   </tr>
                               @endforeach

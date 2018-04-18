@@ -30,7 +30,7 @@
             <li class="user-body">
               <div class="row">
                 <div class="col-xs-4 text-center">
-                  <a href="{{route('admin')}}">后台后台首页</a>
+                  <a href="{{route('admin')}}">后台首页</a>
               </div>
 
                 <div class="col-xs-4 text-center">

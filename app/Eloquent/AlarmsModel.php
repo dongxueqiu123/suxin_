@@ -21,7 +21,7 @@ class AlarmsModel extends AppModel {
     ];
 
     public function scopeFirmId($query,$firmId){
-        $query->where('firm_id' ,'=' ,$firmId);
+        $query->where('provider_id' ,'=' ,$firmId)->orwhere('consumer_id' ,'=' ,$firmId);
     }
 
     public function collector(){

@@ -68,23 +68,49 @@
         </a>
       </li>
 
-      <li class="@if (($active??'') === 'realTime') active @endif">
-        <a href="{{route('charts.collectorChartRealTime',['id'=>3])}}">
-          <i class="fa fa-calendar-o"></i> <span>实时数据</span>
-          <span class="pull-right-container">
+      @if( Auth::user()->id !==1 )
+        @permission(['intelligents'])
+        <li class="@if (($active??'') === 'realTime') active @endif">
+          <a href="{{route('charts.collectorChartRealTime',['id'=>3])}}">
+            <i class="fa fa-calendar-o"></i> <span>实时数据</span>
+            <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
-        </a>
-      </li>
+          </a>
+        </li>
+        @endpermission
+      @else
+        <li class="@if (($active??'') === 'realTime') active @endif">
+          <a href="{{route('charts.collectorChartRealTime',['id'=>3])}}">
+            <i class="fa fa-calendar-o"></i> <span>实时数据</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+          </a>
+        </li>
+      @endif
 
-      <li class="@if (($active??'') === 'intelligents') active @endif">
-        <a href="{{route('intelligents')}}">
-          <i class="fa fa-plus"></i> <span>智能诊断</span>
-          <span class="pull-right-container">
+      @if( Auth::user()->id !==1 )
+        @permission(['intelligents'])
+        <li class="@if (($active??'') === 'intelligents') active @endif">
+          <a href="{{route('intelligents')}}">
+            <i class="fa fa-plus"></i> <span>智能诊断</span>
+            <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
-        </a>
-      </li>
+          </a>
+        </li>
+        @endpermission
+      @else
+        <li class="@if (($active??'') === 'intelligents') active @endif">
+          <a href="{{route('intelligents')}}">
+            <i class="fa fa-plus"></i> <span>智能诊断</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+          </a>
+        </li>
+        @endif
 
       @if( Auth::user()->id !==1 )
 
@@ -132,8 +158,6 @@
         @endpermission
 
       @else
-
-
 
         <li class="@if (in_array($active??'', ['equipments','collectors'])) active @endif treeview">
           <a href="#">
