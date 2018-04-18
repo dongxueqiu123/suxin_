@@ -168,8 +168,6 @@
                                   var length = newData.length;
 
                                   for(dataKey = 0 ; dataKey < length; dataKey++){
-                                      console.log(newData[dataKey][0]);
-                                      console.log(newData[dataKey][1]);
                                       series.addPoint([newData[dataKey][0], newData[dataKey][1]], true, true);
                                   }
                               }
@@ -257,8 +255,7 @@
                                   var length = newData.length;
 
                                   for(dataKey = 0 ; dataKey < length; dataKey++){
-                                      console.log(newData[dataKey][0]);
-                                      console.log(newData[dataKey][1]);
+
                                       series.addPoint([newData[dataKey][0], newData[dataKey][1]], true, true);
                                   }
                               }
