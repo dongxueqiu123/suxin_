@@ -1,5 +1,5 @@
 <footer class="main-footer">
-  <strong>Copyright &copy; 2018 Suxin.</strong> All rights reserved.
+  <strong>Copyright &copy; <span id="year"></span> Suxin.</strong> All rights reserved.
 </footer>
 
 <!-- jQuery 3 -->
@@ -14,3 +14,7 @@
 <!-- AdminLTE App -->
 <script src="{{ asset('bower_components/admin-lte/dist/js/adminlte.min.js') }}"></script>
 <script src="{{ asset('js/admin.js') }}"></script>
+
+<script>
+  $("#year").html(new Date().getFullYear());
+</script>
