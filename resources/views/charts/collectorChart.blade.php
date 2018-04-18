@@ -136,7 +136,7 @@
       var myTime ,time ,curTime ,max ,startDateTime ,collectorId ,status ,dateTime ,$time;
 
       myTime = $.myTime;
-      $time = $('time');
+      dateTime = $('a');
       Highcharts.setOptions({
           global: {
               useUTC: false
@@ -339,17 +339,13 @@
                       setInterval(function (){
                           collectorId = '{{$collector->id}}';
                           status = 'in_hum';
-                          time = new Date();
-                          //curTime = myTime.CurTime();
-                          curTime = $time.data('timeValue');
-                          max = myTime.UnixToDate(curTime,true,(new Date().getTimezoneOffset()/-60));
-                          startDateTime = myTime.UnixToDate(curTime-8,true,(new Date().getTimezoneOffset()/-60));
-                          $('.startTime').val(startDateTime);
-                          url =  getUrl(status,collectorId,startDateTime,max,myTime);
+                          curTime = dateTime.data('timeValue');
+                          startDateTime = myTime.UnixToDate(curTime,true,(new Date().getTimezoneOffset()/-60));
+                          url =  getUrl(status,collectorId,startDateTime,'0',myTime);
                           $.getJSON(
                               url,
                               function (data) {
-                                  var newData = getData(data['data'],1,$time);
+                                  var newData = getData(data['data'],1,dateTime);
                                   var length = newData.length;
                                   for(dataKey = 0 ; dataKey < length; dataKey++){
 
@@ -410,7 +406,7 @@
               data: (function () {
                   // generate an array of random data
                   data =$('#containerHumidityData').html();
-                  return getData(JSON.parse( data),1,$time);
+                  return getData(JSON.parse( data),1,dateTime);
               }())
           }]
       });
@@ -423,19 +419,15 @@
               data[dataKey][0] = data[dataKey][0].replace(/Z/, "");
               pointDate = new Date(data[dataKey][0]);
               data[dataKey][0] = pointDate.getTime()-n*new Date().getTimezoneOffset()*60*1000-8*60*60*1000;
-              if($time){
-                  $link.data('timeValue', data[length-1][0]);
-              }
+              $time.data('timeValue', data[length-1][0]/1000);
           }
           return data;
       }
 
       function getUrl(status,collectorId,startTime,endTime,myTime){
           var startUnix = myTime.DateToUnix(startTime);
-          var endUnix = myTime.DateToUnix(endTime);
           var startDate = myTime.UnixToDate(startUnix,true,8);
-          var endDate = myTime.UnixToDate(endUnix,true,8);
-          return '/console/influx/timeseries/'+status+'/'+collectorId+'?startTime='+startDate+'&endTime='+endDate+'/';
+          return '/console/influx/timeseries/'+status+'/'+collectorId+'?startTime='+startDate;
       }
 
       $('.collector').on('change',function(){
