@@ -554,9 +554,8 @@
       function setOnce(arr,i,series,time){
           var i=i,length=arr.length;
           (function changeTime(){
-              setTimeout(function(){
+              setInterval(function(){
                   var x = (new Date()).getTime();
-
                   series.addPoint([x, arr[i++]], true, true);
                   if(i==length){
                       i=0;
