@@ -30,8 +30,10 @@ class UsersController extends Controller
         if($result){
             return response()->json(['state' => '201', 'info' => '邮箱已存在']);
         }
-        (bcrypt($input['password']) != $user->password)
+
+        (($input['password'] != $user->password) && !empty($input['password']))
         && $user->password = bcrypt($input['password']);
+
         $user->email = $input['email'];
         $user->name = $input['name'];
         if($state = $user->save()){

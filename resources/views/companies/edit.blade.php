@@ -6,7 +6,7 @@
             <small>公司</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
+            <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 后台首页</a></li>
             <li class="active">{{$boxTitle}}</li>
         </ol>
     </section>

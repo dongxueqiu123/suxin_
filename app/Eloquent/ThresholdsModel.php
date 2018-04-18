@@ -28,6 +28,11 @@ class ThresholdsModel extends AppModel
         'id','pattern','pattern_id','category','grade','lowlimit','toplimit','operator_id'
     ];
 
+
+    public function scopeFirmId($query,$firmId){
+        $query->where('firm_id' ,'=' ,$firmId);
+    }
+
     public function getCategory($id){
         $category = self::CATEGORY;
         $result   = empty($id)?$category:$category[$id];

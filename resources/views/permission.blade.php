@@ -3,12 +3,10 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Dashboard
-            <small>Chart Samples</small>
+            <small>权限</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Dashboard</li>
+            <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台后台首页</a></li>
         </ol>
     </section>
 

@@ -25,7 +25,7 @@
       <small>无线节点数据图</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
+        <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 后台首页</a></li>
         <li class="active">{{$boxTitle}}</li>
     </ol>
   </section>
@@ -195,6 +195,13 @@
                   color: '#808080'
               }]
           },
+          plotOptions: {
+              series: {
+                  marker: {
+                      enabled: false
+                  }
+              },
+          },
           credits: {
               enabled: false //不显示LOGO
           },
@@ -277,6 +284,13 @@
                   color: '#808080'
               }]
           },
+          plotOptions: {
+              series: {
+                  marker: {
+                      enabled: false
+                  }
+              },
+          },
           credits: {
               enabled: false //不显示LOGO
           },
@@ -358,6 +372,13 @@
                   width: 1,
                   color: '#808080'
               }]
+          },
+          plotOptions: {
+              series: {
+                  marker: {
+                      enabled: false
+                  }
+              },
           },
           credits: {
               enabled: false //不显示LOGO

@@ -25,6 +25,11 @@ class LiaisonsModel extends AppModel{
         $query->where('pattern' ,'=' ,$pattern);
     }
 
+
+    public function scopeFirmId($query,$firmId){
+        $query->where('firm_id' ,'=' ,$firmId);
+    }
+
     public function company(){
         return $this->belongsTo('App\Eloquent\CompaniesModel','firm_id','id');
     }

@@ -10,7 +10,7 @@
       <small>首页</small>
     </h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+      <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
     </ol>
   </section>
 
@@ -134,10 +134,9 @@
           <ul class="nav nav-tabs pull-right">
             <li class="pull-left header"><i class="fa fa-map-marker"></i> 地图</li>
             <div  style="height: 500px;">
-                <img src="{{ asset('images/WordMap.gif') }}">
+                <img src="{{ asset('images/WordMap.gif') }}" style="width:100%;height:auto;">
             </div>
           </ul>
-
         </div>
 
       </section>
