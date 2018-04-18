@@ -22,7 +22,7 @@ class ChartsController extends Controller{
         $queryArray['firmId'] = Auth::user()->company->id??'';
         $collectors = $this->collectorsServices->getList(0,$queryArray);
         $collector = $this->collectorsServices->get($id);
-        $startDate    = date("Y-m-d H:i:s",time()+8*60*60-10*60);
+        $startDate    = date("Y-m-d H:i:s",time()+8*60*60-5*60);
         $http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
         $speedData = $this->getSpeedData($http_type,'acc_orig',$collector->id??'',$startDate);
         $temperatureData = $this->getTemperatureData($http_type,'ex_temp',$collector->id??'',$startDate);
@@ -48,7 +48,7 @@ class ChartsController extends Controller{
         $queryArray['firmId'] = Auth::user()->company->id??'';
         $collectors = $this->collectorsServices->getList(0,$queryArray);
         $collector = $this->collectorsServices->get($id);
-        $startDate    = date("Y-m-d H:i:s",time()+8*60*60-10*60);
+        $startDate    = date("Y-m-d H:i:s",time()+8*60*60-5*60);
         $http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
 
         $speedData = $this->getSpeedData($http_type,'acc_orig',$collector->id??'',$startDate);
