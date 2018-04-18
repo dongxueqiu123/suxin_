@@ -133,9 +133,10 @@
   <script type="text/javascript">
 
 
-      var myTime ,time ,curTime ,max ,startDateTime ,collectorId ,status ,name;
+      var myTime ,time ,curTime ,max ,startDateTime ,collectorId ,status ,dateTime ,$time;
 
       myTime = $.myTime;
+      $time = $('time');
       Highcharts.setOptions({
           global: {
               useUTC: false
@@ -163,7 +164,7 @@
                           $.getJSON(
                               url,
                               function (data) {
-                                  var newData = getData(data['data'],1);
+                                  var newData = getData(data['data'],1,'');
 
                                   var length = newData.length;
 
@@ -228,7 +229,7 @@
                   // generate an array of random data
                   data =$('#containerData').html();
 
-                  return getData(JSON.parse( data),1);
+                  return getData(JSON.parse( data),1,'');
               }())
           }]
       });
@@ -255,7 +256,7 @@
                           $.getJSON(
                               url,
                               function (data) {
-                                  var newData = getData(data['data'],1);
+                                  var newData = getData(data['data'],1,'');
 
                                   var length = newData.length;
 
@@ -320,7 +321,7 @@
                   // generate an array of random data
                   data =$('#containerSpeedData').html();
 
-                  return getData(JSON.parse( data),1);
+                  return getData(JSON.parse( data),1,'');
               }())
           }]
       });
@@ -339,7 +340,8 @@
                           collectorId = '{{$collector->id}}';
                           status = 'in_hum';
                           time = new Date();
-                          curTime = myTime.CurTime();
+                          //curTime = myTime.CurTime();
+                          curTime = $time.data('timeValue');
                           max = myTime.UnixToDate(curTime,true,(new Date().getTimezoneOffset()/-60));
                           startDateTime = myTime.UnixToDate(curTime-8,true,(new Date().getTimezoneOffset()/-60));
                           $('.startTime').val(startDateTime);
@@ -347,7 +349,7 @@
                           $.getJSON(
                               url,
                               function (data) {
-                                  var newData = getData(data['data'],1);
+                                  var newData = getData(data['data'],1,$time);
                                   var length = newData.length;
                                   for(dataKey = 0 ; dataKey < length; dataKey++){
 
@@ -408,13 +410,12 @@
               data: (function () {
                   // generate an array of random data
                   data =$('#containerHumidityData').html();
-
-                  return getData(JSON.parse( data),1);
+                  return getData(JSON.parse( data),1,$time);
               }())
           }]
       });
 
-      function getData(data,n) {
+      function getData(data,n,$time) {
           var dataKey, length, pointDate;
           length = data.length;
           for(dataKey = 0 ; dataKey < length; dataKey++){
@@ -422,6 +423,9 @@
               data[dataKey][0] = data[dataKey][0].replace(/Z/, "");
               pointDate = new Date(data[dataKey][0]);
               data[dataKey][0] = pointDate.getTime()-n*new Date().getTimezoneOffset()*60*1000-8*60*60*1000;
+              if($time){
+                  $link.data('timeValue', data[length-1][0]);
+              }
           }
           return data;
       }
