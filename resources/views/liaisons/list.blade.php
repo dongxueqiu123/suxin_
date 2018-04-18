@@ -16,7 +16,7 @@
           <div class="col-xs-12">
           <div class="box box-solid">
               <div class="box-header">
-                  <a href="{{route('liaisons.store')}}" class="btn btn-default pull-left"><i class="fa fa-fw fa-plus"></i>新增联系人</a>
+                  <a href="{{route('liaisons.store')}}" class="btn btn-default pull-left"><i class="fa fa-fw fa-plus"></i>新增方式</a>
               </div>
       <div class="nav-tabs-custom">
 

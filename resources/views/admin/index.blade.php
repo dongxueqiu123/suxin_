@@ -133,7 +133,7 @@
         <div class="nav-tabs-custom">
           <ul class="nav nav-tabs pull-right">
             <li class="pull-left header"><i class="fa fa-map-marker"></i> 地图</li>
-            <div  style="height: 500px;">
+            <div>
                 <img src="{{ asset('images/WordMap.gif') }}" style="width:100%;height:auto;">
             </div>
           </ul>

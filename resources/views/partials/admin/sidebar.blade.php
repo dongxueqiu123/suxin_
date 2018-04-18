@@ -72,7 +72,7 @@
         @permission(['intelligents'])
         <li class="@if (($active??'') === 'realTime') active @endif">
           <a href="{{route('charts.collectorChartRealTime',['id'=>3])}}">
-            <i class="fa fa-calendar-o"></i> <span>实时数据</span>
+            <i class="fa fa-area-chart"></i> <span>实时数据</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
@@ -82,7 +82,7 @@
       @else
         <li class="@if (($active??'') === 'realTime') active @endif">
           <a href="{{route('charts.collectorChartRealTime',['id'=>3])}}">
-            <i class="fa fa-calendar-o"></i> <span>实时数据</span>
+            <i class="fa fa-area-chart"></i> <span>实时数据</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
@@ -94,7 +94,7 @@
         @permission(['intelligents'])
         <li class="@if (($active??'') === 'intelligents') active @endif">
           <a href="{{route('intelligents')}}">
-            <i class="fa fa-plus"></i> <span>智能诊断</span>
+            <i class="fa fa-ambulance"></i> <span>智能诊断</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
@@ -104,7 +104,7 @@
       @else
         <li class="@if (($active??'') === 'intelligents') active @endif">
           <a href="{{route('intelligents')}}">
-            <i class="fa fa-plus"></i> <span>智能诊断</span>
+            <i class="fa fa-ambulance"></i> <span>智能诊断</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
@@ -117,17 +117,17 @@
         @permission(['equipments','collectors'])
         <li class="@if (in_array($active??'', ['equipments','collectors'])) active @endif treeview">
           <a href="#">
-            <i class="fa fa-suitcase"></i> <span>设备管理</span>
+            <i class="fa fa-cogs"></i> <span>设备管理</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
           </a>
           <ul class="treeview-menu">
             @permission('equipments')
-            <li class="@if (($active??'') === 'equipments') active @endif"><a href="{{route('equipments')}}"><i class="fa fa-circle-o"></i> 机械设备</a></li>
+            <li class="@if (($active??'') === 'equipments') active @endif"><a href="{{route('equipments')}}"><i class="fa fa-subway"></i> 机械设备</a></li>
             @endpermission
             @permission('collectors')
-            <li class="@if (($active??'') === 'collectors') active @endif"><a href="{{route('collectors')}}"><i class="fa fa-tablet"></i> 无线节点</a></li>
+            <li class="@if (($active??'') === 'collectors') active @endif"><a href="{{route('collectors')}}"><i class="fa fa-wifi"></i> 无线节点</a></li>
             @endpermission
           </ul>
         </li>
@@ -147,10 +147,10 @@
             <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 阈值设置</a></li>
             @endpermission
             @permission('liaisons')
-            <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-fax"></i> 告警方式</a></li>
+            <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-comments-o"></i> 告警方式</a></li>
             @endpermission
             @permission('alarms')
-            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-file"></i> 告警记录</a></li>
+            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-warning"></i> 告警记录</a></li>
             @endpermission
 
           </ul>
@@ -161,14 +161,14 @@
 
         <li class="@if (in_array($active??'', ['equipments','collectors'])) active @endif treeview">
           <a href="#">
-            <i class="fa fa-suitcase"></i> <span>设备管理</span>
+            <i class="fa fa-cogs"></i> <span>设备管理</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
           </a>
           <ul class="treeview-menu">
-            <li class="@if (($active??'') === 'equipments') active @endif"><a href="{{route('equipments')}}"><i class="fa fa-circle-o"></i> 机械设备</a></li>
-            <li class="@if (($active??'') === 'collectors') active @endif"><a href="{{route('collectors')}}"><i class="fa fa-tablet"></i> 无线节点</a></li>
+            <li class="@if (($active??'') === 'equipments') active @endif"><a href="{{route('equipments')}}"><i class="fa fa-subway"></i> 机械设备</a></li>
+            <li class="@if (($active??'') === 'collectors') active @endif"><a href="{{route('collectors')}}"><i class="fa fa-wifi"></i> 无线节点</a></li>
           </ul>
         </li>
 
@@ -181,8 +181,8 @@
           </a>
           <ul class="treeview-menu">
             <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 阈值设置</a></li>
-            <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-phone"></i> 告警方式</a></li>
-            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-file"></i> 告警记录</a></li>
+            <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-comments-o"></i> 告警方式</a></li>
+            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-warning"></i> 告警记录</a></li>
           </ul>
         </li>
 
@@ -192,26 +192,26 @@
         @permission('companies')
         <li class="@if (($active??'') === 'companies') active @endif treeview">
           <a href="#">
-            <i class="fa fa-television"></i> <span>公司管理</span>
+            <i class="fa fa-institution"></i> <span>公司管理</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
           </a>
           <ul class="treeview-menu">
-            <li class="@if (($active??'') === 'companies') active @endif "><a href="{{route('companies')}}"><i class="fa fa-sticky-note-o"></i> 公司</a></li>
+            <li class="@if (($active??'') === 'companies') active @endif "><a href="{{route('companies')}}"><i class="fa fa-sitemap"></i> 公司</a></li>
           </ul>
         </li>
         @endpermission
       @else
         <li class="@if (($active??'') === 'companies') active @endif treeview">
           <a href="#">
-            <i class="fa fa-television"></i> <span>公司管理</span>
+            <i class="fa fa-institution"></i> <span>公司管理</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
           </a>
           <ul class="treeview-menu">
-            <li class="@if (($active??'') === 'companies') active @endif"><a href="{{route('companies')}}"><i class="fa fa-sticky-note-o"></i> 公司</a></li>
+            <li class="@if (($active??'') === 'companies') active @endif"><a href="{{route('companies')}}"><i class="fa fa-sitemap"></i> 公司</a></li>
           </ul>
         </li>
       @endif
