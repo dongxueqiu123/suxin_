@@ -23,10 +23,11 @@ class ChartsController extends Controller{
         $collectors = $this->collectorsServices->getList(0,$queryArray);
         $collector = $this->collectorsServices->get($id);
         $startDate    = date("Y-m-d H:i:s",time()+8*60*60-5*60);
+        $newStartDate = date("Y-m-d H:i:s",time()+8*60*60-10*60);
         $http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
         $speedData = $this->getSpeedData($http_type,'acc_orig',$collector->id??'',$startDate);
-        $temperatureData = $this->getTemperatureData($http_type,'ex_temp',$collector->id??'',$startDate);
-        $humidityData = $this->getHumidityData($http_type,'in_hum',$collector->id??'',$startDate);
+        $temperatureData = $this->getTemperatureData($http_type,'ex_temp',$collector->id??'',$newStartDate);
+        $humidityData = $this->getHumidityData($http_type,'in_hum',$collector->id??'',$newStartDate);
 /*        $url = $http_type.$_SERVER['HTTP_HOST'].'/admin/charts/collectorResponse';
         $data = $this->httpGet($url,[]);
         $collectorData = json_decode($data);*/
@@ -49,13 +50,14 @@ class ChartsController extends Controller{
         $collectors = $this->collectorsServices->getList(0,$queryArray);
         $collector = $this->collectorsServices->get($id);
         $startDate    = date("Y-m-d H:i:s",time()+8*60*60-5*60);
+        $newStartDate = date("Y-m-d H:i:s",time()+8*60*60-10*60);
         $http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
 
         $speedData = $this->getSpeedData($http_type,'acc_orig',$collector->id??'',$startDate);
 
-        $temperatureData = $this->getTemperatureData($http_type,'ex_temp',$collector->id??'',$startDate);
+        $temperatureData = $this->getTemperatureData($http_type,'ex_temp',$collector->id??'',$newStartDate);
 
-        $humidityData = $this->getHumidityData($http_type,'in_hum',$collector->id??'',$startDate);
+        $humidityData = $this->getHumidityData($http_type,'in_hum',$collector->id??'',$newStartDate);
         /*        $url = $http_type.$_SERVER['HTTP_HOST'].'/admin/charts/collectorResponse';
                 $data = $this->httpGet($url,[]);
                 $collectorData = json_decode($data);*/
