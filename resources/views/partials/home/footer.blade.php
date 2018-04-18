@@ -53,7 +53,7 @@
       <div class="row">
         <div class="col-sm-12">
           <p>
-            <strong>Copyright &copy; <span id="time"></span> Suxin.</strong> All rights reserved. &nbsp;&nbsp;&nbsp;苏ICP备 18009421号-1
+            <strong>Copyright &copy; <span id="year"></span> Suxin.</strong> All rights reserved. &nbsp;&nbsp;&nbsp;苏ICP备 18009421号-1
             &nbsp;&nbsp;苏公网安备 32011402010278号</p>
         </div>
       </div>
@@ -64,7 +64,5 @@
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
 <script>
-  var date = new Date();
-  var year = date.getFullYear();
-  $("#time").html(year);
+  $("#year").html(new Date().getFullYear());
 </script>
