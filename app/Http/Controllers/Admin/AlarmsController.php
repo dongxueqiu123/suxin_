@@ -27,7 +27,8 @@ class AlarmsController extends Controller{
 
     public function index(){
         $queryArray['firmId'] = \Auth()->user()->company->id??'';
-        $alarms = $this->alarmsServices->getList(static::PAGE_SIZE_DEFAULT,$queryArray);
+        $ext['latest'] = 'latest';
+        $alarms = $this->alarmsServices->getList(static::PAGE_SIZE_DEFAULT,$queryArray,true,true,$ext);
         $alarms->each(function($alarm){
             $alarm->category = $this->thresholdsServices->getConstant($alarm,'category');
             $alarm->grade    = $this->thresholdsServices->getConstant($alarm,'grade');

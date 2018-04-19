@@ -6,7 +6,7 @@
       <small>告警记录</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 后台首页</a></li>
+        <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台首页</a></li>
         <li class="active">{{$boxTitle}}</li>
     </ol>
   </section>
@@ -37,7 +37,7 @@
               <tbody>
               @foreach($alarms as $key=>$alarm)
 
-              <tr @if($alarm->status ==0)style="color: red;"@else style="color:green;" @endif>
+              <tr @if($alarm->status ==0)style="color: red;"@elseif($alarm->status ==1) style="color:green;" @elseif($alarm->status ==2) style="color:orange;" @endif>
                   <td>{{$key+1}}</td>
                   <td>{{$alarm->category}}</td>
                   <td>{{$alarm->grade}}</td>
@@ -56,11 +56,10 @@
                   <td>{{$alarm->provider->name??'暂无'}}</td>
                   <td>{{$alarm->consumer->name??'暂无'}}</td>
                 <td>
-                    @if($alarm->status == 2)
-                        <a class="btn btn-danger btn-xs restore" url="{{ route('api.alarms.edit',['id'=>$alarm->id])}}">恢复(已删除)</a>
-                        @else
+                    @if($alarm->status == 0)
+                        <a class="btn btn-danger btn-xs restore" url="{{ route('api.alarms.edit',['id'=>$alarm->id])}}">恢复</a>
                         <a class="btn btn-danger btn-xs delete" url="{{ route('api.alarms.edit',['id'=>$alarm->id])}}">删除</a>
-                        @endif
+                    @endif
                 </td>
               </tr>
               @endforeach
@@ -83,15 +82,17 @@
       $('.delete').click(function () {
           var url;
           url = $(this).attr('url');
-          layer.confirm('是否删除？', {
-              btn: ['删除','取消'] //按钮
-          }, function(){
+          layer.prompt({
+              formType: 2,
+              title: '说明',
+              area: ['300px', '100px'] //自定义文本域宽高
+          }, function(value, index, elem){
               $.ajax({
                   url:url,
                   type:'POST',    //GET
                   async:true,    //或false,是否异步
                   data:{
-                      status:2
+                      remark:value,status:2
                   },
                   timeout:5000,    //超时时间
                   dataType:'json',

@@ -25,7 +25,7 @@
             <small>无线节点数据图</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 后台首页</a></li>
+            <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台首页</a></li>
             <li class="active">{{$boxTitle}}</li>
         </ol>
     </section>
@@ -143,7 +143,7 @@
 
         var collectorId = '{{$collector->id}}';
         var startTimes = {'acc_orig': '', 'ex_temp': '', 'in_hum': ''};
-        var flags = {'acc_orig': false, 'ex_temp': false, 'in_hum': false};
+        var flags = {'acc_orig': true, 'ex_temp': true, 'in_hum': true};
         var accs = [];
 
         changeInflux = function(timestamp) {
@@ -153,11 +153,6 @@
         }
 
         convert = function(category, data) {
-            if(flags[category]) {
-                console.log(category + "\t" + data.length);
-                return [];
-            }
-            flags[category] = true;
             var size = data.length;
             if(size == 0) {
                 return data;
@@ -183,22 +178,28 @@
                         var sos = this.series[0];
                         setInterval(
                             function() {
-                                $.getJSON(
-                                    '/console/influx/timeseries/ex_temp/'+collectorId+'?startTime='+startTimes['ex_temp'],
-                                    function(result) {
-                                        var data = convert('ex_temp', result['data']);
-                                        for(var i = 0 ; i < data.length; i++){
-                                            sos.addPoint(data[i], true, true);
+                                if(flags['ex_temp'] == false) {
+                                    flags['ex_temp'] = true;
+                                    $.getJSON(
+                                        '/console/influx/timeseries/ex_temp/'+collectorId+'?startTime='+startTimes['ex_temp'],
+                                        function(result) {
+                                            var data = convert('ex_temp', result['data']);
+                                            for(var i = 0 ; i < data.length; i++){
+                                                sos.addPoint(data[i], true, true);
+                                            }
+                                            flags['ex_temp'] = false;
                                         }
-                                        flags['ex_temp'] = false;
-                                    }
-                                );
+                                    );
+                                }
                             }, 3500);
                     }
                 }
             },
             title: {
-                text: '{{$collector->name}}温度数据图'
+                text: '{{$collector->name}}温度数据图',
+                style: {
+                    fontSize: '13'
+                },
             },
             xAxis: {
                 title: {
@@ -244,8 +245,10 @@
                 name: '温度',
                 lineWidth: 1,
                 data: (function () {
-                    data =$('#containerData').html();
-                    return convert('ex_temp', JSON.parse(data));
+                    var data = $('#containerData').html();
+                    var points = convert('ex_temp', JSON.parse(data));
+                    flags['ex_temp'] = false;
+                    return points;
                 }())
             }]
         });
@@ -261,29 +264,35 @@
                         var sos = this.series[0];
                         setInterval(
                             function() {
-                                $.getJSON(
-                                    '/console/influx/timeseries/acc_orig/'+collectorId+'?startTime='+startTimes['acc_orig'],
-                                    function(result) {
-                                        if(accs.length < 8) {
-                                            var data = convert('acc_orig', result['data']);
-                                            for(var j = 0; j < data.length; j++) {
-                                                accs.push(data.shift());
+                                if(flags['acc_orig'] == false) {
+                                    flags['acc_orig'] = true;
+                                    $.getJSON(
+                                        '/console/influx/timeseries/acc_orig/'+collectorId+'?startTime='+startTimes['acc_orig'],
+                                        function(result) {
+                                            if(accs.length < 8) {
+                                                var data = convert('acc_orig', result['data']);
+                                                for(var j = 0; j < data.length; j++) {
+                                                    accs.push(data.shift());
+                                                }
                                             }
-                                        }
-                                        if(accs.length >= 8) {
-                                            for(var j = 0; j < 8; j++) {
-                                                sos.addPoint(accs.shift(), true, true);
+                                            if(accs.length >= 8) {
+                                                for(var j = 0; j < 8; j++) {
+                                                    sos.addPoint(accs.shift(), true, true);
+                                                }
                                             }
+                                            flags['acc_orig'] = false;
                                         }
-                                        flags['acc_orig'] = false;
-                                    }
-                                );
+                                    );
+                                }
                             }, 1000);
                     }
                 }
             },
             title: {
-                text: '{{$collector->name}}加速度数据图'
+                text: '{{$collector->name}}加速度数据图',
+                style: {
+                    fontSize: '13'
+                },
             },
             xAxis: {
                 title: {
@@ -336,6 +345,7 @@
                             accs.push(data.pop());
                         }
                     }
+                    flags['acc_orig'] = false;
                     return data;
                 }())
             }]
@@ -352,22 +362,28 @@
                         var sos = this.series[0];
                         setInterval(
                             function() {
-                                $.getJSON(
-                                    '/console/influx/timeseries/in_hum/'+collectorId+'?startTime='+startTimes['in_hum'],
-                                    function(result) {
-                                        var data = convert('in_hum', result['data']);
-                                        for(var i = 0 ; i < data.length; i++){
-                                            sos.addPoint(data[i], true, true);
+                                if(flags['in_hum'] == false) {
+                                    flags['in_hum'] = true;
+                                    $.getJSON(
+                                        '/console/influx/timeseries/in_hum/'+collectorId+'?startTime='+startTimes['in_hum'],
+                                        function(result) {
+                                            var data = convert('in_hum', result['data']);
+                                            for(var i = 0 ; i < data.length; i++){
+                                                sos.addPoint(data[i], true, true);
+                                            }
+                                            flags['in_hum'] = false;
                                         }
-                                        flags['in_hum'] = false;
-                                    }
-                                );
+                                    );
+                                }
                             }, 3500);
                     }
                 }
             },
             title: {
-                text: '{{$collector->name}}湿度数据图'
+                text: '{{$collector->name}}湿度数据图',
+                style: {
+                    fontSize: '13'
+                },
             },
             xAxis: {
                 title: {
@@ -413,8 +429,10 @@
                 name: '湿度',
                 lineWidth: 1,
                 data: (function () {
-                    data =$('#containerHumidityData').html();
-                    return convert('in_hum', JSON.parse(data));
+                    var data =$('#containerHumidityData').html();
+                    var points = convert('in_hum', JSON.parse(data));
+                    flags['in_hum'] = false;
+                    return points;
                 }())
             }]
         });

@@ -31,7 +31,7 @@ class AlarmsServices extends ServicesAdapte{
                             bool $queryBelongsTo = true,
                             bool $queryChildren = true, $ext = []){
         $query = $this->alarms->nothing();
-
+        ($ext['latest'] ?? 0) && $query->latest();
         foreach($queryArray as $key => $value){
             if($key === 'firmId'){
                 //没有特殊权限的正常判断

@@ -50,14 +50,7 @@
           <li><a href="#"><i class="fa fa-circle-o"></i> Pace Page</a></li>
         </ul>
       </li>--}}
-      <li >
-        <a href="{{ url('/') }}">
-          <i class="fa fa-home"></i> <span>网站首页</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-      </li>
+
 
       <li class="@if (($active??'') === 'home') active @endif ">
         <a href="{{route('admin')}}">
@@ -192,26 +185,26 @@
         @permission('companies')
         <li class="@if (($active??'') === 'companies') active @endif treeview">
           <a href="#">
-            <i class="fa fa-institution"></i> <span>机构管理</span>
+            <i class="fa fa-institution fa-sitemap"></i> <span>机构管理</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
           </a>
           <ul class="treeview-menu">
-            <li class="@if (($active??'') === 'companies') active @endif "><a href="{{route('companies')}}"><i class="fa fa-sitemap"></i> 公司</a></li>
+            <li class="@if (($active??'') === 'companies') active @endif "><a href="{{route('companies')}}"><i class="fa fa-institution"></i> 公司</a></li>
           </ul>
         </li>
         @endpermission
       @else
         <li class="@if (($active??'') === 'companies') active @endif treeview">
           <a href="#">
-            <i class="fa fa-institution"></i> <span>公司管理</span>
+            <i class="fa fa-sitemap"></i> <span>机构管理</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
           </a>
           <ul class="treeview-menu">
-            <li class="@if (($active??'') === 'companies') active @endif"><a href="{{route('companies')}}"><i class="fa fa-sitemap"></i> 公司</a></li>
+            <li class="@if (($active??'') === 'companies') active @endif"><a href="{{route('companies')}}"><i class="fa fa-institution"></i> 公司</a></li>
           </ul>
         </li>
       @endif
@@ -253,6 +246,15 @@
           </ul>
         </li>
       @endif
+
+      <li >
+        <a href="{{ url('/') }}">
+          <i class="fa fa-home"></i> <span>网站首页</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+      </li>
     </ul>
   </section>
 

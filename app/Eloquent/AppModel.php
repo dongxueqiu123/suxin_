@@ -11,4 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppModel extends Model{
     public function scopeNothing($query){return $query;}
+
+    public function scopeLatest($query){$query->orderBy('id', 'desc');}
 }
