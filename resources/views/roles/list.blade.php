@@ -23,7 +23,6 @@
             <table id="example1" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>序号</th>
                 <th>名称</th>
                 <th>描述</th>
                 <th>更新时间</th>
@@ -33,7 +32,6 @@
               <tbody>
               @foreach($roles as $key=>$role)
               <tr>
-                <td>{{$key+1}}</td>
                 <td>{{$role->name}}
                 </td>
                 <td>{{$role->description}}</td>

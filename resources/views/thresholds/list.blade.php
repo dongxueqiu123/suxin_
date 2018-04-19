@@ -29,7 +29,6 @@
                               <table id="example1" class="table table-bordered table-striped">
                                   <thead>
                                   <tr>
-                                      <th>序号</th>
                                       <th>阈值</th>
                                       <th>分类</th>
                                       <th>等级</th>
@@ -43,7 +42,6 @@
                                   <tbody>
                                   @foreach($thresholds??[] as $key=>$threshold)
                                       <tr>
-                                          <td>{{$key+1}}</td>
                                           <td>{{$threshold->lowlimit}}~{{$threshold->toplimit}}</td>
                                           <td>{{$threshold->category??'暂无'}}</td>
                                           <td>{{$threshold->grade??'暂无'}}</td>

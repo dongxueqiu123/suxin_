@@ -26,7 +26,6 @@
                           <table id="example1" class="table table-bordered table-striped">
                               <thead>
                               <tr>
-                                  <th>序号</th>
                                   <th>名称</th>
                                   <th>生产公司</th>
                                   <th>使用公司</th>
@@ -37,7 +36,6 @@
                               <tbody>
                               @foreach($equipments as $key=>$equipment)
                                   <tr>
-                                      <td>{{$key+1}}</td>
                                       <td>{{$equipment->name}}</td>
                                       <td>{{$equipment->provider->name??''}}</td>
                                       <td>{{$equipment->consumer->name??''}}</td>

@@ -23,7 +23,6 @@
             <table id="example1" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>序号</th>
                 <th>名称</th>
                 <th>简称</th>
                 <th>更新时间</th>
@@ -33,7 +32,6 @@
               <tbody>
               @foreach($companies as $key=>$company)
               <tr>
-                <td>{{$key+1}}</td>
                 <td>{{$company->name}}
                 </td>
                 <td>{{$company->abbreviation}}</td>

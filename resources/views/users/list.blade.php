@@ -23,7 +23,6 @@
             <table id="example1" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>序号</th>
                 <th>名称</th>
                 <th>邮箱</th>
                 <th>所属公司</th>
@@ -35,7 +34,6 @@
               <tbody>
               @foreach($users as $key=>$user)
               <tr>
-                <td>{{$key+1}}</td>
                 <td>{{$user->name}}
                 </td>
                 <td>{{$user->email}}</td>

@@ -28,7 +28,6 @@
                               <table id="example1" class="table table-bordered table-striped">
                                   <thead>
                                   <tr>
-                                      <th>序号</th>
                                       <th>电子邮箱</th>
                                       <th>手机号码</th>
                                       <th>无线节点</th>
@@ -41,7 +40,6 @@
                                   <tbody>
                                   @foreach($liaisons??[] as $key=>$liaison)
                                       <tr>
-                                          <td>{{$key+1}}</td>
                                           <td>{{$liaison->email}}</td>
                                           <td>{{$liaison->mobile}}</td>
                                           <td>{{$liaison->collector->name??'暂无'}}</td>

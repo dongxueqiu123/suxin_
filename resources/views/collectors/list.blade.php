@@ -26,7 +26,6 @@
                           <table id="example1" class="table table-bordered table-striped">
                               <thead>
                               <tr>
-                                  <th>序号</th>
                                   <th>名称</th>
                                   <th>机械设备</th>
                                   <th>公司</th>
@@ -43,7 +42,6 @@
                                   $consumerName = $collector->equipment->consumer->name??'';
                                   ?>
                                   <tr>
-                                      <td>{{$key+1}}</td>
                                       <td>{{$collector->name}}</td>
                                       <td>{{$collector->equipment->name??'暂无'}}</td>
                                       <td>@if($providerName)

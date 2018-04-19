@@ -205,6 +205,8 @@
                 title: {
                     text: '时间 (min)'
                 },
+                ceiling:85,
+                floor:-40,
                 type: 'datetime',
                 tickPixelInterval: 150
             },
@@ -396,6 +398,8 @@
                 title: {
                     text: '湿度 (%RH)'
                 },
+                ceiling:100,
+                floor:0,
                 plotLines: [{
                     value: 0,
                     width: 1,

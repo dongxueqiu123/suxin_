@@ -21,7 +21,7 @@
             <table id="example1" class="table table-bordered table-striped">
               <thead>
               <tr>
-                  <th>序号</th>
+                  <th>编号</th>
                   <th>分类</th>
                   <th>等级</th>
                   <th>告警详情</th>
@@ -38,7 +38,7 @@
               @foreach($alarms as $key=>$alarm)
 
               <tr @if($alarm->status ==0)style="color: red;"@elseif($alarm->status ==1) style="color:green;" @elseif($alarm->status ==2) style="color:orange;" @endif>
-                  <td>{{$key+1}}</td>
+                  <td>{{$alarm->id}}</td>
                   <td>{{$alarm->category}}</td>
                   <td>{{$alarm->grade}}</td>
                   <td>{{$alarm->detail}}</td>
