@@ -152,7 +152,7 @@
                 };
                 var jsonData = JSON.stringify(data);
                 $.ajax({
-                    url:'http://192.168.158.106:8080/console/collector/saveOrUpdate',
+                    url:'/console/collector/saveOrUpdate',
                     type:'POST',    //GET
                     contentType: "application/json;charset=utf-8",
                     data:jsonData,

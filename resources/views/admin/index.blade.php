@@ -380,7 +380,7 @@
              */
             var requestMgr = {
                     request: function (time, successCbk) {
-                        var retrieveByFirmId = 'http://192.168.158.106:8080'+url+'/collector/retrieveByFirmId';
+                        var retrieveByFirmId = url+'/collector/retrieveByFirmId';
                         var points = [];
                         $.getJSON(retrieveByFirmId, function(data) {
                             var len = data.data.length;
