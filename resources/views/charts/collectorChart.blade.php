@@ -205,8 +205,6 @@
                 title: {
                     text: '时间 (min)'
                 },
-                ceiling:85,
-                floor:-40,
                 type: 'datetime',
                 tickPixelInterval: 150
             },
@@ -214,6 +212,8 @@
                 title: {
                     text: '温度 (℃)'
                 },
+                softMax: 30, // softMax 是可变的最大值
+                softMin: 25,
                 plotLines: [{
                     value: 0,
                     width: 1,
@@ -398,8 +398,8 @@
                 title: {
                     text: '湿度 (%RH)'
                 },
-                ceiling:100,
-                floor:0,
+                softMax: 40, // softMax 是可变的最大值
+                softMin: 30,
                 plotLines: [{
                     value: 0,
                     width: 1,
