@@ -64,7 +64,7 @@
       @if( Auth::user()->id !==1 )
         @permission(['intelligents'])
         <li class="@if (($active??'') === 'realTime') active @endif">
-          <a href="{{route('charts.collectorChartRealTime',['id'=>3])}}">
+          <a href="{{route('charts.collectorChartRealTime',['id'=>0])}}">
             <i class="fa fa-area-chart"></i> <span>实时数据</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
@@ -74,7 +74,7 @@
         @endpermission
       @else
         <li class="@if (($active??'') === 'realTime') active @endif">
-          <a href="{{route('charts.collectorChartRealTime',['id'=>3])}}">
+          <a href="{{route('charts.collectorChartRealTime',['id'=>0])}}">
             <i class="fa fa-area-chart"></i> <span>实时数据</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>

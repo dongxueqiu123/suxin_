@@ -34,7 +34,7 @@
               </div>
 
                 <div class="col-xs-4 text-center">
-                  <a href="{{route('charts.collectorChartRealTime',['id'=>3])}}">实时数据</a>
+                  <a href="{{route('charts.collectorChartRealTime',['id'=>0])}}">实时数据</a>
                 </div>
 
                 <div class="col-xs-4 text-center">

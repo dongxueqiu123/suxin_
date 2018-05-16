@@ -33,7 +33,7 @@ class CollectorsServices extends ServicesAdapte{
                             bool $queryChildren = true, $ext = []){
 
         $query = $this->collectors->nothing();
-
+        ($ext['sort'] ?? 0) && $query->sort();
         foreach($queryArray as $key => $value){
             if($key === 'firmId'){
                 //没有特殊权限的正常判断

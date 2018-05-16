@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Eloquent\UsersModel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class HomeController extends Controller
 {
@@ -16,6 +18,7 @@ class HomeController extends Controller
     {
     }
 
+    use AuthenticatesUsers;
     /**
      * Show the application dashboard.
      *
@@ -87,4 +90,22 @@ class HomeController extends Controller
         return view('sensors')->with($view_data);
     }
 
+    public function login(Request $request){
+        if($this->attemptLogin($request)){
+            $result['name']    = \Auth::user()->name;
+            $result['email']   = \Auth::user()->email;
+            $result['id']      = \Auth::user()->id;
+            $result['companyId']      = \Auth::user()->company->id??1;
+            $result['companyName']      = \Auth::user()->company->name??'苏芯物联';
+            return response()->json([
+                'code' => '0',
+                'data' => $result
+            ]);
+        } else{
+            return response()->json([
+                'code' => '-1',
+                'data' => '账号或密码错误'
+            ]);
+        }
+    }
 }

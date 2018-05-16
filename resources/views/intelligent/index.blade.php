@@ -22,7 +22,7 @@
     <script src="{{ asset('laydate/laydate.js') }}"></script>
     <section class="content-header">
         <h1>
-            <small>基于原创算法的齿轮箱智能诊断</small>
+            <small>基于工业大数据的智能故障诊断</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台首页</a></li>

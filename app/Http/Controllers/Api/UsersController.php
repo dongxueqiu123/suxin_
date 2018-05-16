@@ -13,7 +13,8 @@ class UsersController extends Controller
     public function __construct()
     {
         //$this->companies = new CompaniesModel();
-        $this->middleware('auth.user');
+
+        //$this->middleware('auth.user');
     }
 
     public function edit($id,Request $request){

@@ -29,6 +29,7 @@ Route::group(['prefix' => 'admin/users'], function () {
     //Route::get('/edit/{id}', 'Api\CompaniesController@edit')
     Route::post('/store', 'Api\UsersController@store')->name('api.users.store');
     Route::post('/delete/{id}', 'Api\UsersController@delete')->name('api.users.delete');
+
 });
 
 Route::group(['prefix' => 'admin/roles'], function () {
@@ -71,6 +72,29 @@ Route::group(['prefix' => 'admin/liaisons'], function () {
     Route::post('/store', 'Api\LiaisonsController@store')->name('api.liaisons.store');
     Route::post('/delete/{id}', 'Api\LiaisonsController@delete')->name('api.liaisons.delete');
 });
+
+Route::group(['prefix' => 'admin/products'], function () {
+    Route::post('/edit/{id}', 'Api\ProductsController@edit')->name('api.products.edit');
+    Route::post('/store', 'Api\ProductsController@store')->name('api.products.store');
+    Route::post('/delete/{id}', 'Api\ProductsController@delete')->name('api.products.delete');
+    Route::post('/storeImage', 'Api\ProductsController@storeImage')->name('api.products.storeImage');
+});
+
+
+Route::group(['prefix' => 'admin/carts'], function () {
+    Route::post('/store', 'Api\CartsController@store')->name('api.carts.store');
+    Route::post('/delete', 'Api\CartsController@delete')->name('api.carts.delete');
+});
+
+Route::group(['prefix' => 'admin/orders'], function () {
+    Route::post('/store', 'Api\OrdersController@store')->name('api.orders.store');
+    Route::post('/delete', 'Api\OrdersController@delete')->name('api.orders.delete');
+});
+
+Route::group(['prefix' => 'admin/orderProduct'], function () {
+    Route::post('/delete', 'Api\OrderProductController@delete')->name('api.orderProduct.delete');
+});
+
 
 Route::group(['prefix' => 'admin/alarms'], function () {
     Route::post('/edit/{id}', 'Api\AlarmsController@edit')->name('api.alarms.edit');

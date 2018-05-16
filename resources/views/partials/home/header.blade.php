@@ -42,9 +42,9 @@
                             </li>
                             <li>
                                 @if (Auth::user()->role === 1)
-                                    <a href="{{route('charts.collectorChartRealTime',['id'=>3])}}">@lang('auth.live_data')</a>
+                                    <a href="{{route('charts.collectorChartRealTime',['id'=>0])}}">@lang('auth.live_data')</a>
                                 @else
-                                    <a href="{{route('charts.collectorChartRealTime',['id'=>3])}}">@lang('auth.live_data')</a>
+                                    <a href="{{route('charts.collectorChartRealTime',['id'=>0])}}">@lang('auth.live_data')</a>
                                 @endif
                             </li>
                             <li>

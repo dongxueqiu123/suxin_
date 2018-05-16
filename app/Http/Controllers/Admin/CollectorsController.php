@@ -27,7 +27,8 @@ class CollectorsController extends Controller
     public function index()
     {
         $queryArray['firmId'] = \Auth()->user()->company->id??'';
-        $collectors = $this->collectorsServices->getList(static::PAGE_SIZE_DEFAULT, $queryArray);
+        $ext['sort'] = true;
+        $collectors = $this->collectorsServices->getList(static::PAGE_SIZE_DEFAULT, $queryArray,'','',$ext);
         return view('collectors.list',
             [
                 'collectors' => $collectors,

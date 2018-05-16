@@ -44,6 +44,10 @@ Route::prefix('{locale}')->group(function () {
 
 });
 
+Route::post('admin/users/login', 'HomeController@login');
+
+//Route::get('admin/login', 'Admin\HomeController@login');
+
 Route::get('admin', 'Admin\HomeController@index')->name('admin');
 Route::get('admin/permission', 'Admin\HomeController@permission');
 
@@ -109,6 +113,23 @@ Route::group(['prefix' => 'admin/charts', 'middleware' =>['auth.user','RolePermi
 Route::group(['prefix' => 'admin/intelligent', 'middleware' =>['auth.user','RolePermission']],function(){
     Route::get('/', 'Admin\IntelligentsController@index')->name('intelligents');
 
+});
+
+Route::group(['prefix' => 'admin/products', 'middleware' =>['auth.user','RolePermission']],function(){
+    Route::get('/', 'Admin\ProductsController@index')->name('products');
+    Route::get('/store', 'Admin\ProductsController@store')->name('products.store');
+    Route::get('/edit/{id}', 'Admin\ProductsController@edit')->name('products.edit');
+    Route::get('/buy', 'Admin\ProductsController@buy')->name('products.buy');
+    Route::get('/show/{id}', 'Admin\ProductsController@show')->name('products.show');
+});
+
+Route::group(['prefix' => 'admin/carts', 'middleware' =>['auth.user','RolePermission']],function(){
+    Route::get('/', 'Admin\CartsController@index')->name('carts');
+});
+
+Route::group(['prefix' => 'admin/orders', 'middleware' =>['auth.user','RolePermission']],function(){
+    Route::get('/', 'Admin\OrdersController@index')->name('orders');
+    Route::get('/show/{orderNo}', 'Admin\OrdersController@show')->name('orders.show');
 });
 
 /**测试权限**/
