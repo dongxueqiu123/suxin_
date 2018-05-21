@@ -69,7 +69,7 @@ class ProductsController extends Controller
                 'cartsRoute' => route('api.carts.store'),
                 'ordersRoute' => route('api.orders.store'),
                 'products' => $products,
-                'active' => 'products',
+                'active' => 'buyProducts',
             ]
         );
     }
@@ -86,7 +86,7 @@ class ProductsController extends Controller
                 'cartsRoute' => route('api.carts.store'),
                 'ordersRoute' => route('api.orders.store'),
                 'product' => $product,
-                'active' => 'products',
+                'active' => 'buyProducts',
             ]
         );
     }

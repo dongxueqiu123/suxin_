@@ -94,9 +94,7 @@ class ProductsController extends Controller
 
     public function storeImage(Request $request){
         $imgFile =  $request->file('imgFile');
-         $this->imageUpload->saveImage($imgFile);
-
-
+        $this->imageUpload->saveImage($imgFile);
     }
 
 }

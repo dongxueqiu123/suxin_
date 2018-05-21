@@ -21,7 +21,7 @@
                       <h3 class="box-title">我的商品</h3>
                   </div>
                   <div class="box-body">
-                      <table id="example1" class="table table-bordered table-striped">
+                      <table class="table table-bordered table-striped">
                           <thead>
                           <tr>
                               <th>图片</th>
@@ -33,7 +33,7 @@
                           <tbody>
                           @foreach($orderProducts as $orderProduct)
                           <tr class="product">
-                              <td> @if($orderProduct->product->iamge??'')<img style="height: 40px;" src="{{asset($orderProduct->product->image)??''}}">@endif</td>
+                              <td> @if($orderProduct->product->img??'')<img style="height: 40px;" src="{{asset($orderProduct->product->img)??''}}">@else <img style="height: 40px;" src="{{asset('images/hot.png')}}"> @endif</td>
                               <td>{{$orderProduct->product->name}}</td>
                               <td>
                                <span style="text-decoration:line-through;" class="text-red">
@@ -71,7 +71,7 @@
                            <span style="float: right;"> 最终订单金额：￥{{$order->total_price??'0.00'}}</span>
                         </div>
                           <div style="float: right;">
-                             <input type="submit" class="btn btn-danger pull-right btn-block btn-sm" value="提交订单">
+                             <input type="submit" class="btn btn-danger pull-right btn-block btn-sm pay" value="提交订单">
                           </div>
                       </div>
                   </div>
@@ -112,6 +112,33 @@
               layer.close();
           });
           return false;
+      });
+
+      $('.pay').on('click',function(){
+          var orderNo;
+          orderNo =  '{{$order->order_no??''}}';
+          $.ajax({
+              url:'{{route('api.orders.getBeUseInfo')}}',
+              type:'POST',    //GET
+              async:true,    //或false,是否异步
+              data:{
+                  orderNo:orderNo,
+              },
+              timeout:5000,    //超时时间
+              dataType:'json',
+              success:function(data,textStatus,jqXHR){
+                  if(data.state == 200){
+
+                      window.location.href='{{route('pay.alipay',['id'=>$order->order_no??''])}}';
+                  }else if (data.state  == 0){
+                      var info ='商品'+data.info+'已经购买';
+                      layer.confirm(info, {
+                          btn: ['确定'] //按钮
+                      })
+                  }
+              }
+          })
+
       });
 
   </script>

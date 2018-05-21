@@ -18,7 +18,10 @@ class CartsController extends Controller
 
     public function index()
     {
-        $carts = $this->cartsServices->getList('0');
+        $companyId = \Auth::user()->company->id??'';
+        $queryArray = [];
+        $companyId && $queryArray['companyId'] = $companyId;
+        $carts = $this->cartsServices->getList('0',$queryArray);
         foreach ($carts as $cart){
             $ids[] = $cart->id;
         }

@@ -56,7 +56,7 @@
                                       @foreach($carts as $cart)
                                       <tr class="product">
                                           <td><input type="checkbox" class="product-check" value="{{$cart->product->id}}">&nbsp{{$cart->product->id}}</td>
-                                          <td><img style="height: 40px;"@if($cart->product->image??'') src="{{asset($cart->product->image)??''}}"@else src="{{asset('images/hot.png')}}" @endif></td>
+                                          <td><img style="height: 40px;"@if($cart->product->img??'') src="{{asset($cart->product->img)??''}}"@else src="{{asset('images/hot.png')}}" @endif></td>
                                           <td>{{$cart->product->name}}</td>
                                           <td>
                                              <span style="text-decoration:line-through;" class="text-red">

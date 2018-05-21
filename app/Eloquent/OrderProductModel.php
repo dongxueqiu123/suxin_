@@ -27,4 +27,5 @@ class OrderProductModel extends AppModel
     public function product(){
         return $this->hasOne('App\Eloquent\ProductsModel','id','product_id');
     }
+
 }

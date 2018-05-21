@@ -119,9 +119,14 @@ Route::group(['prefix' => 'admin/products', 'middleware' =>['auth.user','RolePer
     Route::get('/', 'Admin\ProductsController@index')->name('products');
     Route::get('/store', 'Admin\ProductsController@store')->name('products.store');
     Route::get('/edit/{id}', 'Admin\ProductsController@edit')->name('products.edit');
-    Route::get('/buy', 'Admin\ProductsController@buy')->name('products.buy');
-    Route::get('/show/{id}', 'Admin\ProductsController@show')->name('products.show');
+
 });
+
+Route::group(['prefix' => 'admin/buyProducts', 'middleware' =>['auth.user','RolePermission']],function(){
+    Route::get('/buy', 'Admin\ProductsController@buy')->name('buyProducts.buy');
+    Route::get('/show/{id}', 'Admin\ProductsController@show')->name('buyProducts.show');
+});
+
 
 Route::group(['prefix' => 'admin/carts', 'middleware' =>['auth.user','RolePermission']],function(){
     Route::get('/', 'Admin\CartsController@index')->name('carts');
@@ -130,6 +135,13 @@ Route::group(['prefix' => 'admin/carts', 'middleware' =>['auth.user','RolePermis
 Route::group(['prefix' => 'admin/orders', 'middleware' =>['auth.user','RolePermission']],function(){
     Route::get('/', 'Admin\OrdersController@index')->name('orders');
     Route::get('/show/{orderNo}', 'Admin\OrdersController@show')->name('orders.show');
+    Route::get('/info/{orderNo}', 'Admin\OrdersController@info')->name('orders.info');
+});
+
+Route::group(['prefix' => 'admin/pay'],function(){
+    Route::get('/alipay/{orderNo}', 'Admin\PayController@index')->name('pay.alipay');
+    Route::get('/return', 'Admin\PayController@return')->name('pay.return');
+    Route::post('/notify', 'Admin\PayController@notify')->name('pay.notify');
 });
 
 /**测试权限**/

@@ -37,5 +37,26 @@ class OrdersController extends Controller
         }
     }
 
+    public function getBeUseInfo(Request $request){
+        $orderNo = $request->input('orderNo');
+
+        $orderProducts = $this->ordersServices->isCanUse($orderNo);
+
+        if(!$orderProducts->isEmpty()){
+            //不能使用
+            $isBeUse = 0;
+            foreach ($orderProducts as $orderProduct)
+            {
+                $products[]= $orderProduct->product->name;
+            }
+            $info = implode(',',$products);
+        }else{
+            $isBeUse = 200;
+        }
+        return response()->json([
+            'state' => $isBeUse,
+            'info' =>$info??'',
+        ]);
+    }
 
 }

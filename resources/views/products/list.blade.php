@@ -40,10 +40,10 @@
                               <tbody>
                               @foreach($products as $product)
                                   <tr>
-                                      <td><a href="{{route('products.show',['id'=>$product->id])}}">{{$product->name}}</a></td>
+                                      <td><a href="{{route('buyProducts.show',['id'=>$product->id])}}">{{$product->name}}</a></td>
                                       <td>{{$product->price??''}}</td>
                                       <td>{{$product->price_original??''}}</td>
-                                      <td>@if($product->image??'')<img style="height: 40px;" src="{{asset($product->img_thumb)??''}}">@endif</td>
+                                      <td><img style="height: 40px;"@if($product->img??'') src="{{asset($product->img)??''}}"@else src="{{asset('images/hot.png')}}" @endif></td>
                                       <td>@if($product->is_alive == 1) 是  @else 否 @endif </td>
                                       <td>{{$product->detail->unit??''}}</td>
                                       <td>{{$product->detail->description??''}}</td>

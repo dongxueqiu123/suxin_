@@ -31,14 +31,14 @@ class CartsController extends Controller
             if($state = $this->cartsServices->save($input)){
                 return response()->json([
                     'state' => $state,
-                    'route' => route('products.buy'),
+                    'route' => route('buyProducts.buy'),
                     'info' => '添加购物车成功',
                 ]);
             }
         }else{
             return response()->json([
                 'state' => '201',
-                'route' => route('products.buy'),
+                'route' => route('buyProducts.buy'),
                 'info' => '购物车已存在此商品']);
         }
 

@@ -33,6 +33,8 @@ class OrdersServices extends ServicesAdapte
         foreach($queryArray as $key => $value){
             if($key == 'orderNo'){
                 $value && $query->orderNo($value);
+            }elseif($key == 'companyId'){
+                $query->companyId($value);
             }
         }
 
@@ -47,6 +49,14 @@ class OrdersServices extends ServicesAdapte
 
     public function getByOrderNo($orderNo){
         return $this->orders->nothing()->orderNo($orderNo)->first();
+    }
+
+    public function getByCompany($companyId,array $options = []){
+        $query = $this->orders->nothing();
+
+        ($options['status']??false) && $query->status($options['status']);
+
+        return $query->companyId($companyId)->get();
     }
 
     public function save(array $modelData)
@@ -71,8 +81,8 @@ class OrdersServices extends ServicesAdapte
             $this->orders->total_price = $totalPrice;
         }
         ($modelData['status']??'') && $this->orders->status = $modelData['status'];
-        $this->orders->user_id = \Auth::user()->id;
-        $this->orders->company_id = (\Auth::user()->company->id??0);
+        !empty(\Auth::user()??'') && $this->orders->user_id = \Auth::user()->id;
+        !empty(\Auth::user()??'') && $this->orders->company_id = (\Auth::user()->company->id??0);
         ($modelData['deleteTime']??'') && $this->orders->delete_time = $modelData['deleteTime'];
         $state = $this->orders->save();
         return $state;
@@ -88,5 +98,36 @@ class OrdersServices extends ServicesAdapte
         $userId = $user->id??0;
         $companyId = $user->company()->id??0;
         return $serviceId.$companyId.time().$userId;
+    }
+
+    public function isCanUse($orderNo)
+    {
+        $orders =  $this->getPaid();
+        $products = collect();
+        foreach ($orders as $order)
+        {
+           $products = $products->merge($this->orderProductServices->getByOrderNo($order->order_no));
+        }
+        $beUseProducts = $this->orderProductServices->getByOrderNo($orderNo);
+
+        $result = $products->reject(function ($value, $key) use($beUseProducts){
+            $isRemove = true;
+            foreach ($beUseProducts as $beUseProduct){
+                if($beUseProduct->product_id == $value->product_id){
+                    $isRemove =  false;
+                }
+            }
+            return $isRemove;
+        });
+
+        return $result;
+    }
+
+    public function getPaid()
+    {
+        $companyId = \Auth::user()->company->id??0;
+        $options['status'] = $this->orders->getPaidStatus(); //1是已支付
+        $orders = $this->getByCompany($companyId, $options);
+        return $orders;
     }
 }

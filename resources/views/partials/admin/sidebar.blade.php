@@ -247,6 +247,50 @@
         </li>
       @endif
 
+
+      @if( Auth::user()->id !==1 )
+        @permission(['products','orders','carts','buyProducts'])
+        <li class="@if (in_array($active??'', ['products','orders','carts','buyProducts'])) active @endif treeview">
+          <a href="#">
+            <i class="fa fa-users"></i> <span>商城</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+          </a>
+          <ul class="treeview-menu">
+            @permission('products')
+            <li class="@if (($active??'') === 'products') active @endif"><a href="{{route('products')}}"><i class="fa fa-user"></i> 商品管理</a></li>
+            @endpermission
+            @permission('buyProducts')
+            <li class="@if (($active??'') === 'buyProducts') active @endif"><a href="{{route('buyProducts.buy')}}"><i class="fa fa-lock"></i> 购买商品</a></li>
+            @endpermission
+            @permission('orders')
+            <li class="@if (($active??'') === 'orders') active @endif"><a href="{{route('orders')}}"><i class="fa ffa-user-plus"></i> 订单列表</a></li>
+            @endpermission
+            @permission('carts')
+            <li class="@if (($active??'') === 'carts') active @endif"><a href="{{route('carts')}}"><i class="fa fa-lock"></i> 购物车</a></li>
+            @endpermission
+          </ul>
+        </li>
+        @endpermission
+      @else
+        <li class="@if (in_array($active??'', ['products','orders','carts','buyProducts'])) active @endif treeview">
+          <a href="#">
+            <i class="fa fa-users"></i> <span>商城</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="@if (($active??'') === 'products') active @endif"><a href="{{route('products')}}"><i class="fa fa-user"></i> 商品管理</a></li>
+            <li class="@if (($active??'') === 'buyProducts') active @endif"><a href="{{route('buyProducts.buy')}}"><i class="fa fa-user"></i> 购买商品</a></li>
+            <li class="@if (($active??'') === 'orders') active @endif"><a href="{{route('orders')}}"><i class="fa fa-user-plus"></i> 订单列表</a></li>
+            <li class="@if (($active??'') === 'carts') active @endif"><a href="{{route('carts')}}"><i class="fa fa-lock"></i> 购物车</a></li>
+          </ul>
+        </li>
+      @endif
+
+
       <li >
         <a href="{{ url('/') }}">
           <i class="fa fa-home"></i> <span>网站首页</span>

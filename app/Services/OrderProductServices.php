@@ -58,4 +58,10 @@ class OrderProductServices extends ServicesAdapte
     {
         return $this->orderProduct::where('id',$id)->delete();
     }
+
+    public function getByOrderNo($orderNo)
+    {
+
+        return $this->orderProduct::where('order_no',$orderNo)->get();
+    }
 }

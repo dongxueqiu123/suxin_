@@ -28,8 +28,8 @@
                   <div class="box-body">
                       <div class="row">
                           <div class="col-md-12" >
-                              <a href="{{route('products.show',['id'=>$product->id])}}">
-                                  <img style="width: 100%;" @if($product->img_thumb??'') src="{{asset($product->img_thumb)??''}}"@else src="{{asset('images/hot.png')}}" @endif>
+                              <a href="{{route('buyProducts.show',['id'=>$product->id])}}">
+                                  <img style="width: 100%;" @if($product->img??'') src="{{asset($product->img)??''}}"@else src="{{asset('images/hot.png')}}" @endif>
                               </a>
                           </div>
                       </div>
@@ -37,7 +37,7 @@
 
                   <div class="box-footer no-padding">
                       <ul class="nav nav-pills nav-stacked">
-                          <li><a href="{{route('products.show',['id'=>$product->id])}}">{{$product->name}}</a></li>
+                          <li><a href="{{route('buyProducts.show',['id'=>$product->id])}}">{{$product->name}}</a></li>
 
                           <li><a href="#" style="height: 40px;">
 
@@ -81,8 +81,8 @@
                                       @foreach($products as $key => $product)
                                           @if($key > 3)
                                       <tr class="product" >
-                                          <td ><a href="{{route('products.show',['id'=>$product->id])}}"><img style="width: 120px;" @if($product->image??'') src="{{asset($product->image)??''}}" @else src="{{asset('images/hot.png')}}" @endif></a></td>
-                                          <td><a href="{{route('products.show',['id'=>$product->id])}}">{{$product->name}}</a></td>
+                                          <td ><a href="{{route('buyProducts.show',['id'=>$product->id])}}"><img style="width: 120px;" @if($product->img??'') src="{{asset($product->img)??''}}" @else src="{{asset('images/hot.png')}}" @endif></a></td>
+                                          <td><a href="{{route('buyProducts.show',['id'=>$product->id])}}">{{$product->name}}</a></td>
                                           <td>
                                   <span  class="pull-right text-green">
                                   ¥{{$product->price}}</span>

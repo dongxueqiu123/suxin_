@@ -89,6 +89,7 @@ Route::group(['prefix' => 'admin/carts'], function () {
 Route::group(['prefix' => 'admin/orders'], function () {
     Route::post('/store', 'Api\OrdersController@store')->name('api.orders.store');
     Route::post('/delete', 'Api\OrdersController@delete')->name('api.orders.delete');
+    Route::post('/getBeUseInfo', 'Api\OrdersController@getBeUseInfo')->name('api.orders.getBeUseInfo');
 });
 
 Route::group(['prefix' => 'admin/orderProduct'], function () {

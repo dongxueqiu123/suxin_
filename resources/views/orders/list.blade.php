@@ -44,8 +44,10 @@
                                               <td>{{$order->total_price??''}}</td>
                                               <td>
                                                   @if($order->status == 0)
-                                                  <a class="btn btn-primary btn-xs " href={{route('orders.show',['id'=>$order->order_no])}}>查看</a>
+                                                      <a class="btn btn-primary btn-xs " href={{route('orders.show',['id'=>$order->order_no])}}>查看</a>
                                                   @endif
+
+                                                      <a class="btn btn-primary btn-xs " href={{route('orders.info',['id'=>$order->order_no])}}>详情</a>
                                               </td>
                                           </tr>
                                       @endforeach
