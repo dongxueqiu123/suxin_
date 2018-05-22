@@ -35,10 +35,13 @@ class OrdersServices extends ServicesAdapte
                 $value && $query->orderNo($value);
             }elseif($key == 'companyId'){
                 $query->companyId($value);
+            }elseif($key == 'status'){
+                $query->status($value);
             }
         }
+        ($ext['page']??null) && $page = $ext['page'];
 
-        $orders = $pageSize === 0?$query->get(): $query->paginate($pageSize);
+        $orders = $pageSize === 0?$query->get(): $query->paginate($pageSize,['*'],'page',$page??null);
         return $orders;
     }
 
