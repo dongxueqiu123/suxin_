@@ -538,6 +538,7 @@
         });
 
         function setOnce(arr,i,series,time){
+
             var i=i,length=arr.length;
             (function changeTime(){
                 setTimeout(function(){
@@ -554,6 +555,7 @@
         }
 
         function getArray(data,intervalTime,num,min) {
+
             var result = [];
             for (dataKey = 0; dataKey < num; dataKey++) {
                 result[dataKey] = [(new Date()).getTime()+dataKey*intervalTime-min*60*1000,data[dataKey]];

@@ -68,7 +68,7 @@ class ProductsController extends Controller
         $finalImageUrl = [];
         foreach ($finalImages as $key=>$finalImage)
         {
-            $finalImageUrl[] = (new imageUpload('',''))->stream2Image($finalImage);
+            !empty($finalImage) && $finalImageUrl[] = (new imageUpload('',''))->stream2Image($finalImage);
         }
         $input['finalImages'] = (!empty($finalImageUrl))?implode('|',$finalImageUrl):$finalImageUrl;
         $input['image'] = reset($finalImageUrl);

@@ -29,7 +29,7 @@
                       <span class="box-title text-red" style="margin-left:30px;">状态：失效订单</span>
                   @endif
                   <span class="box-title"  style="margin-left:30px;">金额：￥{{$order->total_price??'0.00'}}</span>
-
+                  <span class="box-title text-green"  style="margin-left:30px;">方式：{{$order->payment->pay_type??'未知'}}</span>
               </div>
               <!-- /.box-header -->
               <div class="box-body">

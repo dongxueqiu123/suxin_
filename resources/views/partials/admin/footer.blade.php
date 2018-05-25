@@ -5,7 +5,13 @@
 </footer>
 
 <!-- jQuery 3 -->
-{{--<script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>--}}
+<?php
+$route = Route::currentRouteName();
+$routeNames = explode('.',$route);
+?>
+@if($routeNames['0'] == 'intelligents')
+<script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+@endif
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- Morris.js charts -->

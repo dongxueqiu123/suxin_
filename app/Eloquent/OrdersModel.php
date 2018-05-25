@@ -48,4 +48,8 @@ class OrdersModel extends AppModel
     public function orderProducts(){
         return $this->hasMany('App\Eloquent\OrderProductModel','order_no','order_no');
     }
+
+    public function payment(){
+        return $this->hasOne('App\Eloquent\PaymentsModel','order_no','order_no');
+    }
 }

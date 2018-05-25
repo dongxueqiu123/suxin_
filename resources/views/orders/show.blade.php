@@ -53,11 +53,14 @@
                   </div>
                   <div class="box-body">
                       <div class="form-group">
-                          {{--<label style="float: left;margin-left: 50px;" >--}}
-                              {{--<input type="radio" checked name="payment">&nbsp;&nbsp;<img style="height: 40px;" src="{{asset('images/weixin.jpg')}}">--}}
-                          {{--</label>--}}
+{{--                          <label style="float: left;margin-left: 50px;" >
+                              <input type="radio" name="payment" value="3">&nbsp;&nbsp;<img style="height: 40px;" src="{{asset('images/weixin.jpg')}}">
+                          </label>--}}
                           <label style="float: left;margin-left: 50px;">
-                              <input type="radio" checked name="payment">&nbsp;&nbsp;<img style="height: 40px;" src="{{asset('images/alipay.jpg')}}">
+                              <input type="radio" checked name="payment" value="{{$alipayId}}">&nbsp;&nbsp;<img style="height: 40px;" src="{{asset('images/alipay.jpg')}}">
+                          </label>
+                          <label style="float: left;margin-left: 50px;">
+                              <input type="radio" name="payment" value="{{$unionId}}">&nbsp;&nbsp;<img style="height: 40px;" src="{{asset('images/union.jpg')}}">
                           </label>
                       </div>
                   </div>
@@ -115,21 +118,22 @@
       });
 
       $('.pay').on('click',function(){
-          var orderNo;
-          orderNo =  '{{$order->order_no??''}}';
+          var orderNo,type;
+          orderNo = '{{$order->order_no??''}}';
+          type    =  $('input[name="payment"]:checked').val();
           $.ajax({
               url:'{{route('api.orders.getBeUseInfo')}}',
               type:'POST',    //GET
               async:true,    //或false,是否异步
               data:{
                   orderNo:orderNo,
+                  type:type
               },
               timeout:5000,    //超时时间
               dataType:'json',
               success:function(data,textStatus,jqXHR){
                   if(data.state == 200){
-
-                      window.location.href='{{route('pay.alipay',['id'=>$order->order_no??''])}}';
+                      window.location.href= data.url;
                   }else if (data.state  == 0){
                       var info ='商品'+data.info+'已经购买';
                       layer.confirm(info, {
@@ -138,7 +142,6 @@
                   }
               }
           })
-
       });
 
   </script>

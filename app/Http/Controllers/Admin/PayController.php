@@ -8,6 +8,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Log as payLog;
 use Yansongda\Pay\Pay;
 use Yansongda\Pay\Log;
 use App\Services\OrdersServices;
@@ -45,7 +46,7 @@ class PayController extends Controller
     {
         $order =  $this->ordersServices->getByOrderNo($orderNo);
         $orderProducts = $this->ordersServices->isCanUse($orderNo);
-        if($order->status != 0 || !($orderProducts->isEmpty())){
+        if(($order->status??null) != 0 || !($orderProducts->isEmpty())){
             return redirect(route('orders'));
         }
         $order = [
@@ -105,4 +106,66 @@ class PayController extends Controller
 
         return $alipay->success();// laravel 框架中请直接 `return $alipay->success()`
     }
+
+
+    public function unionIndex($orderNo, Request $request)
+    {
+
+
+        $order =  $this->ordersServices->getByOrderNo($orderNo);
+        $orderProducts = $this->ordersServices->isCanUse($orderNo);
+        if(($order->status??'') != 0 || !($orderProducts->isEmpty())){
+            return redirect(route('orders'));
+        }
+
+        $unionpay = app('unionpay.wap');
+        $unionpay->setOrderId($orderNo);
+        $unionpay->setTxnAmt($order->total_price*100??'');
+        $unionpay->setTxnTime(date('YmdHis'));
+
+        return $unionpay->consume();
+    }
+
+    public function unionReturn(Request $request)
+    {
+        $payInfo =  $request->all();
+        return view('pay.return',
+            [
+                'boxTitle'=>'支付成功',
+                'orderNo' =>$payInfo['orderId']??'',
+                'amount' =>$payInfo['settleAmt']/100??'0.00',
+            ]
+        );
+
+    }
+
+    public function unionNotify(Request $request)
+    {
+        if (! app('unionpay.mobile')->verify()) {
+
+            return 'fail';
+        }
+        $payInfo =  $request->all();
+        if($payInfo['respCode'] == '00'){
+            $order = $this->ordersServices->getByOrderNo($payInfo['orderId']);
+            $modelData['id'] = $order->id;
+            $modelData['status'] = 1;
+            if($this->ordersServices->save($modelData))
+            {
+                $payment = $this->paymentsServices->getByOrderNo($payInfo['orderId']);
+                if(empty($payment))
+                {
+                    $paymentsData['payType']     = 3;
+                    $paymentsData['orderNo']     = $payInfo['orderId'];
+                    $paymentsData['totalAmount'] = $payInfo['txnAmt']/100;
+                    $paymentsData['tradeNo']     = $payInfo['queryId'];
+                    $paymentsData['notifyInfo']  = json_encode($payInfo);
+                    $this->paymentsServices->save($paymentsData);
+                }
+
+            }
+        }
+        return 'success';
+    }
+
 }

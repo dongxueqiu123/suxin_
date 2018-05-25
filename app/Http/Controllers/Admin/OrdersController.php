@@ -8,6 +8,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Eloquent\OrdersModel;
+use App\Eloquent\PaymentsModel;
 use App\Http\Controllers\Controller;
 use App\Services\OrderProductServices;
 use App\Services\OrdersServices;
@@ -16,7 +17,8 @@ use Illuminate\Http\Request;
 class OrdersController extends Controller
 {
     public function __construct(){
-        $this->orders = new OrdersModel();
+        $this->orders         = new OrdersModel();
+        $this->payments       = new PaymentsModel();
         $this->ordersServices = new OrdersServices();
     }
 
@@ -69,11 +71,13 @@ class OrdersController extends Controller
         }
         return view('orders.show',
             [
-                'boxTitle'=>'订单列表',
+                'boxTitle' => '订单列表',
                 'active' => 'orders',
-                'orderProducts'=>$order->orderProducts??[],
+                'orderProducts'=> $order->orderProducts??[],
                 'route' => route('api.orderProduct.delete'),
                 'order' => $order??'',
+                'alipayId' => $this->payments->getAlipayId(),
+                'unionId' => $this->payments->getUnionPayId(),
             ]
         );
     }

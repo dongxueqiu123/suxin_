@@ -11,6 +11,7 @@
 |
 */
 
+Route::get('admin', 'Admin\HomeController@index')->name('admin');
 Route::get('{locale}', 'HomeController@index');
 
 Route::redirect('/', '/'.app()->getLocale(), 301);
@@ -41,14 +42,13 @@ Route::prefix('{locale}')->group(function () {
     Route::get('cloud', 'HomeController@industrial');
     Route::get('analytics', 'HomeController@analytics');
     Route::get('contact_us', 'HomeController@contact_us');
-
 });
 
 Route::post('admin/users/login', 'HomeController@login');
 
 //Route::get('admin/login', 'Admin\HomeController@login');
 
-Route::get('admin', 'Admin\HomeController@index')->name('admin');
+
 Route::get('admin/permission', 'Admin\HomeController@permission');
 
 Route::group(['prefix' => 'admin/companies', 'middleware' =>['auth.user','RolePermission']], function () {
@@ -142,6 +142,9 @@ Route::group(['prefix' => 'admin/pay'],function(){
     Route::get('/alipay/{orderNo}', 'Admin\PayController@index')->name('pay.alipay');
     Route::get('/return', 'Admin\PayController@return')->name('pay.return');
     Route::post('/notify', 'Admin\PayController@notify')->name('pay.notify');
+    Route::get('/unionIndex/{orderNo}', 'Admin\PayController@unionIndex')->name('pay.unionIndex');
+    Route::post('/unionReturn', 'Admin\PayController@unionReturn')->name('pay.unionReturn');
+    Route::post('/unionNotify', 'Admin\PayController@unionNotify')->name('pay.unionNotify');
 });
 
 /**测试权限**/

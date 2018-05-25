@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "cfef9590670c9985256372fa576f6275",
+    "content-hash": "17a1e172877f2c17aa301dc562f680bb",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -499,6 +499,54 @@
                 "url"
             ],
             "time": "2017-03-20T17:10:46+00:00"
+        },
+        {
+            "name": "hyperbolaa/unionpay",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperbolaa/Unionpay.git",
+                "reference": "e97b85b5533b4a47e973aaaa937b3f05ab2d9c21"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/hyperbolaa/Unionpay/e97b85b5533b4a47e973aaaa937b3f05ab2d9c21.zip",
+                "reference": "e97b85b5533b4a47e973aaaa937b3f05ab2d9c21",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "5.*",
+                "illuminate/events": "5.*",
+                "illuminate/support": "5.*",
+                "php": ">=5.5.0"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Hyperbolaa\\Unionpay\\": "src/Hyperbolaa/Unionpay/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "chong yu",
+                    "email": "chongyu366@gmail.com"
+                }
+            ],
+            "description": "银联支付SDK在Laravel5中封装包。",
+            "homepage": "https://github.com/hyperbolaa/Unionpay",
+            "keywords": [
+                "laravel",
+                "laravel5",
+                "union",
+                "unionpay",
+                "银联",
+                "银联支付"
+            ],
+            "time": "2017-06-26T06:44:38+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -5679,6 +5727,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "hyperbolaa/unionpay": 20,
         "zizaco/entrust": 20,
         "laracasts/generators": 20
     },

@@ -175,6 +175,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
+        Hyperbolaa\Unionpay\UnionpayServiceProvider::class,
         /*
          * Package Service Providers...
          */

@@ -322,7 +322,7 @@
             callback: function (data) {//异步回调函数
                 var name,price,priceOriginal,isAlive,unit,description,dataUrl,finalImages;
                 finalImages=[];
-                name   = $('#name').val();
+                name  = $('#name').val();
                 price = $('#price').val();
                 priceOriginal = $('#priceOriginal').val();
                 isAlive  =  $("input[name='isAlive']:checked").val();
