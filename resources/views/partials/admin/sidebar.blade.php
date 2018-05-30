@@ -126,7 +126,7 @@
         </li>
         @endpermission
 
-        @permission(['thresholds','liaisons','alarms'])
+        @permission(['thresholds','liaisons','alarms','recover'])
         <li class="@if (in_array($active??'', ['thresholds','liaisons','alarms'])) active @endif treeview">
           <a href="#">
             <i class="fa fa-bell"></i> <span>告警管理</span>
@@ -143,7 +143,13 @@
             <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-comments-o"></i> 告警方式</a></li>
             @endpermission
             @permission('alarms')
-            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-warning"></i> 告警记录</a></li>
+            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-warning"></i> 告警记录
+                <span class="pull-right-container">
+              <small class="label pull-right bg-red">{{ Session::get('alarmCount') }}</small>
+            </span>
+              </a></li>
+
+            <li class="@if (($active??'') === 'recover') active @endif"><a href="{{route('recover')}}"><i class="fa fa-warning"></i> 解决记录</a></li>
             @endpermission
 
           </ul>
@@ -165,7 +171,7 @@
           </ul>
         </li>
 
-        <li class="@if (in_array($active??'', ['thresholds','liaisons','alarms'])) active @endif treeview">
+        <li class="@if (in_array($active??'', ['thresholds','liaisons','alarms','recover'])) active @endif treeview">
           <a href="#">
             <i class="fa fa-bell"></i> <span>告警管理</span>
             <span class="pull-right-container">
@@ -175,7 +181,14 @@
           <ul class="treeview-menu">
             <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 阈值设置</a></li>
             <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-comments-o"></i> 告警方式</a></li>
-            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-warning"></i> 告警记录</a></li>
+            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-warning"></i>
+                告警记录
+                <span class="pull-right-container">
+              <small class="label pull-right bg-red">{{ Session::get('alarmCount') }}</small>
+            </span>
+              </a></li>
+
+            <li class="@if (($active??'') === 'recover') active @endif"><a href="{{route('recover')}}"><i class="fa fa-warning"></i> 解决记录</a></li>
           </ul>
         </li>
 

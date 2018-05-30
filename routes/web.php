@@ -102,6 +102,7 @@ Route::group(['prefix' => 'admin/liaisons', 'middleware' =>['auth.user','RolePer
 
 Route::group(['prefix' => 'admin/alarms', 'middleware' =>['auth.user','RolePermission']],function(){
     Route::get('/', 'Admin\AlarmsController@index')->name('alarms');
+    Route::get('/recover', 'Admin\AlarmsController@recover')->name('recover');
 });
 
 Route::group(['prefix' => 'admin/charts', 'middleware' =>['auth.user','RolePermission']],function(){

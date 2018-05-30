@@ -56,7 +56,6 @@ class PayController extends Controller
         ];
         $request->session()->put('orderNo', $orderNo);
         $alipay = Pay::alipay($this->config)->web($order);
-
         return $alipay->send();// laravel 框架中请直接 `return $alipay`
     }
 
