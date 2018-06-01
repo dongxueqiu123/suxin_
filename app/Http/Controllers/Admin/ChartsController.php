@@ -24,18 +24,18 @@ class ChartsController extends Controller{
         $ext['sort'] = true;
         $collectors = $this->collectorsServices->getList(0,$queryArray,'','',$ext);
         $collector =  ($id==0)?$collectors->first():$this->collectorsServices->get($id);
-        $startDate    = date("Y-m-d H:i:s",time()+8*60*60-3*60);
-        $newStartDate = date("Y-m-d H:i:s",time()+8*60*60-10*60);
+        $startTime    = time()-3*60;
+        $newStartTime = time()-10*60;
         $http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
-        $speedData = $this->getSpeedData($http_type,'acc_orig',$collector->id??'',$startDate);
+        $speedData = $this->getSpeedData($http_type,'acc_orig',$collector->id??'',$startTime);
 
-        $dateTime =  time()+8*60*60-3*60;
-        if(empty($speedData['data']) || count($speedData['data'])){
+        $dateTime =  time()-3*60;
+        if(empty($speedData['data']) || count($speedData['data'])<=32){
             $time = 60*60*1000;
             for($i=1; $i<=24; $i++){
                 $dateTime = $dateTime-10*60;
                 $data = is_array($speedData['data'])?$speedData['data']:[];
-                $speedData = $this->getSpeedData($http_type,'acc_orig',$collector->id??'',date("Y-m-d H:i:s",$dateTime));
+                $speedData = $this->getSpeedData($http_type,'acc_orig',$collector->id??'',$dateTime);
                 $speedData['data'] = is_array($speedData['data'])?$speedData['data']:[];
                 $speedData['data'] = array_merge($speedData['data'],$data);
                 if(count($speedData['data'])>300){
@@ -44,14 +44,14 @@ class ChartsController extends Controller{
             }
         }
 
-        $temperatureData = $this->getTemperatureData($http_type,'ex_temp',$collector->id??'',$newStartDate);
+        $temperatureData = $this->getTemperatureData($http_type,'ex_temp',$collector->id??'',$newStartTime);
 
-        $dateTime =  time()+8*60*60-10*60;
+        $dateTime =  time()-10*60;
         if(empty($temperatureData['data']) || count($temperatureData['data'])){
             for($i=1; $i<=24; $i++){
                 $dateTime = $dateTime-10*60;
                 $data = is_array($temperatureData['data'])?$temperatureData['data']:[];
-                $temperatureData = $this->getTemperatureData($http_type,'ex_temp',$collector->id??'',date("Y-m-d H:i:s",$dateTime));
+                $temperatureData = $this->getTemperatureData($http_type,'ex_temp',$collector->id??'',$dateTime);
                 $temperatureData['data'] = is_array($temperatureData['data'])?$temperatureData['data']:[];
                 $temperatureData['data'] = array_merge($temperatureData['data'],$data);
                 if(count($temperatureData['data'])>300){
@@ -59,14 +59,14 @@ class ChartsController extends Controller{
                 }
             }
         }
-        $humidityData = $this->getHumidityData($http_type,'in_hum',$collector->id??'',$newStartDate);
+        $humidityData = $this->getHumidityData($http_type,'in_hum',$collector->id??'',$newStartTime);
 
-        $dateTime =  time()+8*60*60-10*60;
+        $dateTime =  time()-10*60;
         if(empty($humidityData['data']) || count($humidityData['data'])){
             for($i=1; $i<=24; $i++){
                 $dateTime = $dateTime-10*60;
                 $data = is_array($humidityData['data'])?$humidityData['data']:[];
-                $humidityData = $this->getHumidityData($http_type,'in_hum',$collector->id??'',date("Y-m-d H:i:s",$dateTime));
+                $humidityData = $this->getHumidityData($http_type,'in_hum',$collector->id??'',$dateTime);
                 $humidityData['data'] = is_array($humidityData['data'])?$humidityData['data']:[];
                 $humidityData['data'] = array_merge($humidityData['data'],$data);
                 if(count($humidityData['data'])>300){
@@ -99,20 +99,20 @@ class ChartsController extends Controller{
         $time = 1000;
         $collectors = $this->collectorsServices->getList(0,$queryArray,'','',$ext);
         $collector =  ($id==0)?$collectors->first():$this->collectorsServices->get($id);
-        $startDate    = date("Y-m-d H:i:s",time()+8*60*60-3*60);
-        $newStartDate = date("Y-m-d H:i:s",time()+8*60*60-10*60);
+        $startTime    = time()-3*60;
+        $newStartTime = time()-10*60;
         $http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
 
-        $speedData = $this->getSpeedData($http_type,'acc_orig',$collector->id??'',$startDate);
+        $speedData = $this->getSpeedData($http_type,'acc_orig',$collector->id??'',$startTime);
 
 
-        $dateTime =  time()+8*60*60-3*60;
-        if(empty($speedData['data']) || count($speedData['data'])){
+        $dateTime =  time()-3*60;
+        if(empty($speedData['data']) || count($speedData['data'])<=32){
             $time = 60*60*1000;
             for($i=1; $i<=24; $i++){
                 $dateTime = $dateTime-10*60;
                 $data = is_array($speedData['data'])?$speedData['data']:[];
-                $speedData = $this->getSpeedData($http_type,'acc_orig',$collector->id??'',date("Y-m-d H:i:s",$dateTime));
+                $speedData = $this->getSpeedData($http_type,'acc_orig',$collector->id??'',$dateTime);
                 $speedData['data'] = is_array($speedData['data'])?$speedData['data']:[];
                 $speedData['data'] = array_merge($speedData['data'],$data);
                 if(count($speedData['data'])>300){
@@ -121,13 +121,13 @@ class ChartsController extends Controller{
             }
         }
 
-        $temperatureData = $this->getTemperatureData($http_type,'ex_temp',$collector->id??'',$newStartDate);
-        $dateTime =  time()+8*60*60-10*60;
+        $temperatureData = $this->getTemperatureData($http_type,'ex_temp',$collector->id??'',$newStartTime);
+        $dateTime =  time()-10*60;
         if(empty($temperatureData['data']) || count($temperatureData['data'])){
             for($i=1; $i<=24; $i++){
                 $dateTime = $dateTime-10*60;
                 $data = is_array($temperatureData['data'])?$temperatureData['data']:[];
-                $temperatureData = $this->getTemperatureData($http_type,'ex_temp',$collector->id??'',date("Y-m-d H:i:s",$dateTime));
+                $temperatureData = $this->getTemperatureData($http_type,'ex_temp',$collector->id??'',$dateTime);
                 $temperatureData['data'] = is_array($temperatureData['data'])?$temperatureData['data']:[];
                 $temperatureData['data'] = array_merge($temperatureData['data'],$data);
                 if(count($temperatureData['data'])>300){
@@ -136,17 +136,17 @@ class ChartsController extends Controller{
             }
         }
 
-        $humidityData = $this->getHumidityData($http_type,'in_hum',$collector->id??'',$newStartDate);
+        $humidityData = $this->getHumidityData($http_type,'in_hum',$collector->id??'',$newStartTime);
         /*        $url = $http_type.$_SERVER['HTTP_HOST'].'/admin/charts/collectorResponse';
                 $data = $this->httpGet($url,[]);
                 $collectorData = json_decode($data);*/
 
-        $dateTime =  time()+8*60*60-10*60;
+        $dateTime =  time()-10*60;
         if(empty($humidityData['data']) || count($humidityData['data'])){
             for($i=1; $i<=24; $i++){
                 $dateTime = $dateTime-10*60;
                 $data = is_array($humidityData['data'])?$humidityData['data']:[];
-                $humidityData = $this->getHumidityData($http_type,'in_hum',$collector->id??'',date("Y-m-d H:i:s",$dateTime));
+                $humidityData = $this->getHumidityData($http_type,'in_hum',$collector->id??'',$dateTime);
                 $humidityData['data'] = is_array($humidityData['data'])?$humidityData['data']:[];
                 $humidityData['data'] = array_merge($humidityData['data'],$data);
                 if(count($humidityData['data'])>300){
@@ -169,19 +169,22 @@ class ChartsController extends Controller{
     }
 
     public function getTemperatureData($http_type,$state,$id,$endDate){
-        $url = $http_type.$_SERVER['HTTP_HOST'].'/console/influx/timeseries/'.$state.'/'.$id.'?startTime='.urlencode($endDate);
+        $_SERVER['HTTP_HOST'] = 'www.suxiniot.com';
+        $url = $http_type.$_SERVER['HTTP_HOST'].'/console/influx/timeseries/'.$state.'/'.$id.'?startTime='.($endDate-8*60*60)*1000;
         $data = $this->httpGet($url,[]);
         return $data;
     }
 
     public function getSpeedData($http_type,$state,$id,$endDate){
-        $url = $http_type.$_SERVER['HTTP_HOST'].'/console/influx/timeseries/'.$state.'/'.$id.'?startTime='.urlencode($endDate);
+        $_SERVER['HTTP_HOST'] = 'www.suxiniot.com';
+        $url = $http_type.$_SERVER['HTTP_HOST'].'/console/influx/timeseries/'.$state.'/'.$id.'?startTime='.($endDate-8*60*60)*1000;
         $data = $this->httpGet($url,[]);
         return $data;
     }
 
     public function getHumidityData($http_type,$state,$id,$endDate){
-        $url = $http_type.$_SERVER['HTTP_HOST'].'/console/influx/timeseries/'.$state.'/'.$id.'?startTime='.urlencode($endDate);
+        $_SERVER['HTTP_HOST'] = 'www.suxiniot.com';
+        $url = $http_type.$_SERVER['HTTP_HOST'].'/console/influx/timeseries/'.$state.'/'.$id.'?startTime='.($endDate-8*60*60)*1000;
         $data = $this->httpGet($url,[]);
         return $data;
     }

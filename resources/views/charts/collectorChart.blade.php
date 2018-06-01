@@ -146,24 +146,18 @@
         var flags = {'acc_orig': true, 'ex_temp': true, 'in_hum': true};
         var accs = [];
 
-        changeInflux = function(timestamp) {
-            var temp = timestamp.replace(/T/, " ");
-            temp = temp.replace(/Z/, "");
-            return temp;
-        }
 
         convert = function(category, data) {
             var size = data.length;
             if(size == 0) {
                 return data;
             }
-            startTimes[category] = changeInflux(data[size - 1][0]);
-            var interval = new Date().getTimezoneOffset()*60*1000+8*60*60*1000;
-            var timestamp, pointTime;
+            startTimes[category] = data[size - 1][0];
+            var interval = new Date().getTimezoneOffset()*60*1000;
+            var timestamp;
             for(var i = 0 ; i < size; i++){
-                timestamp = changeInflux(data[i][0]);
-                pointTime = new Date(timestamp);
-                data[i][0] = pointTime.getTime() - interval;
+                timestamp = data[i][0];
+                data[i][0] = timestamp - interval;
             }
             return data;
         }
@@ -181,7 +175,7 @@
                                 if(flags['ex_temp'] == false) {
                                     flags['ex_temp'] = true;
                                     $.getJSON(
-                                        '/console/influx/timeseries/ex_temp/'+collectorId+'?startTime='+startTimes['ex_temp'],
+                                        'https://www.suxiniot.com/console/influx/timeseries/ex_temp/'+collectorId+'?startTime='+startTimes['ex_temp'],
                                         function(result) {
                                             var data = convert('ex_temp', result['data']);
                                             for(var i = 0 ; i < data.length; i++){
@@ -264,12 +258,14 @@
                 events: {
                     load: function () {
                         var sos = this.series[0];
+                        var chart = this;
+                        var timeLen = '{{$time}}';
                         setInterval(
                             function() {
                                 if(flags['acc_orig'] == false) {
                                     flags['acc_orig'] = true;
                                     $.getJSON(
-                                        '/console/influx/timeseries/acc_orig/'+collectorId+'?startTime='+startTimes['acc_orig'],
+                                        'https://www.suxiniot.com/console/influx/timeseries/acc_orig/'+collectorId+'?startTime='+startTimes['acc_orig'],
                                         function(result) {
                                             if(accs.length < 8) {
                                                 var data = convert('acc_orig', result['data']);
@@ -279,14 +275,16 @@
                                             }
                                             if(accs.length >= 8) {
                                                 for(var j = 0; j < 8; j++) {
-                                                    sos.addPoint(accs.shift(), true, true);
+                                                        sos.addPoint(accs.shift(), false, true);
                                                 }
+                                                chart.redraw();
                                             }
+
                                             flags['acc_orig'] = false;
                                         }
                                     );
                                 }
-                            }, 1000);
+                            }, timeLen);
                     }
                 }
             },
@@ -367,7 +365,7 @@
                                 if(flags['in_hum'] == false) {
                                     flags['in_hum'] = true;
                                     $.getJSON(
-                                        '/console/influx/timeseries/in_hum/'+collectorId+'?startTime='+startTimes['in_hum'],
+                                        'https://www.suxiniot.com/console/influx/timeseries/in_hum/'+collectorId+'?startTime='+startTimes['in_hum'],
                                         function(result) {
                                             var data = convert('in_hum', result['data']);
                                             for(var i = 0 ; i < data.length; i++){
