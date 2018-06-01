@@ -264,25 +264,27 @@
                             function() {
                                 if(flags['acc_orig'] == false) {
                                     flags['acc_orig'] = true;
-                                    $.getJSON(
-                                        'https://www.suxiniot.com/console/influx/timeseries/acc_orig/'+collectorId+'?startTime='+startTimes['acc_orig'],
-                                        function(result) {
-                                            if(accs.length < 8) {
+                                    if(accs.length < 8) {
+                                        $.getJSON(
+                                            'https://www.suxiniot.com/console/influx/timeseries/acc_orig/'+collectorId+'?startTime='+startTimes['acc_orig'],
+                                            function(result) {
+                                                // if(accs.length < 8) {
                                                 var data = convert('acc_orig', result['data']);
                                                 for(var j = 0; j < data.length; j++) {
                                                     accs.push(data.shift());
                                                 }
                                             }
-                                            if(accs.length >= 8) {
-                                                for(var j = 0; j < 8; j++) {
-                                                        sos.addPoint(accs.shift(), false, true);
-                                                }
-                                                chart.redraw();
-                                            }
+                                        );
+                                    }
 
-                                            flags['acc_orig'] = false;
+                                    if(accs.length >= 8) {
+                                        for(var j = 0; j < 8; j++) {
+                                            sos.addPoint(accs.shift(), false, true);
                                         }
-                                    );
+                                        chart.redraw();
+                                    }
+
+                                    flags['acc_orig'] = false;
                                 }
                             }, timeLen);
                     }
