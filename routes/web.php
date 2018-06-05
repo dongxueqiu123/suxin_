@@ -108,6 +108,8 @@ Route::group(['prefix' => 'admin/alarms', 'middleware' =>['auth.user','RolePermi
 Route::group(['prefix' => 'admin/charts', 'middleware' =>['auth.user','RolePermission']],function(){
     Route::get('/collectorChart/{id}', 'Admin\ChartsController@collectorChart')->name('charts.collectorChart');
     Route::get('/collectorChartRealTime/{id}', 'Admin\ChartsController@collectorChartRealTime')->name('charts.collectorChartRealTime');
+    Route::get('/collectorHistoryChart/{id}', 'Admin\ChartsController@collectorHistoryChart')->name('charts.collectorHistoryChart');
+    Route::get('/collectorHistoryResponse', 'Admin\ChartsController@collectorHistoryResponse')->name('charts.collectorHistoryResponse');
     Route::get('/collectorResponse', 'Admin\ChartsController@collectorResponse')->name('collectorResponse');
 });
 
