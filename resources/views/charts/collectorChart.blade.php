@@ -170,6 +170,7 @@
                 events: {
                     load: function () {
                         var sos = this.series[0];
+                        var chart = this;
                         setInterval(
                             function() {
                                 if(flags['ex_temp'] == false) {
@@ -179,8 +180,9 @@
                                         function(result) {
                                             var data = convert('ex_temp', result['data']);
                                             for(var i = 0 ; i < data.length; i++){
-                                                sos.addPoint(data[i], true, true);
+                                                sos.addPoint(data[i], false, true);
                                             }
+                                            chart.redraw();
                                             flags['ex_temp'] = false;
                                         }
                                     );
@@ -268,21 +270,22 @@
                                         $.getJSON(
                                             'https://www.suxiniot.com/console/influx/timeseries/acc_orig/'+collectorId+'?startTime='+startTimes['acc_orig'],
                                             function(result) {
-                                                // if(accs.length < 8) {
                                                 var data = convert('acc_orig', result['data']);
-                                                for(var j = 0; j < data.length; j++) {
-                                                    accs.push(data.shift());
-                                                }
+                                                accs = accs.concat(data)
                                             }
                                         );
                                     }
-
+                                    if(accs.length > 32){
+                                        for(var i = 0; i < accs.length-8; i++){
+                                            sos.addPoint(accs.shift(), false, true);
+                                        }
+                                    }
                                     if(accs.length >= 8) {
                                         for(var j = 0; j < 8; j++) {
                                             sos.addPoint(accs.shift(), false, true);
                                         }
-                                        chart.redraw();
                                     }
+                                    chart.redraw();
 
                                     flags['acc_orig'] = false;
                                 }
@@ -362,6 +365,7 @@
                 events: {
                     load: function () {
                         var sos = this.series[0];
+                        var chart = this;
                         setInterval(
                             function() {
                                 if(flags['in_hum'] == false) {
@@ -371,8 +375,9 @@
                                         function(result) {
                                             var data = convert('in_hum', result['data']);
                                             for(var i = 0 ; i < data.length; i++){
-                                                sos.addPoint(data[i], true, true);
+                                                sos.addPoint(data[i], false, true);
                                             }
+                                            chart.redraw();
                                             flags['in_hum'] = false;
                                         }
                                     );
