@@ -33,7 +33,7 @@ class AlarmsController extends Controller{
     public function index(Request $request){
         $page = $request->input('page')??1;
         $queryArray['firmId'] = \Auth()->user()->company->id??1;
-        $body  = $this->alarmsServices->getClient('http://192.168.158.106:8080/console/alarm/retrieveAlarm',static::PAGE_SIZE_DEFAULT,$page,$queryArray);
+        $body  = $this->alarmsServices->getClient('http://52.80.145.123:8080/console/alarm/retrieveAlarm',static::PAGE_SIZE_DEFAULT,$page,$queryArray);
         $alarms = empty($body['data'])?[]:$body['data'];
         foreach($alarms as $key=>$alarm){
             $alarms[$key]['categoryName']= $this->thresholdsServices->getConstantByArray($alarm,'category');
@@ -55,8 +55,7 @@ class AlarmsController extends Controller{
         $queryArray['firmId'] = \Auth()->user()->company->id??1;
         $queryArray['status'] = 3;
         !empty($name) &&  $queryArray['name'] = $name;
-        dump(alarmsServices::$name1);die;
-        $body  = $this->alarmsServices->getClient('http://192.168.158.106:8080/console/alarm/retrieveByParams',static::PAGE_SIZE_DEFAULT,$page,$queryArray);
+        $body  = $this->alarmsServices->getClient('http://52.80.145.123:8080/console/alarm/retrieveByParams',static::PAGE_SIZE_DEFAULT,$page,$queryArray);
 
         $alarms = empty($body['data'])?[]:$body['data'];
         foreach($alarms as $key=>$alarm){
@@ -86,7 +85,6 @@ class AlarmsController extends Controller{
             $alarms[$key]['grade'] = $this->thresholdsServices->getConstantByArray($alarm,'grade');
         }
         $alarms  = new LengthAwarePaginator($alarms,$body['count'],static::PAGE_SIZE_DEFAULT,$page,['path'=>'']);
-
         return view('alarms.recover',
             [
                 'alarms' => $alarms,
