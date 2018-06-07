@@ -157,7 +157,7 @@
               };
               var jsonData = JSON.stringify(data);
               $.ajax({
-                  url:'http://192.168.158.106:8080/console/alarm/updateById',
+                  url:'http://52.80.145.123:8080/console/alarm/updateById',
                   type:'POST',    //GET
                   contentType: "application/json;charset=utf-8",
                   async:true,    //或false,是否异步

@@ -213,7 +213,7 @@ class ChartsController extends Controller{
                 'collector'=>$collector,
                 'collectors'=>$collectors,
                 'boxTitle'=>'无线节点数据展示',
-                'active' => 'collectors',
+                'active' => 'historyRealTime',
             ]
         );
     }

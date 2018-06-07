@@ -71,11 +71,27 @@
           </span>
           </a>
         </li>
+        <li class="@if (($active??'') === 'historyRealTime') active @endif">
+          <a href="{{route('charts.collectorHistoryChart',['id'=>0])}}">
+            <i class="fa fa-bar-chart"></i> <span>历史数据</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+          </a>
+        </li>
         @endpermission
       @else
         <li class="@if (($active??'') === 'realTime') active @endif">
           <a href="{{route('charts.collectorChartRealTime',['id'=>0])}}">
             <i class="fa fa-area-chart"></i> <span>实时数据</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+          </a>
+        </li>
+        <li class="@if (($active??'') === 'historyRealTime') active @endif">
+          <a href="{{route('charts.collectorHistoryChart',['id'=>0])}}">
+            <i class="fa fa-bar-chart"></i> <span>历史数据</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
@@ -149,7 +165,7 @@
             </span>
               </a></li>
 
-            <li class="@if (($active??'') === 'recover') active @endif"><a href="{{route('recover')}}"><i class="fa fa-warning"></i> 解决记录</a></li>
+            <li class="@if (($active??'') === 'recover') active @endif"><a href="{{route('recover')}}"><i class="fa fa-check-square-o"></i> 解决记录</a></li>
             @endpermission
 
           </ul>
@@ -188,7 +204,7 @@
             </span>
               </a></li>
 
-            <li class="@if (($active??'') === 'recover') active @endif"><a href="{{route('recover')}}"><i class="fa fa-warning"></i> 解决记录</a></li>
+            <li class="@if (($active??'') === 'recover') active @endif"><a href="{{route('recover')}}"><i class="fa  fa-check-square-o"></i> 解决记录</a></li>
           </ul>
         </li>
 

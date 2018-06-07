@@ -21,7 +21,7 @@ class ThresholdsModel extends AppModel
     const EQUIPMENT = 'equipment_id';
     const COLLECTOR = 'collector_id';
     const PATTERN = [self::FIRM=>'厂家'  ,self::EQUIPMENT=>'机械设备' ,self::COLLECTOR=>'采集设备'];
-    const CATEGORY = ['1'=>'温度' ,'2'=>'加速度'];
+    const CATEGORY = ['1'=>'温度' ,'2'=>'加速度' ,'3'=>'离线'];
     const GRADE = ['1'=>'一般' ,'2'=>'次要' ,'3'=>'重要' ,'4'=>'紧要'];
 
     protected $fillable = [
@@ -41,7 +41,7 @@ class ThresholdsModel extends AppModel
 
     public function getGrade($id){
         $grade  = self::GRADE;
-        $result = empty($id)?$grade:$grade[$id];
+        $result = empty($id)?$grade:($grade[$id]??'');
         return $result;
     }
 

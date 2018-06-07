@@ -17,7 +17,7 @@
         .demo-footer a{padding: 0 5px; color: #01AAED;}
     </style>
     <script src="{{ asset('highcharts/code/highcharts.js') }}"></script>
-    <script src="{{ asset('highcharts/code/modules/windbarb.js') }}"></script>
+    <script src="{{ asset('highcharts/code/modules/boost.js') }}"></script>
     <script src="{{ asset('highcharts/code/modules/exporting.js') }}"></script>
     <script src="{{ asset('laydate/laydate.js') }}"></script>
     <section class="content-header">
@@ -39,12 +39,18 @@
             <div class="col-xs-12">
                 <div class="box box-solid">
                     <div class="box-body">
-                         <input type="text" class="demo-input startTime" placeholder="开始时间"  id="test2"  >
-                        <input type="text" class="demo-input endTime" placeholder="截止时间" id="test1">
-                        {{--                      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
-                                                  查询
-                                              </button>--}}
-                        <a class="btn btn-default btn-xs find" >查询</a>
+                         <input type="text" class="demo-input startTime" style="height: 34px;padding-bottom: 5px;" placeholder="开始时间"  id="test2"  >
+                        <input type="text" class="demo-input endTime" style="height: 34px;padding-bottom: 5px;" placeholder="截止时间" id="test1">
+                        <select class="demo-input select2 method"  data-placeholder="Select a State"  style="width: 20%;">
+                            <option  value="acc_peak">峰值加速度</option>
+                            <option  value="ex_temp">温度</option>
+                            <option  value="in_hum">湿度</option>
+                        </select>
+                        <select class="demo-input select2 collector"  data-placeholder="Select a State"  style="width: 20%;">
+                            @foreach($collectors as $collectorInfo)
+                            <option @if($collector->id == $collectorInfo->id) selected @endif value="{{$collectorInfo->id}}" >{{$collectorInfo->name}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>
@@ -66,6 +72,8 @@
                     </div>
                     <div class="box-body">
                         <div id="container" style="height: 300px;"></div>
+                        <div id="fadeOut" class="highcharts-loading" style="position: absolute; background-color: white; opacity: 1; text-align: center; z-index: 10;   margin: auto;  top: 100px; left: 0;  right: 0;   width: 800px; height: 258px;">
+                            <span class="highcharts-loading-inner" style="font-weight: bold; position: relative; top: 45%; color: gray;">Loading...</span></div>
                     </div>
                     <!-- /.box-body-->
                 </div>
@@ -77,8 +85,11 @@
         <!-- /.row -->
 
     </section>
+    <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <script type="text/javascript">
-        var myTime ,time ,curTime ,max ,startDateTime ,collectorId ,startTime ,endTime ;
+        $('.select2').select2();
+
+        var myTime ,time ,curTime ,max ,startDateTime ,collectorId ,startTime ,endTime ,method;
         collectorId = '{{$collector->id}}';
         name = '加速度';
         currentCharts();
@@ -86,26 +97,23 @@
         laydate.render({
             elem: '#test1' //指定元素
             ,type: 'datetime'
-            ,value: time
+            ,value: max
             ,max : max
             ,done: function(value, date, endDate){
+                startTime = $('.startTime').val();
+                changeHighChart(startTime,value)
 
-/*                var unixTime = myTime.DateToUnix(value);
-                var dateTime = myTime.UnixToDate(unixTime-300,true,8);
-                if(!value){
-                    dateTime = '';
-                }
-                $('.startTime').val(dateTime);*/
             }
         });
 
         laydate.render({
             elem: '#test2' //指定元素
             ,type: 'datetime'
-            ,value: time
+            ,value: startDateTime
             ,max : max
             ,done: function(value, date, endDate){
-
+                endTime = $('.endTime').val();
+                changeHighChart(value,endTime)
                 /*                var unixTime = myTime.DateToUnix(value);
                                 var dateTime = myTime.UnixToDate(unixTime-300,true,8);
                                 if(!value){
@@ -114,80 +122,98 @@
                                 $('.startTime').val(dateTime);*/
             }
         });
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
 
-
-        $('.find').on('click',function(){
+        $('.method').change(function(){
             startTime = $('.startTime').val();
             endTime = $('.endTime').val();
-            highCharts(collectorId,startTime,endTime,name);
+            changeHighChart(startTime,endTime)
         });
+
+        $('.collector').change(function(){
+            startTime = $('.startTime').val();
+            endTime = $('.endTime').val();
+            changeHighChart(startTime,endTime)
+        });
+
+        function currentCharts(){
+            myTime = $.myTime;
+            time = new Date();
+            curTime = myTime.CurTime();
+            max = myTime.UnixToDate(curTime,true,8);
+            startDateTime = myTime.UnixToDate(curTime-300,true,8);
+            changeHighChart(startDateTime,max);
+        }
+
+        function changeHighChart(startTime,endTime){
+            $('#fadeOut').fadeIn();
+            method = $('.method').val();
+            methodName = $('.method option:selected').html();
+            collectorId = $('.collector').val();
+            name = $('.collector option:selected').html();
+            $('#fadeOut').fadeOut(3000);
+            highCharts(collectorId,startTime,endTime,method,methodName,name);
+        }
+
 
         function countIntervalAndTimes(startTime,endTime){
             var differenceTime,times = 1,interval = 1,result=[];
             differenceTime = endTime-startTime;
-            if(differenceTime <= 300){
+            if(differenceTime <= 60*60){
                 interval = Math.ceil(differenceTime/60);//分钟
-            }else if(differenceTime > 300 && differenceTime <= 30*60){
-                times = Math.ceil(differenceTime/(60*5));//次数
-                interval = 5;//分钟
-            }else if(differenceTime > 30*60 && differenceTime <= 60*60){ //30-60分钟每次请求10分钟
-                times = Math.ceil(differenceTime/(60*10));
-                interval = 10;
-            }else if(differenceTime > 60*60 && differenceTime <= 60*240){ //60-240分钟每次请求30分钟
-                times = Math.ceil(differenceTime/(60*30));
-                interval = 30;
-            }else if(differenceTime > 60*240 ){ //大于240分钟每次请求60分钟
-                times = Math.ceil(differenceTime/60*60);
+            }else if(differenceTime > 60*60 && differenceTime <= 60*240){ //60-240分钟每次请求60分钟
+                times = Math.ceil(differenceTime/(60*60));
                 interval = 60;
+            }else if(differenceTime > 60*240 && differenceTime <= 60*240*4){ //4-16小时每次请求4小时
+                times = Math.ceil(differenceTime/(60*240));
+                interval = 240;
+            }else if(differenceTime > 60*240*4 && differenceTime <= 60*240*4*4){ //16-64小时每次请求16分钟
+                times = Math.ceil(differenceTime/(60*240*4));
+                interval = 240*4;
+            }else if(differenceTime > 60*240*4*4){ //大于64小时每次请求64小时
+                times = Math.ceil(differenceTime/(60*240*4*4));
+                interval = 240*4*4;
             }
+            console.log(times);
             result['interval'] = interval;
             result['times']    = times;
             return result;
         }
 
-        function getUrlAndTimes(collectorId,endTime,interval){
-            return 'https://www.suxiniot.com/console/influx/timeseries/period/acc_orig/'+collectorId+'?endTime='+(endTime-8*60*60)*1000 +'&period='+interval;
+        function getUrlAndTimes(collectorId,endTime,method,interval){
+
+            return 'https://www.suxiniot.com/console/influx/timeseries/period/'+method+'/'+collectorId+'?endTime='+(endTime+(new Date().getTimezoneOffset()*60))*1000 +'&period='+interval;
         }
 
-        function highCharts(collectorId,startTime,endTime,name){
-            title = '采集器五分钟'+name+'变化';
+        function highCharts(collectorId,startTime,endTime,method,methodName,name){
+            title = '采集器'+name+'变化';
             yAxisTitle = name+'变化';
             seriesName = name;
-            Highcharts.chart('container', {
-                chart: {
-                    type: 'spline',
-                    animation: Highcharts.svg, // don't animate in old IE
-                    marginRight: 10,
-                    events: {
-                        load: function () {
-                            var sos = this.series[0];
 
-                            result = countIntervalAndTimes(myTime.DateToUnix(startTime),myTime.DateToUnix(endTime));
-                            for(var i = 0 ; i < result['times']; i++){
-                                $.getJSON(getUrlAndTimes(collectorId,myTime.DateToUnix(endTime)-i*result['interval']*60,result['interval']), function(result) {
-                                        sos.addPoint(result['data'], true, false);
-                                    }
-                                );
-                            }
-                        }
-                    }
-                },
+            chart = Highcharts.chart('container', {
                 title: {
-                    text: '{{$collector->name}}加速度数据图',
+                    text: name+methodName+'数据图',
                     style: {
                         fontSize: '13'
                     },
                 },
                 xAxis: {
                     title: {
-                        text: '时间 (min)'
+                        text: '时间'
                     },
                     type: 'datetime',
-                    tickPixelInterval: 150
+                    tickPixelInterval: 150,
+                    dateTimeLabelFormats: {
+                        day: '%Y-%m-%d'
+                    }
                 },
                 yAxis: {
                     title: {
-                        text: '加速度 (m/s²)'
+                        text: methodName
                     },
                     plotLines: [{
                         value: 0,
@@ -221,28 +247,34 @@
 
                 series: [{
                     lineWidth: 1,
-                    type: 'area',
+
                     name: seriesName,
-                    data: [],/*(function () {
-                                for(dataKey = 0 ; dataKey < length; dataKey++){
-                                    data[dataKey][0] = data[dataKey][0]+16*60*60*1000;
+                    data: (function () {
+                        accs = [];
+                        result = countIntervalAndTimes(myTime.DateToUnix(startTime),myTime.DateToUnix(endTime));
+                        for(var i = 0 ; i < result['times']; i++){
+                            $.ajax({
+                                url:getUrlAndTimes(collectorId,myTime.DateToUnix(endTime)-i*result['interval']*60,method,result['interval']),
+                                type:'GET',    //GET
+                                async:false,    //或false,是否异步
+                                timeout:5000,    //超时时间
+                                dataType:'json',
+                                success:function(data,textStatus,jqXHR){
+                                    if(data['data']){
+                                        accs = data['data'].concat(accs)
+                                    }
                                 }
-                                return data;
-                            }())*/
+                            })
+                        }
+                        var interval = new Date().getTimezoneOffset()*60*1000;
+                        for(var i = 0 ; i < accs.length; i++){
+                            timestamp = accs[i][0];
+                            accs[i][0] = timestamp - interval;
+                        };
+                        return accs;
+                    }())
                 }]
             });
-
         }
-
-        function currentCharts(){
-            myTime = $.myTime;
-            time = new Date();
-            curTime = myTime.CurTime();
-            max = myTime.UnixToDate(curTime,true,8);
-            startDateTime = myTime.UnixToDate(curTime-300,true,8);
-            $('.startTime').val(startDateTime);
-            highCharts(collectorId,startDateTime,max,name);
-        }
-
     </script>
 @endsection
