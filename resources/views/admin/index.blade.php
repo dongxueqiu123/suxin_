@@ -247,9 +247,9 @@
         });
 
         var map = new BMap.Map("map", {});                        // 创建Map实例
-        map.centerAndZoom(new BMap.Point(-7.298437,39.892518), 2);     // 初始化地图,设置中心点坐标和地图级别         //启用滚轮放大缩小
-        map.disableDoubleClickZoom();
-        map.disableDragging();
+        map.centerAndZoom(new BMap.Point(-7.298437,39.892518), 1);     // 初始化地图,设置中心点坐标和地图级别         //启用滚轮放大缩小
+        map.enableScrollWheelZoom();
+        //map.disableDragging();
         if (document.createElement('canvas').getContext) {
             var  mapStyle ={
                 features: ["road", "building","water","land"],//隐藏地图上的poi
@@ -266,9 +266,9 @@
                 rs            = [],   //最新的结果
                 isNowTimeData = false, //是否显示当前时间的定位情况
                 py            = null, //偏移
-                //gridWidth     = 10000,//网格的大小
+                gridWidth     = 10000,//网格的大小
                 isOverlay     = false,//是否叠加
-                gridWidth   = 1,//网格的大小
+                //gridWidth   = 1,//网格的大小
                 canvas        = null; //偏移
 
             function Star(options){
@@ -379,58 +379,37 @@
              *
              */
             var requestMgr = {
-                    request: function (time, successCbk) {
-                        var retrieveByFirmId = url+'/collector/retrieveByFirmId';
-                        var points = [];
-                        $.getJSON(retrieveByFirmId, function(data) {
-                            var len = data.data.length;
-                            var l = 0;
+                request: function (time, successCbk) {
+                    var url =  url+'/collector/retrieveByFirmId';
+                    var xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function() {
+                        if( xhr.readyState == 4  && xhr.status == 200 ) {
+                            var res ,len ,l,points =[];
+                            res = JSON.parse(xhr.responseText);
+                            len = res['data'].length;
+                            l = 0;
                             for(var i = 0; i < len; i++){
-                                if(data.data[i]['latitude'] != 0 || data.data[i]['longitude'] != 0){
-                                    points[l++] = [data.data[i]['longitude'],data.data[i]['latitude'],8]
+                                if(res['data'][i]['latitude'] != 0 || res['data'][i]['longitude'] != 0){
+                                    points[l++] = [res['data'][i]['longitude'],res['data'][i]['latitude'],8]
                                 }
                             }
-                            showStars(points);
+                            console.log(points);
+                            if (!isOverlay) {
+                                rs = points;
+                            } else {
+                                rs = rs.concat(points);
+                                if (rs.length > 10000) {
+                                    rs.splice(0, rs.length - 10000);
+                                }
+                            }
+                            showStars(rs);
                             if (successCbk) {
                                 successCbk();
                             }
-                            return false;
-                        });
-
-//                    if (document.location.host === 'developer.baidu.com') {
-//                        var url = "http://lbsyun.baidu.com/jsdemo/data/data";
-//                    } else {
-//                        var url = "../data/data";
-//                    }
-//
-//                    var xhr = new XMLHttpRequest();
-//                    xhr.onreadystatechange = function() {
-//                        if( xhr.readyState == 4  && xhr.status == 200 ) {
-//                            if (!isOverlay) {
-//                                rs = JSON.parse(xhr.responseText);
-//                            } else {
-//                                rs = rs.concat(JSON.parse(xhr.responseText));
-//                                if (rs.length > 10000) {
-//                                    rs.splice(0, rs.length - 10000);
-//                                }
-//                            }
-//                            showStars(rs);
-//                            if (successCbk) {
-//                                successCbk();
-//                            }
-//                        }
-//                    }
-//                    xhr.open( "GET", url, true );
-//                    xhr.send( null );
-
-/*                    if (!isOverlay) {
-                               } else {
-                        rs = rs.concat(JSON.parse(xhr.responseText));
-                        if (rs.length > 10000) {
-                            rs.splice(0, rs.length - 10000);
                         }
-                    }*/
-
+                    }
+                    xhr.open( "GET", url, true );
+                    xhr.send( null );
                 }
             }
 
@@ -439,10 +418,10 @@
                 stars.length = 0;
                 var temp = {};
                 for (var i = 0, len = rs.length; i < len; i++) {
-
                     var baiduXY=new BMap.Point(rs[i][0],rs[i][1])
                     var projection2 = map.getMapType().getProjection();
                     var mocaXY = projection2.lngLatToPoint(baiduXY);
+
 
                     var item = rs[i];
                     var addNum = gridWidth / 2;
