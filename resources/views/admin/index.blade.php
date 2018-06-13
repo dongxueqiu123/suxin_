@@ -171,8 +171,8 @@
 
         <div class="nav-tabs-custom">
           <ul class="nav nav-tabs pull-right">
-            <li class="pull-left header"><i class="fa fa-map-marker"></i> 地图</li>
-            <div id="map" style="height: 500px;">
+            <li class="pull-left header" style="width: 100%"><i class="fa fa-map-marker"></i> 地图</li>
+            <div id="map" style="height: 1080px; width: 1012px; margin: 0 auto;">
                 {{--<img src="{{ asset('images/WordMap.gif') }}" style="width:100%;height:auto;">--}}
             </div>
           </ul>
@@ -247,8 +247,8 @@
         });
 
         var map = new BMap.Map("map", {});                        // 创建Map实例
-        map.centerAndZoom(new BMap.Point(-7.298437,39.892518), 1);     // 初始化地图,设置中心点坐标和地图级别         //启用滚轮放大缩小
-        map.enableScrollWheelZoom();
+        map.centerAndZoom(new BMap.Point(-7.298437,15.892518), 1);     // 初始化地图,设置中心点坐标和地图级别         //启用滚轮放大缩小
+        map.disableScrollWheelZoom();
         //map.disableDragging();
         if (document.createElement('canvas').getContext) {
             var  mapStyle ={
@@ -380,7 +380,7 @@
              */
             var requestMgr = {
                 request: function (time, successCbk) {
-                    var url =  url+'/collector/retrieveByFirmId';
+                    var url = '/console/collector/retrieveByFirmId';
                     var xhr = new XMLHttpRequest();
                     xhr.onreadystatechange = function() {
                         if( xhr.readyState == 4  && xhr.status == 200 ) {
@@ -393,7 +393,6 @@
                                     points[l++] = [res['data'][i]['longitude'],res['data'][i]['latitude'],8]
                                 }
                             }
-                            console.log(points);
                             if (!isOverlay) {
                                 rs = points;
                             } else {

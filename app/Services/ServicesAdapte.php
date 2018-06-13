@@ -50,8 +50,12 @@ class ServicesAdapte implements ServicesInterface{
             }
         }
         (!empty($array)) && $urlParameter = $pageUrl.implode('&',$array);
-        $response = $http->get($url.$urlParameter);
-        $body = json_decode((string)$response->getBody(), true);
+        try{
+            $response = $http->get($url.$urlParameter);
+            $body = json_decode((string)$response->getBody(), true);
+        }catch (\Exception $e){
+            $body = ['code' => 999,'info' => '请求超时','data' => '','count'=> 0];
+        }
         return $body;
     }
 

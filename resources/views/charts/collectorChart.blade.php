@@ -153,12 +153,7 @@
                 return data;
             }
             startTimes[category] = data[size - 1][0];
-            var interval = new Date().getTimezoneOffset()*60*1000;
-            var timestamp;
-            for(var i = 0 ; i < size; i++){
-                timestamp = data[i][0];
-                data[i][0] = timestamp - interval;
-            }
+
             return data;
         }
 

@@ -59,8 +59,7 @@
                           <label style="float: left;margin-left: 50px;">
                               <input type="radio" checked name="payment" value="{{$alipayId}}">&nbsp;&nbsp;<img style="height: 40px;" src="{{asset('images/alipay.jpg')}}">
                           </label>
-                          {{--
-                          <label style="float: left;margin-left: 50px;">
+         {{--                 <label style="float: left;margin-left: 50px;">
                               <input type="radio" name="payment" value="{{$unionId}}">&nbsp;&nbsp;<img style="height: 40px;" src="{{asset('images/union.jpg')}}">
                           </label>--}}
                       </div>

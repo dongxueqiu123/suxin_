@@ -72,8 +72,8 @@
                     </div>
                     <div class="box-body">
                         <div id="container" style="height: 300px;"></div>
-                        <div id="fadeOut" class="highcharts-loading" style="position: absolute; background-color: white; opacity: 1; text-align: center; z-index: 10;   margin: auto;  top: 100px; left: 0;  right: 0;   width: 800px; height: 258px;">
-                            <span class="highcharts-loading-inner" style="font-weight: bold; position: relative; top: 45%; color: gray;">Loading...</span></div>
+{{--                        <div id="fadeOut" class="highcharts-loading" style="position: absolute; background-color: white; opacity: 1; text-align: center; z-index: 10;   margin: auto;  top: 100px; left: 0;  right: 0;   width: 800px; height: 258px;">
+                            <span class="highcharts-loading-inner" style="font-weight: bold; position: relative; top: 45%; color: gray;">Loading...</span></div>--}}
                     </div>
                     <!-- /.box-body-->
                 </div>
@@ -88,7 +88,11 @@
     <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <script type="text/javascript">
         $('.select2').select2();
-
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
         var myTime ,time ,curTime ,max ,startDateTime ,collectorId ,startTime ,endTime ,method;
         collectorId = '{{$collector->id}}';
         name = '加速度';
@@ -122,11 +126,7 @@
                                 $('.startTime').val(dateTime);*/
             }
         });
-        Highcharts.setOptions({
-            global: {
-                useUTC: false
-            }
-        });
+
 
         $('.method').change(function(){
             startTime = $('.startTime').val();
@@ -144,18 +144,20 @@
             myTime = $.myTime;
             time = new Date();
             curTime = myTime.CurTime();
-            max = myTime.UnixToDate(curTime,true,8);
-            startDateTime = myTime.UnixToDate(curTime-300,true,8);
+            var timeZone = new Date().getTimezoneOffset();
+            max = myTime.UnixToDate(curTime,true,timeZone/-60);
+
+            startDateTime = myTime.UnixToDate(curTime-300,true,timeZone/-60);
             changeHighChart(startDateTime,max);
         }
 
         function changeHighChart(startTime,endTime){
-            $('#fadeOut').fadeIn();
+            //$('#fadeOut').fadeIn();
             method = $('.method').val();
             methodName = $('.method option:selected').html();
             collectorId = $('.collector').val();
             name = $('.collector option:selected').html();
-            $('#fadeOut').fadeOut(3000);
+            //$('#fadeOut').fadeOut(3000);
             highCharts(collectorId,startTime,endTime,method,methodName,name);
         }
 
@@ -163,7 +165,7 @@
         function countIntervalAndTimes(startTime,endTime){
             var differenceTime,times = 1,interval = 1,result=[];
             differenceTime = endTime-startTime;
-            if(differenceTime <= 60*60){
+            if(differenceTime ){
                 interval = Math.ceil(differenceTime/60);//分钟
             }else if(differenceTime > 60*60 && differenceTime <= 60*240){ //60-240分钟每次请求60分钟
                 times = Math.ceil(differenceTime/(60*60));
@@ -178,23 +180,40 @@
                 times = Math.ceil(differenceTime/(60*240*4*4));
                 interval = 240*4*4;
             }
-            console.log(times);
+
             result['interval'] = interval;
             result['times']    = times;
             return result;
         }
 
         function getUrlAndTimes(collectorId,endTime,method,interval){
-
-            return 'https://www.suxiniot.com/console/influx/timeseries/period/'+method+'/'+collectorId+'?endTime='+(endTime+(new Date().getTimezoneOffset()*60))*1000 +'&period='+interval;
+            return 'https://www.suxiniot.com/console/influx/timeseries/period/'+method+'/'+collectorId+'?endTime='+endTime*1000 +'&period='+interval;
         }
 
         function highCharts(collectorId,startTime,endTime,method,methodName,name){
             title = '采集器'+name+'变化';
             yAxisTitle = name+'变化';
             seriesName = name;
-
+            result = countIntervalAndTimes(myTime.DateToUnix(startTime),myTime.DateToUnix(endTime));
             chart = Highcharts.chart('container', {
+/*                chart: {
+                    type: 'spline',
+                    animation: Highcharts.svg, // don't animate in old IE
+                    marginRight: 10,
+                    events: {
+                        load: function () {
+                        }
+                    }
+                },*/
+                loading: {
+                    labelStyle: {
+                        color: 'gray'
+                    },
+                    style: {
+                        backgroundColor: 'white',
+                        opacity: 1,
+                    }
+                },
                 title: {
                     text: name+methodName+'数据图',
                     style: {
@@ -208,7 +227,10 @@
                     type: 'datetime',
                     tickPixelInterval: 150,
                     dateTimeLabelFormats: {
-                        day: '%Y-%m-%d'
+                        second: '%H:%M:%S',
+                        minute: '%H:%M',
+                        hour: '%H:%M',
+                        day: '%Y-%m-%d',
                     }
                 },
                 yAxis: {
@@ -251,30 +273,32 @@
                     name: seriesName,
                     data: (function () {
                         accs = [];
-                        result = countIntervalAndTimes(myTime.DateToUnix(startTime),myTime.DateToUnix(endTime));
-                        for(var i = 0 ; i < result['times']; i++){
-                            $.ajax({
-                                url:getUrlAndTimes(collectorId,myTime.DateToUnix(endTime)-i*result['interval']*60,method,result['interval']),
-                                type:'GET',    //GET
-                                async:false,    //或false,是否异步
-                                timeout:5000,    //超时时间
-                                dataType:'json',
-                                success:function(data,textStatus,jqXHR){
-                                    if(data['data']){
-                                        accs = data['data'].concat(accs)
-                                    }
-                                }
-                            })
-                        }
-                        var interval = new Date().getTimezoneOffset()*60*1000;
-                        for(var i = 0 ; i < accs.length; i++){
-                            timestamp = accs[i][0];
-                            accs[i][0] = timestamp - interval;
-                        };
                         return accs;
                     }())
                 }]
             });
+            chart.showLoading();
+
+
+            var sos = chart.series[0];
+            accs = [];
+            for(var i = 0 ; i < result['times']; i++){
+                $.ajax({
+                    url:getUrlAndTimes(collectorId,myTime.DateToUnix(endTime)-i*result['interval']*60,method,result['interval']),
+                    type:'GET',    //GET
+                    async:true,    //或false,是否异步
+                    timeout:10000,    //超时时间
+                    dataType:'json',
+                    success:function(data,textStatus,jqXHR){
+                        if(data['data']){
+                            accs = data['data'].concat(accs)
+                        }
+                        sos.setData(accs);
+                        chart.hideLoading();
+                    }
+                })
+            }
+
         }
     </script>
 @endsection
