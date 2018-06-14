@@ -59,11 +59,11 @@
         }
     </style>
     <section class="content-header">
-        <h1>
-            <small>商品</small>
+        <h1 style="color: black;font-weight:bold;font-size:16px;">
+            商品
         </h1>
-        <ol class="breadcrumb">
-            <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <ol class="breadcrumbSuXin">
+            <li><a href="{{route('admin')}}" style="color:#367fa9"><i class="fa fa-dashboard"></i> 首页</a></li>
             <li class="active">{{$boxTitle}}</li>
         </ol>
     </section>
@@ -98,7 +98,7 @@
                             <div class="form-group">
                                 <label for="abbreviation" class="col-sm-2 control-label">图片</label>
                                 <div class="col-sm-10">
-                                    <button type="button" id="replaceImg" class="l-btn">添加图片</button>
+                                    <button type="button" id="replaceImg" class="btn btn-default btn-flat">添加图片</button>
                                     <div class="appendPic">
                                         @foreach($product->img_thumbs??[] as $img_thumb)
                                         <div class="fa-box" style="width: 200px;border: solid 1px #555;padding: 5px;margin: 10px 10px;float: left;">
@@ -151,7 +151,7 @@
             <div class="black-cloth" onclick="closeTailor(this)"></div>
             <div class="tailoring-content">
                 <div class="tailoring-content-one">
-                    <label title="上传图片" for="chooseImg" class="l-btn choose-btn">
+                    <label title="上传图片" for="chooseImg" class="btn btn-default btn-flat choose-btn">
                         <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" class="hidden" onchange="selectImg(this)">
                         选择图片
                     </label>
@@ -168,10 +168,10 @@
                     </div>
                 </div>
                 <div class="tailoring-content-three">
-                    <button class="l-btn cropper-reset-btn">复位</button>
-                    <button class="l-btn cropper-rotate-btn">旋转</button>
-                    <button class="l-btn cropper-scaleX-btn">换向</button>
-                    <button class="l-btn sureCut" id="sureCut">确定</button>
+                    <button class="btn btn-default btn-flat cropper-reset-btn">复位</button>
+                    <button class="btn btn-default btn-flat cropper-rotate-btn">旋转</button>
+                    <button class="btn btn-default btn-flat cropper-scaleX-btn">换向</button>
+                    <button class="btn btn-default btn-flat sureCut" id="sureCut">确定</button>
                 </div>
             </div>
         </div>

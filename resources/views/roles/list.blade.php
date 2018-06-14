@@ -2,11 +2,11 @@
 
 @section('content')
   <section class="content-header">
-    <h1>
-      <small>角色</small>
+    <h1 style="color: black;font-weight:bold;font-size:16px;">
+        角色
     </h1>
-    <ol class="breadcrumb">
-        <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+    <ol class="breadcrumbSuXin">
+        <li><a href="{{route('admin')}}" style="color:#367fa9"><i class="fa fa-dashboard"></i> 首页</a></li>
         <li class="active">{{$boxTitle}}</li>
     </ol>
   </section>
@@ -16,7 +16,7 @@
       <div class="col-xs-12">
         <div class="box box-solid">
           <div class="box-header">
-              <a href="{{route('roles.store')}}" class="btn btn-default pull-left"><i class="fa fa-fw fa-plus"></i>新增角色</a>
+              <a href="{{route('roles.store')}}" class="btn btn-default btn-flat pull-left "><i class="fa fa-fw fa-plus"></i>新增角色</a>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -37,8 +37,8 @@
                 <td>{{$role->description}}</td>
                 <td>{{$role->updated_at}}</td>
                 <td>
-                  <a class="btn btn-primary btn-xs " href={{route('roles.edit',['id'=>$role->id])}}>编辑</a>
-                  <a class="btn btn-danger btn-xs delete" url="{{ route('api.roles.delete',['id'=>$role->id])}}" >删除</a>
+                  <a class="btn btn-default btn-flat btn-xs " href={{route('roles.edit',['id'=>$role->id])}}>编辑</a>
+                  <a class="btn btn-default btn-flat btn-xs delete" url="{{ route('api.roles.delete',['id'=>$role->id])}}" >删除</a>
                 </td>
               </tr>
               @endforeach

@@ -2,11 +2,11 @@
 
 @section('content')
   <section class="content-header">
-    <h1>
-      <small>阈值设置</small>
+    <h1 style="color: black;font-weight:bold;font-size:16px;">
+      添加告警
     </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <ol class="breadcrumbSuXin">
+      <li><a href="{{route('admin')}}" style="color:#367fa9"><i class="fa fa-dashboard"></i> 首页</a></li>
       <li class="active">{{$boxTitle}}</li>
     </ol>
   </section>

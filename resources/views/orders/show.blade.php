@@ -2,11 +2,11 @@
 
 @section('content')
   <section class="content-header">
-      <h1>
-          <small>订单列表</small>
+      <h1 style="color: black;font-weight:bold;font-size:16px;">
+          订单列表
       </h1>
-      <ol class="breadcrumb">
-          <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+      <ol class="breadcrumbSuXin">
+          <li><a href="{{route('admin')}}" style="color:#367fa9"><i class="fa fa-dashboard"></i> 首页</a></li>
           <li class="active">{{$boxTitle}}</li>
       </ol>
   </section>
@@ -41,7 +41,7 @@
                                   <span style=" margin-left: 10px;" class="text-green">
                                   ¥<span class="product-money">{{$orderProduct->product->price}}</span></span>
                               </td>
-                              <td><a class="btn btn-danger btn-xs delete" orderNo="{{$order->order_no??''}}" orderId="{{$order->id??''}}" orderProductId="{{$orderProduct->id}}">删除</a></td>
+                              <td><a class="btn btn-default btn-flat btn-xs delete" orderNo="{{$order->order_no??''}}" orderId="{{$order->id??''}}" orderProductId="{{$orderProduct->id}}">删除</a></td>
                           </tr>
                           @endforeach
                           </tbody>
@@ -74,7 +74,7 @@
                            <span style="float: right;"> 最终订单金额：￥{{$order->total_price??'0.00'}}</span>
                         </div>
                           <div style="float: right;">
-                             <input type="submit" class="btn btn-danger pull-right btn-block btn-sm pay" value="提交订单">
+                             <input type="submit" class="btn btn-danger btn-flat pull-right btn-block btn-sm pay" value="提交订单">
                           </div>
                       </div>
                   </div>

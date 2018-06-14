@@ -30,7 +30,7 @@ class CartsController extends Controller
             [
                 'idStr' => $idStr,
                 'carts' => $carts,
-                'boxTitle'=>'',
+                'boxTitle'=>'购物车',
                 'active' => 'carts',
                 'route' => route('api.carts.store'),
             ]

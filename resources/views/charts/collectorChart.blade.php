@@ -21,11 +21,11 @@
     <script src="{{ asset('highcharts/code/modules/exporting.js') }}"></script>
     <script src="{{ asset('laydate/laydate.js') }}"></script>
     <section class="content-header">
-        <h1>
-            <small>无线节点数据图</small>
+        <h1 style="color: black;font-weight:bold;font-size:16px;">
+            无线节点数据图
         </h1>
-        <ol class="breadcrumb">
-            <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <ol class="breadcrumbSuXin">
+            <li><a href="{{route('admin')}}" style="color:#367fa9"><i class="fa fa-dashboard"></i> 首页</a></li>
             <li class="active">{{$boxTitle}}</li>
         </ol>
     </section>
@@ -53,7 +53,7 @@
                 <!-- interactive chart -->
                 <div class="box box-solid">
                     <div class="box-header with-border">
-                        <i class="fa fa-bar-chart-o"></i>
+                        <i class="fa fa-bar-chart-o" style="color: black;font-size:13px;"></i>
 
                         <h3 class="box-title"></h3>
 
@@ -78,7 +78,7 @@
                 <!-- interactive chart -->
                 <div class="box box-solid">
                     <div class="box-header with-border">
-                        <i class="fa fa-bar-chart-o"></i>
+                        <i class="fa fa-bar-chart-o" style="color: black;font-size:13px;"></i>
 
                         <h3 class="box-title"></h3>
 
@@ -104,7 +104,7 @@
                 <!-- interactive chart -->
                 <div class="box box-solid">
                     <div class="box-header with-border">
-                        <i class="fa fa-bar-chart-o"></i>
+                        <i class="fa fa-bar-chart-o" style="color: black;font-size:13px;"></i>
 
                         <h3 class="box-title"></h3>
 

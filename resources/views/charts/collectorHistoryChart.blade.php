@@ -21,11 +21,11 @@
     <script src="{{ asset('highcharts/code/modules/exporting.js') }}"></script>
     <script src="{{ asset('laydate/laydate.js') }}"></script>
     <section class="content-header">
-        <h1>
-            <small>采集器数据图</small>
+        <h1 style="color: black;font-weight:bold;font-size:16px;">
+           采集器数据图
         </h1>
-        <ol class="breadcrumb">
-            <li><a href="{{route('admin')}}"><i class="fa fa-home"></i> 首页</a></li>
+        <ol class="breadcrumbSuXin">
+            <li><a href="{{route('admin')}}" style="color:#367fa9"><i class="fa fa-home"></i> 首页</a></li>
             <li class="active">{{$boxTitle}}</li>
         </ol>
     </section>
@@ -60,9 +60,9 @@
                 <!-- interactive chart -->
                 <div class="box box-solid">
                     <div class="box-header with-border">
-                        <i class="fa fa-bar-chart-o"></i>
+                        <i class="fa fa-bar-chart-o" style="color: black;font-size:13px;"></i>
 
-                        <h3 class="box-title">采集器数据图</h3>
+                        <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">采集器数据图</h3>
 
                         <div class="box-tools pull-right">
 
@@ -166,18 +166,18 @@
             var differenceTime,times = 1,interval = 1,result=[];
             differenceTime = endTime-startTime;
             if(differenceTime ){
-                interval = Math.ceil(differenceTime/60);//分钟
+                interval = differenceTime*1000;//毫秒
             }else if(differenceTime > 60*60 && differenceTime <= 60*240){ //60-240分钟每次请求60分钟
-                times = Math.ceil(differenceTime/(60*60));
+                times = differenceTime*1000;
                 interval = 60;
             }else if(differenceTime > 60*240 && differenceTime <= 60*240*4){ //4-16小时每次请求4小时
-                times = Math.ceil(differenceTime/(60*240));
+                times = differenceTime*1000;
                 interval = 240;
             }else if(differenceTime > 60*240*4 && differenceTime <= 60*240*4*4){ //16-64小时每次请求16分钟
-                times = Math.ceil(differenceTime/(60*240*4));
+                times = differenceTime*1000;
                 interval = 240*4;
             }else if(differenceTime > 60*240*4*4){ //大于64小时每次请求64小时
-                times = Math.ceil(differenceTime/(60*240*4*4));
+                times = differenceTime*1000;
                 interval = 240*4*4;
             }
 

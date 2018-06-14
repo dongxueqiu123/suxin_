@@ -2,11 +2,11 @@
 
 @section('content')
   <section class="content-header">
-    <h1>
-      <small>用户</small>
+    <h1 style="color: black;font-weight:bold;font-size:16px;">
+      用户
     </h1>
-    <ol class="breadcrumb">
-        <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+    <ol class="breadcrumbSuXin">
+        <li><a href="{{route('admin')}}"  style="color:#367fa9"><i class="fa fa-dashboard"></i> 首页</a></li>
         <li class="active">{{$boxTitle}}</li>
     </ol>
   </section>
@@ -16,7 +16,7 @@
       <div class="col-xs-12">
         <div class="box box-solid">
           <div class="box-header">
-              <a href="{{route('users.store')}}" class="btn btn-default pull-left"><i class="fa fa-fw fa-plus"></i>新增用户</a>
+              <a href="{{route('users.store')}}" class="btn btn-default btn-flat pull-left "><i class="fa fa-fw fa-plus"></i>新增用户</a>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -41,8 +41,8 @@
                 <td>{{$user->roleUser->roles->name??''}}</td>
                 <td>{{$user->updated_at}}</td>
                 <td>
-                  <a class="btn btn-primary btn-xs " href={{route('users.edit',['id'=>$user->id])}}>编辑</a>
-                  <a class="btn btn-danger btn-xs delete" url="{{ route('api.users.delete',['id'=>$user->id])}}" >删除</a>
+                  <a class="btn btn-default btn-flat btn-xs " href={{route('users.edit',['id'=>$user->id])}}>编辑</a>
+                  <a class="btn btn-default btn-flat btn-xs delete" url="{{ route('api.users.delete',['id'=>$user->id])}}" >删除</a>
                 </td>
               </tr>
               @endforeach

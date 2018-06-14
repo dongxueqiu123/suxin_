@@ -2,11 +2,11 @@
 
 @section('content')
   <section class="content-header">
-      <h1>
-          <small>购物车</small>
+      <h1 style="color: black;font-weight:bold;font-size:16px;">
+          购物车
       </h1>
-      <ol class="breadcrumb">
-          <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+      <ol class="breadcrumbSuXin">
+          <li><a href="{{route('admin')}}" style="color:#367fa9"><i class="fa fa-dashboard"></i> 首页</a></li>
           <li class="active">{{$boxTitle}}</li>
       </ol>
   </section>
@@ -14,8 +14,8 @@
   <section class="content">
       <div class="row">
           <div class="col-xs-12">
-              <div class="box box-solid">
-                  <div class="nav-tabs-custom">
+              <div class="">
+                  <div class="">
                       <div class="tab-content" style="position: fixed; padding: 0px 0px 0px 10px; bottom: 0px; background: rgb(255, 255, 255); text-align: right; border: 1px solid rgb(204, 204, 204); z-index: 9999; width: 80%;">
                           <div  style="line-height: 34px;text-align: left;float: left;">
                               <span><input type="checkbox" class="check-all">&nbsp全选</span>
@@ -64,7 +64,7 @@
                                               <span style=" margin-left: 10px;" class="text-green">
                                   ¥<span class="product-money">{{$cart->product->price}}</span></span>
                                           </td>
-                                          <td><a class="btn btn-danger btn-xs delete" url="{{ route('api.carts.delete')}}" ids ='{{$cart->id}}'>删除</a></td>
+                                          <td><a class="btn btn-default btn-flat btn-xs delete" url="{{ route('api.carts.delete')}}" ids ='{{$cart->id}}'>删除</a></td>
                                       </tr>
                                       @endforeach
                                       </tbody>

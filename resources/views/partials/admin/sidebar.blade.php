@@ -153,7 +153,7 @@
           <ul class="treeview-menu">
 
             @permission('thresholds')
-            <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 阈值设置</a></li>
+            <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 添加告警</a></li>
             @endpermission
             @permission('liaisons')
             <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-comments-o"></i> 告警方式</a></li>
@@ -195,7 +195,7 @@
           </span>
           </a>
           <ul class="treeview-menu">
-            <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 阈值设置</a></li>
+            <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 添加告警</a></li>
             <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-comments-o"></i> 告警方式</a></li>
             <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-warning"></i>
                 告警记录

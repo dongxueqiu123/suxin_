@@ -2,11 +2,11 @@
 
 @section('content')
   <section class="content-header">
-    <h1>
-      <small>告警记录</small>
+    <h1 style="color: black;font-weight:bold;font-size:16px;">
+      告警记录
     </h1>
-    <ol class="breadcrumb">
-        <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+    <ol class="breadcrumbSuXin">
+        <li><a href="{{route('admin')}}" style="color:#367fa9"><i class="fa fa-dashboard"></i> 首页</a></li>
         <li class="active">{{$boxTitle}}</li>
     </ol>
   </section>
@@ -38,7 +38,7 @@
                               <td width="20%">{{$alarm['providerName']}}</td>
                               <td width="20%">{{$alarm['consumerName']}}</td>
                               <td width="10%">{{$alarm['categoryName']}}</td>
-                              <td width="10%"><span class="btn btn-danger btn-xs showOrHide " state="hide"><span class="glyphicon glyphicon-plus"></span> 查看</span></td>
+                              <td width="10%"><span class="btn btn-default btn-flat btn-xs showOrHide " state="hide"><span class="glyphicon glyphicon-plus"></span> 查看</span></td>
                           </tr>
                           </tbody>
                       </table>
@@ -47,22 +47,18 @@
                               <tr>
                                   <th >状态</th>
                                   <th>等级</th>
-                                  <th>操作说明</th>
                                   <th>告警详情</th>
-                                  <th>解决时间</th>
                                   <th>开始告警时间</th>
                                   <th>最近告警时间</th>
                                   <th>操作</th>
                               </tr>
-                              <tr style="color: #db4c3f">
+                              <tr >
                                   <td>待处理</td>
                                   <td>{{$alarm['gradeName']}}</td>
-                                  <td></td>
                                   <td>{{$alarm['detail']}}</td>
-                                  <td></td>
                                   <td>2018-12-21 12:12:12</td>
                                   <td>{{date('Y-m-d H:i:s',$alarm['alarmTime']/1000)}}</td>
-                                  <td><span class="btn btn-danger btn-xs restore" alarmId={{$alarm['id']}}  collectorId={{$alarm['collectorId']}} alarmCategory={{$alarm['category']}}>解决</span></td>
+                                  <td><span class="btn btn-default btn-flat btn-xs restore" alarmId={{$alarm['id']}}  collectorId={{$alarm['collectorId']}} alarmCategory={{$alarm['category']}}>解决</span></td>
                               </tr>
 {{--                              <tr style="color: #00ad9c">
                                   <td>恢复</td>

@@ -45,12 +45,10 @@
     </style>
     <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=14CImIkoVgUuvMoTPNaFjlCefawkU0LN "></script>
   <section class="content-header">
-    <h1>
-      <small>首页</small>
+    <h1 style="color: black;font-weight:bold;font-size:16px;">
+      首页
     </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-    </ol>
+
   </section>
 
   <section class="content">
@@ -61,7 +59,7 @@
         <div class="small-box bg-aqua">
           <div class="inner">
             <h3 class="equipmentNum">0</h3>
-            <p>机械设备总数</p>
+            <p style="font-size: 13px;">机械设备总数</p>
           </div>
           <div class="icon">
             <i class="ion ion-monitor"></i>
@@ -74,7 +72,7 @@
         <div class="small-box bg-aqua">
           <div class="inner">
             <h3 class="equipmentOnlineNum">0</h3>
-            <p>机械设备在线数</p>
+            <p style="font-size: 13px;">机械设备在线数</p>
           </div>
           <div class="icon">
             <i class="ion ion-wifi"></i>
@@ -87,7 +85,7 @@
         <div class="small-box bg-green">
           <div class="inner">
             <h3 class="collectorNum">0</h3>
-            <p>无线节点总数</p>
+            <p style="font-size: 13px;">无线节点总数</p>
           </div>
           <div class="icon">
             <i class="ion ion-laptop"></i>
@@ -100,7 +98,7 @@
         <div class="small-box bg-green">
           <div class="inner">
             <h3 class="collectorOnlineNum">0</h3>
-            <p>无线节点在线数</p>
+            <p style="font-size: 13px;">无线节点在线数</p>
           </div>
           <div class="icon">
             <i class="ion ion-wifi"></i>
@@ -115,7 +113,7 @@
         <div class="small-box bg-yellow">
           <div class="inner">
             <h3 class="allWarnTempNum">0</h3>
-            <p >温度告警总数</p>
+            <p style="font-size: 13px;">温度告警总数</p>
           </div>
           <div class="icon">
             <i class="ion ion-thermometer"></i>
@@ -128,7 +126,7 @@
         <div class="small-box bg-yellow">
           <div class="inner">
             <h3  class="unManageWarnTempNum">0</h3>
-            <p>温度告警待处理数</p>
+            <p style="font-size: 13px;">温度告警待处理数</p>
           </div>
           <div class="icon">
             <i class="ion ion-ios-gear-outline"></i>
@@ -141,7 +139,7 @@
         <div class="small-box bg-red">
           <div class="inner">
             <h3 class="allWarnShakeNum">0</h3>
-            <p>振动告警总数</p>
+            <p style="font-size: 13px;">振动告警总数</p>
           </div>
           <div class="icon">
             <i class="ion ion-speedometer"></i>
@@ -154,7 +152,7 @@
         <div class="small-box bg-red">
           <div class="inner">
             <h3 class="unManageWarnShakeNum">0</h3>
-            <p>振动告警待处理数</p>
+            <p style="font-size: 13px;">振动告警待处理数</p>
           </div>
           <div class="icon">
             <i class="ion ion-ios-gear"></i>
@@ -171,7 +169,7 @@
 
         <div class="nav-tabs-custom">
           <ul class="nav nav-tabs pull-right">
-            <li class="pull-left header" style="width: 100%"><i class="fa fa-map-marker"></i> 地图</li>
+            <li class="pull-left header" style="width: 100%;font-size: 13px;line-height:25px;"><i class="fa fa-map-marker"></i> 地图</li>
             <div id="map" style="height: 1080px; width: 1012px; margin: 0 auto;">
                 {{--<img src="{{ asset('images/WordMap.gif') }}" style="width:100%;height:auto;">--}}
             </div>

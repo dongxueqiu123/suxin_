@@ -2,11 +2,11 @@
 
 @section('content')
   <section class="content-header">
-      <h1>
-          <small>订单列表</small>
+      <h1 style="color: black;font-weight:bold;font-size:16px;">
+          订单列表
       </h1>
-      <ol class="breadcrumb">
-          <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+      <ol class="breadcrumbSuXin">
+          <li><a href="{{route('admin')}}" style="color:#367fa9"><i class="fa fa-dashboard"></i> 首页</a></li>
           <li class="active">{{$boxTitle}}</li>
       </ol>
   </section>
@@ -47,7 +47,7 @@
 
                                                   <tbody>
                                                   @foreach($payOrders as $order)
-                                                      <tr @if($order->status == 1) class= "text-green" @elseif($order->status == 2)class= "text-red" @endif>
+                                                      <tr{{-- @if($order->status == 1) class= "text-green" @elseif($order->status == 2)class= "text-red" @endif--}}>
                                                           <td>{{$order->order_no}}</td>
                                                           <td>{{$order->create_time??''}}</td>
                                                           <td>@if($order->status == 0)新订单@elseif($order->status == 1)已支付@else过期@endif</td>
@@ -55,10 +55,10 @@
                                                           <td>{{$order->total_price??''}}</td>
                                                           <td>
                                                               @if($order->status == 0)
-                                                                  <a class="btn btn-primary btn-xs " href={{route('orders.show',['id'=>$order->order_no])}}>查看</a>
+                                                                  <a class="btn btn-default btn-flat btn-xs " href={{route('orders.show',['id'=>$order->order_no])}}>查看</a>
                                                               @endif
 
-                                                              <a class="btn btn-primary btn-xs " href={{route('orders.info',['id'=>$order->order_no])}}>详情</a>
+                                                              <a class="btn btn-default btn-flat btn-xs " href={{route('orders.info',['id'=>$order->order_no])}}>详情</a>
                                                           </td>
                                                       </tr>
                                                   @endforeach
@@ -101,10 +101,10 @@
                                                           <td>{{$order->total_price??''}}</td>
                                                           <td>
                                                               @if($order->status == 0)
-                                                                  <a class="btn btn-primary btn-xs " href={{route('orders.show',['id'=>$order->order_no])}}>查看</a>
+                                                                  <a class="btn btn-default btn-flat btn-xs " href={{route('orders.show',['id'=>$order->order_no])}}>查看</a>
                                                               @endif
 
-                                                              <a class="btn btn-primary btn-xs " href={{route('orders.info',['id'=>$order->order_no])}}>详情</a>
+                                                              <a class="btn btn-default btn-flat btn-xs " href={{route('orders.info',['id'=>$order->order_no])}}>详情</a>
                                                           </td>
                                                       </tr>
                                                   @endforeach
@@ -139,7 +139,7 @@
 
                                                   <tbody>
                                                   @foreach($overdueOrders as $order)
-                                                      <tr @if($order->status == 1) class= "text-green" @elseif($order->status == 2)class= "text-red" @endif>
+                                                      <tr>
                                                           <td>{{$order->order_no}}</td>
                                                           <td>{{$order->create_time??''}}</td>
                                                           <td>@if($order->status == 0)新订单@elseif($order->status == 1)已支付@else过期@endif</td>
@@ -147,10 +147,10 @@
                                                           <td>{{$order->total_price??''}}</td>
                                                           <td>
                                                               @if($order->status == 0)
-                                                                  <a class="btn btn-primary btn-xs " href={{route('orders.show',['id'=>$order->order_no])}}>查看</a>
+                                                                  <a class="btn btn-default btn-flat btn-xs " href={{route('orders.show',['id'=>$order->order_no])}}>查看</a>
                                                               @endif
 
-                                                              <a class="btn btn-primary btn-xs " href={{route('orders.info',['id'=>$order->order_no])}}>详情</a>
+                                                              <a class="btn btn-default btn-flat btn-xs " href={{route('orders.info',['id'=>$order->order_no])}}>详情</a>
                                                           </td>
                                                       </tr>
                                                   @endforeach

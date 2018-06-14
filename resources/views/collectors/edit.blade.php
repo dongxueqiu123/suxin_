@@ -7,11 +7,11 @@
     </style>
     <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=14CImIkoVgUuvMoTPNaFjlCefawkU0LN "></script>
     <section class="content-header">
-        <h1>
-            <small>无线节点</small>
+        <h1 style="color: black;font-weight:bold;font-size:16px;">
+            无线节点
         </h1>
-        <ol class="breadcrumb">
-            <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <ol class="breadcrumbSuXin">
+            <li><a href="{{route('admin')}}" style="color:#367fa9"><i class="fa fa-dashboard"></i> 首页</a></li>
             <li class="active">{{$boxTitle}}</li>
         </ol>
     </section>

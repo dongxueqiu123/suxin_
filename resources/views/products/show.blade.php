@@ -9,11 +9,11 @@
 
     </style>
   <section class="content-header">
-      <h1>
-          <small>购买商品</small>
+      <h1 style="color: black;font-weight:bold;font-size:16px;">
+          购买商品
       </h1>
-      <ol class="breadcrumb">
-          <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+      <ol class="breadcrumbSuXin">
+          <li><a href="{{route('admin')}}" style="color:#367fa9"><i class="fa fa-dashboard"></i> 首页</a></li>
           <li class="active"></li>
       </ol>
   </section>
@@ -94,8 +94,8 @@
                           <td style="float: left">$250.30</td>
                       </tr>
                       <tr>
-                          <td colspan ="2" ><button type="button" class="cart btn btn-warning"  style="float: left;margin-right: 20px;" value="{{$product->id}}">加入购物车</button>
-                              <button type="button" class="buy btn btn-danger"  style="float: left" value="{{$product->id}}">立即购买</button>
+                          <td colspan ="2" ><button type="button" class="cart btn btn-warning btn-flat"  style="float: left;margin-right: 20px;" value="{{$product->id}}">加入购物车</button>
+                              <button type="button" class="buy btn btn-danger btn-flat"  style="float: left" value="{{$product->id}}">立即购买</button>
                           </td>
                       </tr>
                   </table>

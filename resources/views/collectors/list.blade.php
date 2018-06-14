@@ -2,11 +2,11 @@
 
 @section('content')
   <section class="content-header">
-      <h1>
-          <small>无线节点</small>
+      <h1 style="color: black;font-weight:bold;font-size:16px;">
+          无线节点
       </h1>
-      <ol class="breadcrumb">
-          <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+      <ol class="breadcrumbSuXin">
+          <li><a href="{{route('admin')}}" style="color:#367fa9"><i class="fa fa-dashboard"></i> 首页</a></li>
           <li class="active">{{$boxTitle}}</li>
       </ol>
   </section>
@@ -16,7 +16,7 @@
           <div class="col-xs-12">
           <div class="box box-solid">
               <div class="box-header">
-                  <a href="{{route('collectors.store')}}" class="btn btn-default pull-left"><i class="fa fa-fw fa-plus"></i>新增无线节点</a>
+                  <a href="{{route('collectors.store')}}" class="btn btn-default btn-flat pull-left"><i class="fa fa-fw fa-plus"></i>新增无线节点</a>
               </div>
       <div class="nav-tabs-custom">
           <div class="tab-content">
@@ -55,14 +55,14 @@
                                       <td>@if($collector->online_flag??'')（在线）@else（离线）@endif</td>
                                       <td>{{$collector->operate_time}}</td>
                                       <td>
-                                          <a class="btn btn-primary btn-xs" href={{route('collectors.edit',['id'=>$collector->id])}}>修改{{--<i class="fa fa-edit" style="font-size: 14px;"></i>--}}</a>
-                                          <a class="btn btn-danger btn-xs delete" url="{{ route('api.collectors.delete',['id'=>$collector->id])}}" >删除{{--<i class="fa fa-trash-o" style="font-size: 14px;"></i>--}}</a>
+                                          <a class="btn btn-default btn-flat btn-xs" href={{route('collectors.edit',['id'=>$collector->id])}}>修改{{--<i class="fa fa-edit" style="font-size: 14px;"></i>--}}</a>
+                                          <a class="btn btn-default btn-flat btn-xs delete" url="{{ route('api.collectors.delete',['id'=>$collector->id])}}" >删除{{--<i class="fa fa-trash-o" style="font-size: 14px;"></i>--}}</a>
                                           @if( Auth::user()->id !==1 )
                                               @permission(['charts'])
-                                              <a class="btn btn-warning btn-xs " href={{route('charts.collectorChart',['id'=>$collector->id])}}>图表{{--<i class="fa fa-fw fa-area-chart" style="font-size: 14px;"></i>--}}</a>
+                                              <a class="btn btn-default btn-flat btn-xs " href={{route('charts.collectorChart',['id'=>$collector->id])}}>图表{{--<i class="fa fa-fw fa-area-chart" style="font-size: 14px;"></i>--}}</a>
                                               @endpermission
                                           @else
-                                              <a class="btn btn-warning btn-xs " href={{route('charts.collectorChart',['id'=>$collector->id])}}>图表{{--<i class="fa fa-fw fa-area-chart" style="font-size: 14px;"></i>--}}</a>
+                                              <a class="btn btn-default btn-flat btn-xs " href={{route('charts.collectorChart',['id'=>$collector->id])}}>图表{{--<i class="fa fa-fw fa-area-chart" style="font-size: 14px;"></i>--}}</a>
                                           @endif
                                       </td>
                                   </tr>

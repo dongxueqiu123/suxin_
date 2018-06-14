@@ -9,11 +9,11 @@
 
     </style>
   <section class="content-header">
-      <h1>
-          <small>购买商品</small>
+      <h1 style="color: black;font-weight:bold;font-size:16px;">
+          购买商品
       </h1>
-      <ol class="breadcrumb">
-          <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+      <ol class="breadcrumbSuXin">
+          <li><a href="{{route('admin')}}" style="color:#367fa9"><i class="fa fa-dashboard"></i> 首页</a></li>
           <li class="active">{{$boxTitle??''}}</li>
       </ol>
   </section>

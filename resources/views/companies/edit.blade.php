@@ -2,11 +2,11 @@
 
 @section('content')
     <section class="content-header">
-        <h1>
-            <small>公司</small>
+        <h1 style="color: black;font-weight:bold;font-size:16px;">
+            公司
         </h1>
-        <ol class="breadcrumb">
-            <li><a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <ol class="breadcrumbSuXin">
+            <li><a href="{{route('admin')}}" style="color:#367fa9"><i class="fa fa-dashboard"></i> 首页</a></li>
             <li class="active">{{$boxTitle}}</li>
         </ol>
     </section>
@@ -26,14 +26,14 @@
                             <div class="form-group">
                                 <label for="name" class="col-sm-2 control-label">名称</label>
 
-                                <div class="col-sm-10">
+                                <div class="col-sm-5">
                                     <input type="name" class="form-control" value="{{$company->name??''}}" id="name" placeholder="公司名称"  datatype="*" errormsg="请填写信息">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="abbreviation" class="col-sm-2 control-label">简称</label>
 
-                                <div class="col-sm-10">
+                                <div class="col-sm-5">
                                     <input type="abbreviation" class="form-control" value="{{$company->abbreviation??''}}" id="abbreviation" placeholder="公司简称"  datatype="*" errormsg="请填写信息">
                                 </div>
                             </div>

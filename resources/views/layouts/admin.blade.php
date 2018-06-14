@@ -26,8 +26,77 @@
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
     <script src="{{ asset('js/suxin/jquery-1.9.1.min.js') }}"></script>
     <script src="{{ asset('js/suxin/index.js?v=1') }}"></script>
+    <style>
+        body,button, input, select, span,tspan,textarea,h1 ,h2, h3, h4, h5, h6 { font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;}
+        .content{
+            padding: 8px 15px;
+        }
+        input,select,button,a,p{
+            font-size: 13px;
+        }
+        .breadcrumbSuXin>.active {
+            color: #777;
+        }
+        .breadcrumbSuXin>li {
+            display: inline-block;
+        }
+        .content-header>.breadcrumbSuXin {
+            /* float: right; */
+            background: transparent;
+            margin-top: 0;
+            margin-bottom: 0;
+            /* font-size: 12px; */
+            padding: 15px 1px 5px 16px;
+            /* position: absolute; */
+            /* top: 15px; */
+            /* right: 10px; */
+            /* border-radius: 2px; */
+        }
+        .content-header > .breadcrumbSuXin > li > a {
+            color: #444;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .content-header > .breadcrumbSuXin > li > a > .fa,
+        .content-header > .breadcrumbSuXin > li > a > .glyphicon,
+        .content-header > .breadcrumbSuXin > li > a > .ion {
+            margin-right: 5px;
+        }
+        .content-header > .breadcrumbSuXin > li + li:before {
+            content: '>\00a0';
+        }
+        @media (max-width: 991px) {
+            .content-header > .breadcrumbSuXin {
+                position: relative;
+                margin-top: 5px;
+                top: 0;
+                right: 0;
+                float: none;
+                background: #d2d6de;
+                padding-left: 10px;
+            }
+            .content-header > .breadcrumb li:before {
+                color: #97a0b3;
+            }
+        }
+        .box{
+            border-radius: 0px;
+        }
+        .btn {
+            font-size: 13px;
+        }
+        .form-control{
+            font-size: 13px;
+        }
+        .treeview-menu>li>a {
+            font-size: 13px;
+        }
+        .box-header>.fa, .box-header>.glyphicon, .box-header>.ion, .box-header .box-title {
+             font-size: 13px;
+        }
+    </style>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini " style="font-size: 13px;">
     <div class="wrapper">
       @include('partials.admin.header')
       @include('partials.admin.sidebar')
