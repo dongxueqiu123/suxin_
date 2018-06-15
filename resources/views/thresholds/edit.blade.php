@@ -30,7 +30,7 @@
 
                   <div class="form-group">
                       <label for="name" class="col-sm-2 control-label">公司</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-5">
                           <select class="form-control select2 company"  style="width: 100%;">
                               @foreach($companies??[] as $key => $company)
                                   <option @if(($company->id??'') == ($threshold->firm_id??'')) selected @endif value="{{$company->id}}">{{$company->name}}</option>
@@ -41,7 +41,7 @@
 
                   <div class="form-group changeEquipment" @if(!($threshold->equipment_id??'') && !($threshold->collector_id??'')) style="display: none" @endif>
                       <label for="name" class="col-sm-2 control-label">机械设备</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-5">
                           <select class="form-control select2 equipment"  style="width: 100%;">
 
                           </select>
@@ -50,7 +50,7 @@
 
                   <div class="form-group changeCollector" @if(!($threshold->equipment_id??'') && !($threshold->collector_id??'')) style="display: none" @endif>
                       <label for="name" class="col-sm-2 control-label">无线节点</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-5">
                           <select class="form-control select2 collector"  style="width: 100%;">
 
                           </select>
@@ -58,7 +58,7 @@
                   </div>
                   <div class="form-group " >
                       <label for="abbreviation" class="col-sm-2 control-label">分类</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-5">
                           <select class="form-control select2 category"  style="width: 100%;">
                               @foreach($categories??[] as $key =>$category)
                                   <option @if(($threshold->category??'') == $key) selected @endif value="{{$key}}">{{$category}}</option>
@@ -69,7 +69,7 @@
 
                   <div class="form-group " >
                       <label for="abbreviation" class="col-sm-2 control-label">等级</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-5">
                           <select class="form-control select2 grade"  style="width: 100%;">
                               @foreach($grades??[] as $key =>$grade)
                                   <option @if(($threshold->grade??'') == $key) selected @endif value="{{$key}}">{{$grade}}</option>
@@ -80,14 +80,14 @@
 
                   <div class="form-group">
                       <label for="lowLimit" class="col-sm-2 control-label">阈值下线</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-5">
                           <input type="lowLimit" class="form-control" value="{{$threshold->lowlimit??''}}" id="lowLimit" placeholder="下限（-999~999）"  datatype="/^-?[1-9]{0,3}(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]{1}[0-9]{0,2}(\.\d+)?$/" errormsg="请设正确的阈值下线" >
                       </div>
                   </div>
 
                   <div class="form-group">
                       <label for="topLimit" class="col-sm-2 control-label">阈值上线</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-5">
                           <input type="topLimit" class="form-control" value="{{$threshold->toplimit??''}}" id="topLimit" placeholder="上限（-999~999）" datatype="/^-?[1-9]{0,3}(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]{1}[0-9]{0,2}(\.\d+)?$/"  errormsg="请设正确的阈值上线" >
                       </div>
                   </div>

@@ -79,19 +79,19 @@
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="name" class="col-sm-2 control-label">名称</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-5">
                                     <input type="name" class="form-control" value="{{$product->name??''}}" id="name" placeholder="名称" datatype="*" errormsg="请填写信息" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="mac" class="col-sm-2 control-label">价格</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-5">
                                     <input type="price" class="form-control" value="{{$product->price??''}}" id="price" placeholder="价格(精确到分)"   datatype="/^[0-9]+(.[0-9]{2})?$/" errormsg="请输入正确的价格" nullmsg="请输入价格" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="abbreviation" class="col-sm-2 control-label">原价</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-5">
                                     <input type="priceOriginal" class="form-control" value="{{$product->price_original??''}}" id="priceOriginal" placeholder="原价(精确到分)"   datatype="/^[0-9]+(.[0-9]{2})?$/" errormsg="请输入正确的价格" nullmsg="请输入原价" >
                                 </div>
                             </div>
@@ -113,7 +113,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="abbreviation" class="col-sm-2 control-label">是否上架</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-5">
                                     <label>
                                     <input type="radio" name="isAlive" value="1" class="minimal-red" @if(($product->is_alive??'1') == 1 ) checked @endif>
                                     是
@@ -127,13 +127,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="abbreviation" class="col-sm-2 control-label">单位</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-5">
                                     <input type="unit" class="form-control" value="{{$product->detail->unit??''}}" id="unit" placeholder="单位" datatype="*" errormsg="请填写信息" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="abbreviation" class="col-sm-2 control-label">描述</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-5">
                                     		<textarea  id="description" name="content1" style="width:700px;height:200px;visibility:hidden;">
                                         <?php echo htmlspecialchars($product->detail->description??''); ?>
                                    </textarea>

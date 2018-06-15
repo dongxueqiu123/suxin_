@@ -29,19 +29,19 @@
                             <div class="form-group">
                                 <label for="display_name" class="col-sm-2 control-label">名称</label>
 
-                                <div class="col-sm-10">
+                                <div class="col-sm-5">
                                     <input type="display_name" class="form-control" value="{{$permission->display_name??''}}" id="display_name" placeholder="权限名称"  datatype="*" errormsg="请填写信息">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="description" class="col-sm-2 control-label">描述</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-5">
                                     <input type="description" class="form-control" value="{{$permission->description??''}}" id="description" placeholder="权限描述"  datatype="*" errormsg="请填写信息">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="name" class="col-sm-2 control-label">路由</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-5">
                                     <input type="name" class="form-control" value="{{$permission->name??''}}" id="name" placeholder="权限路由"  datatype="*" errormsg="请填写信息">
                                 </div>
                             </div>

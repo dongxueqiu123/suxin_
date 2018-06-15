@@ -27,13 +27,13 @@
                       <div class="form-group">
                           <label for="name" class="col-sm-2 control-label">名称</label>
 
-                          <div class="col-sm-10">
+                          <div class="col-sm-5">
                               <input type="name" class="form-control" value="{{$role->name??''}}" id="name" placeholder="角色名称"  datatype="*" errormsg="请填写信息">
                           </div>
                       </div>
                       <div class="form-group">
                           <label for="description" class="col-sm-2 control-label">描述</label>
-                          <div class="col-sm-10">
+                          <div class="col-sm-5">
                               <input type="description" class="form-control" value="{{$role->description??''}}" id="description" placeholder="角色描述"  datatype="*" errormsg="请填写信息">
                           </div>
                       </div>

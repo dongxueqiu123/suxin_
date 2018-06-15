@@ -45,9 +45,9 @@
     </style>
     <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=14CImIkoVgUuvMoTPNaFjlCefawkU0LN "></script>
   <section class="content-header">
-    <h1 style="color: black;font-weight:bold;font-size:16px;">
+{{--    <h1 style="color: black;font-weight:bold;font-size:16px;">
       首页
-    </h1>
+    </h1>--}}
 
   </section>
 

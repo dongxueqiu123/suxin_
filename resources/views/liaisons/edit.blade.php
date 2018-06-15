@@ -29,7 +29,7 @@
 
                   <div class="form-group">
                       <label for="name" class="col-sm-2 control-label">公司</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-5">
                           <select class="form-control select2 company"  style="width: 100%;">
                               @foreach($companies??[] as $key => $company)
                                   <option @if(($company->id??'') == ($liaison->firm_id??'')) selected @endif value="{{$company->id}}">{{$company->name}}</option>
@@ -40,7 +40,7 @@
 
                   <div class="form-group changeEquipment" @if(!($liaison->equipment_id??'') && !($liaison->collector_id??'')) style="display: none" @endif>
                       <label for="name" class="col-sm-2 control-label">机械设备</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-5">
                           <select class="form-control select2 equipment"  style="width: 100%;">
 
                           </select>
@@ -49,7 +49,7 @@
 
                   <div class="form-group changeCollector" @if(!($liaison->equipment_id??'') && !($liaison->collector_id??'')) style="display: none" @endif>
                       <label for="name" class="col-sm-2 control-label">无线节点</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-5">
                           <select class="form-control select2 collector"  style="width: 100%;">
 
                           </select>
@@ -58,14 +58,14 @@
 
                   <div class="form-group">
                       <label for="lowLimit" class="col-sm-2 control-label">手机号码</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-5">
                           <input type="lowLimit" class="form-control" value="{{$liaison->mobile??''}}" id="mobile" placeholder="手机号码" datatype="m" errormsg="请填写正确的手机号码" >
                       </div>
                   </div>
 
                   <div class="form-group">
                       <label for="topLimit" class="col-sm-2 control-label">电子邮箱</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-5">
                           <input type="topLimit" class="form-control" value="{{$liaison->email??''}}" id="email" placeholder="电子邮箱" datatype="e" errormsg="请填写正确的电子邮箱" >
                       </div>
                   </div>

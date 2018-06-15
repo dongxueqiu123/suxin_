@@ -4,6 +4,10 @@
     <style type="text/css">
         body, html,#allmap {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
         .anchorBL{display:none;}
+         .citylist_popup_main .city_content_top {
+             height: 40px;
+         }
+
     </style>
     <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=14CImIkoVgUuvMoTPNaFjlCefawkU0LN "></script>
     <section class="content-header">
@@ -27,19 +31,19 @@
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="name" class="col-sm-2 control-label">名称</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-5">
                                     <input type="name" class="form-control" value="{{$collector->name??''}}" id="name" placeholder="名称" datatype="*" errormsg="请填写信息" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="mac" class="col-sm-2 control-label">mac地址</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-5">
                                     <input type="mac" class="form-control" value="{{$collector->mac??''}}" id="mac" placeholder="00-23-5A-15-99-42-11-25"  datatype="*23-23" errormsg="请填写正确的mac地址" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="abbreviation" class="col-sm-2 control-label">公司</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-5">
                                     <select class="form-control select2 company"  style="width: 100%;">
                                         @foreach($companies as $key => $company)
                                             <option @if(($collector->firm_id??'') == $company->id) selected @endif value="{{$company->id}}">{{$company->name}}</option>
@@ -49,7 +53,7 @@
                             </div>
                             <div class="form-group changeEquipment" @if(($collector->equipment_id??'') == '') style="display: none;"@endif>
                                 <label for="abbreviation" class="col-sm-2 control-label">机械设备</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-5">
                                     <select class="form-control select2 equipment"  style="width: 100%;">
 
                                     </select>
@@ -86,6 +90,25 @@
             var point = new BMap.Point(116.331398,49.897445);
             map.centerAndZoom(point,2);
         }
+
+        map.enableScrollWheelZoom();
+        map.enableInertialDragging();
+
+        map.enableContinuousZoom();
+
+        var size = new BMap.Size(10, 20);
+        map.addControl(new BMap.CityListControl({
+            anchor: BMAP_ANCHOR_TOP_LEFT,
+            offset: size,
+            // 切换城市之间事件
+            // onChangeBefore: function(){
+            //    alert('before');
+            // },
+            // 切换城市之后事件
+            // onChangeAfter:function(){
+            //   alert('after');
+            // }
+        }));
 /*        var geolocation = new BMap.Geolocation();
         geolocation.getCurrentPosition(function(r){
             if(this.getStatus() == BMAP_STATUS_SUCCESS){

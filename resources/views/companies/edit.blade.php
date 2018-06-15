@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+
     <section class="content-header">
         <h1 style="color: black;font-weight:bold;font-size:16px;">
             公司
@@ -63,6 +64,7 @@
     </section>
     <script src="{{asset('layer/layer.js')}}"></script>
     <script src="{{asset('vaildform/validform_min.js')}}"></script>
+
     <script>
 
         $(".form-horizontal").Validform({

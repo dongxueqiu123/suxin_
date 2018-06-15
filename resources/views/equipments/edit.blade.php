@@ -28,14 +28,14 @@
               <div class="box-body">
                 <div class="form-group">
                   <label for="name" class="col-sm-2 control-label">名称</label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-5">
                     <input type="name" class="form-control" value="{{$equipment->name??''}}" id="name" placeholder="名称" datatype="*" errormsg="请填写信息" >
                   </div>
                 </div>
 
                   <div class="form-group">
                       <label for="abbreviation" class="col-sm-2 control-label">生产公司</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-5">
                           <select class="form-control select2 providerId"  style="width: 100%;">
 
                               @foreach($companies??[] as $company)
@@ -47,7 +47,7 @@
 
                   <div class="form-group">
                       <label for="abbreviation" class="col-sm-2 control-label">使用公司</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-5">
                           <select class="form-control select2 consumerId"  style="width: 100%;">
 
                               @foreach($companies??[] as $company)

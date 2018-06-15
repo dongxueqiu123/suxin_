@@ -28,33 +28,33 @@
                 <div class="form-group">
                   <label for="name" class="col-sm-2 control-label">名称</label>
 
-                  <div class="col-sm-10">
+                  <div class="col-sm-5">
                     <input type="name" class="form-control" value="{{$user->name??''}}" id="name" placeholder="名称" datatype="*" errormsg="请填写信息">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="email" class="col-sm-2 control-label">邮箱</label>
 
-                  <div class="col-sm-10">
+                  <div class="col-sm-5">
                     <input type="email" class="form-control" value="{{$user->email??''}}" id="email" placeholder="邮箱"  datatype="e" errormsg="请填写正确的电子邮箱" >
                   </div>
                 </div>
                   <div class="form-group">
                       <label for="password" class="col-sm-2 control-label">密码</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-5">
                           <input type="password" name="password111" class="form-control" value="{{$user->password??''}}" id="password" placeholder="密码" datatype="*6-100" errormsg="密码最少为6位" >
                       </div>
                   </div>
                   <div class="form-group">
                       <label for="password" class="col-sm-2 control-label">确认密码</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-5">
                           <input type="password" name="password_confirmation" recheck="password111" class="form-control" value="{{$user->password??''}}" id="password_confirmation" placeholder="确认密码">
                       </div>
                   </div>
                   @if(!empty($roles??[]))
                       <div class="form-group">
                           <label for="abbreviation" class="col-sm-2 control-label">角色</label>
-                          <div class="col-sm-10">
+                          <div class="col-sm-5">
                               <select class="form-control select2 roleId"  style="width: 100%;"  datatype="*" errormsg="请选择角色" nullmsg="请选择管理员">
                                   @if(empty($roleUser))
                                       <option  value="">请选择</option>
