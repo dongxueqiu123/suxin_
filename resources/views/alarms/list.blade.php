@@ -105,6 +105,37 @@
   <script>
       $('.select2').select2();
 
+      var cache = layer.cache||{}, skin = function(type){
+          return (cache.skin ? (' ' + cache.skin + ' ' + cache.skin + '-'+type) : '');
+      };
+
+      layer.prompt = function(options, yes){
+          var a="";if(options=options||{},"function"==typeof options&&(t=options),options.area){var o=options.area;a='style="width: '+o[0]+"; height: "+o[1]+';"',delete options.area}
+          options = options || {};
+          if(typeof options === 'function') yes = options;
+          var prompt, content = options.formType == 2 ? '<textarea  placeholder='+ (options.value||'') +' class="layui-layer-input"'+a+">" +'</textarea>' : function(){
+              return '<input type="'+ (options.formType == 1 ? 'password' : 'text') +'" class="layui-layer-input" value="'+ (options.value||'') +'">';
+          }();
+          return layer.open($.extend({
+              btn: ['&#x786E;&#x5B9A;','&#x53D6;&#x6D88;'],
+              content: content,
+              skin: 'layui-layer-prompt' + skin('prompt'),
+              success: function(layero){
+                  prompt = layero.find('.layui-layer-input');
+                  prompt.focus();
+              }, yes: function(index){
+                  var value = prompt.val();
+                  if(value === ''){
+                      yes && yes(value, index, prompt);
+                  } else if(value.length > (options.maxlength||500)) {
+                      layer.tips('&#x6700;&#x591A;&#x8F93;&#x5165;'+ (options.maxlength || 500) +'&#x4E2A;&#x5B57;&#x6570;', prompt, {tips: 1});
+                  } else {
+                      yes && yes(value, index, prompt);
+                  }
+              }
+          }, options));
+      };
+
       $('.delete').click(function () {
           var url;
           url = $(this).attr('url');
@@ -140,9 +171,12 @@
           layer.prompt({
               formType: 2,
               title: '说明',
-              value: '此故障已解决',
+              value: '已解决（默认字段，可修改）',
               area: ['300px', '100px'] //自定义文本域宽高
           }, function(value, index, elem){
+              if(value.length == 0){
+                  value = '已解决';
+              }
               var data = {
                   remark:value,
                   status:1,
