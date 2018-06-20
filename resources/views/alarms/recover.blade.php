@@ -38,30 +38,28 @@
                           <thead>
                           <tr>
                               <th>编号</th>
+                              <th>无线节点</th>
+                              <th>机械设备</th>
                               <th>分类</th>
                               <th>等级</th>
                               <th>告警详情</th>
-                              <th>状态</th>
-                              <th>操作说明</th>
-                              <th>无线节点</th>
-                              <th>机械设备</th>
                               <th>生产公司</th>
                               <th>使用公司</th>
+                              <th>操作说明</th>
                           </tr>
                           </thead>
                           <tbody>
                           @foreach($alarms as $key=>$alarm)
                               <tr>
                                   <td>{{$alarm['id']??''}}</td>
+                                  <td>{{$alarm['collectorName']??''}}</td>
+                                  <td>{{$alarm['equipmentName']??''}}</td>
                                   <td>{{$alarm['categoryName']??''}}</td>
                                   <td>{{$alarm['gradeName']??''}}</td>
                                   <td>{{$alarm['detail']??''}}</td>
-                                  <td>恢复</td>
-                                  <td>{{$alarm['remark']??''}}</td>
-                                  <td>{{$alarm['collectorName']??''}}</td>
-                                  <td>{{$alarm['equipmentName']??''}}</td>
                                   <td>{{$alarm['providerName']??''}}</td>
                                   <td>{{$alarm['consumerName']??''}}</td>
+                                  <td>{{$alarm['remark']??''}}</td>
                               </tr>
                           @endforeach
                           </tbody>
@@ -79,6 +77,12 @@
           var name = $('#name').val();
           window.location.href = url+"?name="+name;
       })
-
+      $("body").keydown(function() {
+          if (event.keyCode == "13") {//keyCode=13是回车键
+              var url = '{{route('recover')}}';
+              var name = $('#name').val();
+              window.location.href = url+"?name="+name;
+          }
+      });
   </script>
 @endsection
