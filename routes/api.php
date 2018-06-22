@@ -17,6 +17,10 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
+Route::group(['prefix' => 'admin/home'], function(){
+    Route::post('/getMapPoint', 'Api\HomeController@getMapPoint')->name('api.home.getMapPoint');
+});
+
 Route::group(['prefix' => 'admin/companies'], function () {
     Route::post('/edit/{id}', 'Api\CompaniesController@edit')->name('api.companies.edit');
     //Route::get('/edit/{id}', 'Api\CompaniesController@edit')

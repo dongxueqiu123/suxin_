@@ -59,4 +59,25 @@ class ServicesAdapte implements ServicesInterface{
         return $body;
     }
 
+    public function postClient(string $url,array $parameters = []){
+        $jsonParameters = json_encode($parameters);
+        $http = new Client();
+        try{
+            $result = $http->request('POST',$url,[
+                'headers' => [
+                    'Content-Type' => 'application/json;charset=utf-8',
+                ],
+                'body'   => $jsonParameters
+            ]);
+            if($result->getBody()->getSize()){
+                $contents = $result->getBody()->getContents();
+                $body = json_decode($contents,true);
+            }else{
+                $body = ['code' => 998,'info' => '其他错误','data' => '','count'=> 0];;
+            }
+        }catch (\Exception $e){
+            $body = ['code' => 999,'info' => '请求超时','data' => '','count'=> 0];
+        }
+        return $body;
+    }
 }

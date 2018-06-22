@@ -58,7 +58,7 @@
       <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-aqua">
           <div class="inner">
-            <h3 class="equipmentNum">0</h3>
+            <h3 class="equipmentNum">{{$count['equipmentCountAll']??0}}</h3>
             <p style="font-size: 13px;">机械设备总数</p>
           </div>
           <div class="icon">
@@ -71,7 +71,7 @@
       <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-aqua">
           <div class="inner">
-            <h3 class="equipmentOnlineNum">0</h3>
+            <h3 class="equipmentOnlineNum">{{$count['equipmentCount']??0}}</h3>
             <p style="font-size: 13px;">机械设备在线数</p>
           </div>
           <div class="icon">
@@ -84,7 +84,7 @@
       <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-green">
           <div class="inner">
-            <h3 class="collectorNum">0</h3>
+            <h3 class="collectorNum">{{$count['collectorCountAll']??0}}</h3>
             <p style="font-size: 13px;">无线节点总数</p>
           </div>
           <div class="icon">
@@ -97,7 +97,7 @@
       <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-green">
           <div class="inner">
-            <h3 class="collectorOnlineNum">0</h3>
+            <h3 class="collectorOnlineNum">{{$count['collectorCount']??0}}</h3>
             <p style="font-size: 13px;">无线节点在线数</p>
           </div>
           <div class="icon">
@@ -112,20 +112,20 @@
       <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-yellow">
           <div class="inner">
-            <h3 class="allWarnTempNum">0</h3>
-            <p style="font-size: 13px;">温度告警总数</p>
+            <h3 class="allWarnTempNum">{{$count['alarmTempCountAll']??0}}</h3>
+            <p style="font-size: 13px;">温度告警已处理数</p>
           </div>
           <div class="icon">
             <i class="ion ion-thermometer"></i>
           </div>
-          <a href="{{route('alarms')}}" class="small-box-footer">更多 <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="{{route('recover')}}" class="small-box-footer">更多 <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
 
       <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-yellow">
           <div class="inner">
-            <h3  class="unManageWarnTempNum">0</h3>
+            <h3  class="unManageWarnTempNum">{{$count['alarmTempCount']??0}}</h3>
             <p style="font-size: 13px;">温度告警待处理数</p>
           </div>
           <div class="icon">
@@ -138,20 +138,20 @@
       <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-red">
           <div class="inner">
-            <h3 class="allWarnShakeNum">0</h3>
-            <p style="font-size: 13px;">振动告警总数</p>
+            <h3 class="allWarnShakeNum">{{$count['alarmBobCountAll']??0}}</h3>
+            <p style="font-size: 13px;">振动告警已处理数</p>
           </div>
           <div class="icon">
             <i class="ion ion-speedometer"></i>
           </div>
-          <a href="{{route('alarms')}}" class="small-box-footer">更多 <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="{{route('recover')}}" class="small-box-footer">更多 <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
 
       <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-red">
           <div class="inner">
-            <h3 class="unManageWarnShakeNum">0</h3>
+            <h3 class="unManageWarnShakeNum">{{$count['alarmBobCount']??0}}</h3>
             <p style="font-size: 13px;">振动告警待处理数</p>
           </div>
           <div class="icon">
@@ -187,6 +187,7 @@
         allCollectorUrl, onlineCollectorUrl,allWarnTempNum,unManageWarnTempNum;
         companyId = '{{ $company->id??'1' }}';
         url = '/console';
+/*
         allEquipmentUrl = url+'/equipment/countAll?firmId='+companyId;
         $.getJSON(allEquipmentUrl, function(data) {
             if(data['code'] == 0){
@@ -243,6 +244,7 @@
                 $('.unManageWarnShakeNum').html(data['data']);
             }
         });
+*/
 
         var map = new BMap.Map("map", {});                        // 创建Map实例
         map.centerAndZoom(new BMap.Point(-7.298437,15.892518), 1);     // 初始化地图,设置中心点坐标和地图级别         //启用滚轮放大缩小
@@ -378,6 +380,7 @@
              */
             var requestMgr = {
                 request: function (time, successCbk) {
+                    //var url = '{{route('api.home.getMapPoint')}}';
                     var url = '/console/collector/retrieveByFirmId';
                     var xhr = new XMLHttpRequest();
                     xhr.onreadystatechange = function() {
