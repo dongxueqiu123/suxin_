@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Eloquent\ApiModuleModel;
 use App\Services\ServicesAdapte;
+use App\Services\CartsServices;
 
 class AlarmCount {
 
@@ -20,9 +22,14 @@ class AlarmCount {
     {
         $servicesAdapte = new ServicesAdapte();
         $queryArray['firmId'] = \Auth()->user()->company->id??'1';
-        $body  = $servicesAdapte->getClient('http://52.80.145.123:8080/console/alarm/countAlarm','0','1',$queryArray,[$servicesAdapte::LIMITATION,$servicesAdapte::PAGINATION]);
+        //机械设备总数
+        $body  = $servicesAdapte->getInfoClient(env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_ALARM_COUNTALARM,$queryArray);
         $count =  empty($body['data']) ?0: $body['data'];
         $request->session()->put('alarmCount', $count);
+
+        $cartsServices =  new CartsServices();
+        $count = $cartsServices->getCount();
+        $request->session()->put('cartsCount', $count);
         return $next($request);
     }
 

@@ -33,13 +33,13 @@
                       <div class="col-sm-5">
                           <select class="form-control select2 company"  style="width: 100%;">
                               @foreach($companies??[] as $key => $company)
-                                  <option @if(($company->id??'') == ($threshold->firm_id??'')) selected @endif value="{{$company->id}}">{{$company->name}}</option>
+                                  <option @if(($company['id']??'') == ($threshold['firmId']??'')) selected @endif value="{{$company['id']}}">{{$company['name']}}</option>
                               @endforeach
                           </select>
                       </div>
                   </div>
 
-                  <div class="form-group changeEquipment" @if(!($threshold->equipment_id??'') && !($threshold->collector_id??'')) style="display: none" @endif>
+                  <div class="form-group changeEquipment">
                       <label for="name" class="col-sm-2 control-label">机械设备</label>
                       <div class="col-sm-5">
                           <select class="form-control select2 equipment"  style="width: 100%;">
@@ -48,7 +48,7 @@
                       </div>
                   </div>
 
-                  <div class="form-group changeCollector" @if(!($threshold->equipment_id??'') && !($threshold->collector_id??'')) style="display: none" @endif>
+                  <div class="form-group changeCollector">
                       <label for="name" class="col-sm-2 control-label">无线节点</label>
                       <div class="col-sm-5">
                           <select class="form-control select2 collector"  style="width: 100%;">
@@ -61,7 +61,7 @@
                       <div class="col-sm-5">
                           <select class="form-control select2 category"  style="width: 100%;">
                               @foreach($categories??[] as $key =>$category)
-                                  <option @if(($threshold->category??'') == $key) selected @endif value="{{$key}}">{{$category}}</option>
+                                  <option @if(($threshold['category']??'') == $key) selected @endif value="{{$key}}">{{$category}}</option>
                               @endforeach
                           </select>
                       </div>
@@ -72,7 +72,7 @@
                       <div class="col-sm-5">
                           <select class="form-control select2 grade"  style="width: 100%;">
                               @foreach($grades??[] as $key =>$grade)
-                                  <option @if(($threshold->grade??'') == $key) selected @endif value="{{$key}}">{{$grade}}</option>
+                                  <option @if(($threshold['grade']??'') == $key) selected @endif value="{{$key}}">{{$grade}}</option>
                               @endforeach
                           </select>
                       </div>
@@ -81,14 +81,14 @@
                   <div class="form-group">
                       <label for="lowLimit" class="col-sm-2 control-label">阈值下线</label>
                       <div class="col-sm-5">
-                          <input type="lowLimit" class="form-control" value="{{$threshold->lowlimit??''}}" id="lowLimit" placeholder="下限（-999~999）"  datatype="/^-?[1-9]{0,3}(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]{1}[0-9]{0,2}(\.\d+)?$/" errormsg="请设正确的阈值下线" >
+                          <input type="lowLimit" class="form-control" value="{{$threshold['lowlimit']??''}}" id="lowLimit" placeholder="下限（-999~999）"  datatype="/^-?[1-9]{0,3}(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]{1}[0-9]{0,2}(\.\d+)?$/" errormsg="请设正确的阈值下线" >
                       </div>
                   </div>
 
                   <div class="form-group">
                       <label for="topLimit" class="col-sm-2 control-label">阈值上线</label>
                       <div class="col-sm-5">
-                          <input type="topLimit" class="form-control" value="{{$threshold->toplimit??''}}" id="topLimit" placeholder="上限（-999~999）" datatype="/^-?[1-9]{0,3}(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]{1}[0-9]{0,2}(\.\d+)?$/"  errormsg="请设正确的阈值上线" >
+                          <input type="topLimit" class="form-control" value="{{$threshold['toplimit']??''}}" id="topLimit" placeholder="上限（-999~999）" datatype="/^-?[1-9]{0,3}(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]{1}[0-9]{0,2}(\.\d+)?$/"  errormsg="请设正确的阈值上线" >
                       </div>
                   </div>
               </div>
@@ -104,7 +104,9 @@
   </section>
   <script src="{{asset('layer/layer.js')}}"></script>
   <script src="{{asset('vaildform/validform_min.js')}}"></script>
+  <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
   <script>
+      $('.select2').select2();
       $(".form-horizontal").Validform({
           btnSubmit: ".sign",
           tipSweep: true,
@@ -126,27 +128,18 @@
                   url:'{{$route}}',
                   type:'POST',    //GET
                   data:{
-                      companyId:companyId,equipmentId:equipmentId,collectorId:collectorId,category:category,grade:grade,lowLimit:lowLimit,topLimit:topLimit
+                      firmId:companyId,equipmentId:equipmentId,collectorId:collectorId,category:category,grade:grade,lowLimit:lowLimit,topLimit:topLimit
                   },
                   timeout:5000,    //超时时间
                   dataType:'json',
                   success:function(data){
-                      if(data.state === '201'){
-                          layer.alert(data.info)
-                      }else{
+                      if(data.code === '0'){
                           window.location.href = data.route
+                      }else{
+                          layer.alert(data.info)
                       }
                   },
                   error:function(data){
-                      if(data.responseJSON.errors['category']){
-                          layer.alert(data.responseJSON.errors['category']['0'])
-                      }else if(data.responseJSON.errors['grade']){
-                          layer.alert(data.responseJSON.errors['grade']['0'])
-                      }else if(data.responseJSON.errors['companyId']){
-                          layer.alert(data.responseJSON.errors['companyId']['0'])
-                      }else if(data.responseJSON.errors['equipmentId']){
-                          layer.alert(data.responseJSON.errors['equipmentId']['0'])
-                      }
                   }
               });
               return false;
@@ -170,14 +163,18 @@
      });
 
      var company,equipment,collector;
-     equipment = '{{$threshold->equipment_id??''}}';
-     collector = '{{$threshold->collector_id??''}}';
-     company = '{{$threshold->firm_id??''}}';
+     equipment = '{{$threshold['equipmentId']??''}}';
+     collector = '{{$threshold['collectorId']??''}}';
+     company = '{{$threshold['firmId']??''}}';
      if(company){
          changeEquipments(company,equipment);
          if(equipment){
              changeCollectors(company,equipment,collector);
          }
+     }else{
+         company = '{{$companies['0']['id']??''}}';
+         changeEquipments(company,equipment);
+         changeCollectors(company,equipment,collector);
      }
 
 

@@ -35,13 +35,13 @@
               @foreach($permissions as $key=>$permission)
               <tr>
                 <td>{{$key+1}}</td>
-                <td>{{$permission->display_name}}</td>
-                <td>{{$permission->description}}</td>
-                <td>{{$permission->name}}</td>
-                <td>{{$permission->updated_at}}</td>
+                <td>{{$permission['displayName']}}</td>
+                <td>{{$permission['description']}}</td>
+                <td>{{$permission['name']}}</td>
+                <td>{{date('Y-m-d H:i:s',$permission['updatedAt']/1000)}}</td>
                 <td>
-                  <a class="btn btn-default btn-flat btn-xs " href={{route('permissions.edit',['id'=>$permission->id])}}>编辑</a>
-                  <a class="btn btn-default btn-flat btn-xs delete" url="{{ route('api.permissions.delete',['id'=>$permission->id])}}" >删除</a>
+                  <a class="btn btn-default btn-flat btn-xs " href={{route('permissions.edit',['id'=>$permission['id']])}}>编辑</a>
+                  <a class="btn btn-default btn-flat btn-xs delete" url="{{ route('api.permissions.delete',['id'=>$permission['id']])}}" >删除</a>
                 </td>
               </tr>
               @endforeach

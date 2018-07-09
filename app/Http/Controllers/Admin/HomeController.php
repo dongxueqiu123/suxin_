@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\ServicesAdapte;
 use App\Eloquent\ApiModuleModel;
+use Illuminate\Support\Facades\DB;
+use App\Services\EquipmentsServices;
+use App\Services\CollectorsServices;
+use App\Services\AlarmsServices;
 
 class HomeController extends Controller
 {
@@ -17,49 +21,48 @@ class HomeController extends Controller
      */
     public function __construct()
     {
+        $this->equipmentsServices = new EquipmentsServices();
+        $this->collectorsServices = new CollectorsServices();
+        $this->alarmsServices = new AlarmsServices();
         $this->servicesAdapte = new servicesAdapte();
         $this->middleware('auth.user');
     }
 
+    public function test(){
+
+        $user = DB::select('select * from users where id = :id', ['id' => 1]);
+        dump($user[0]);die;
+    }
+
     public function index()
     {
-        $user = \Auth()->user();
-        $company = $user->company;
-        $url = env('HTTP_URL',$_SERVER['HTTP_HOST']);
-
+        $firmId =  (\Auth()->user()->companyId??1) == 0 ? 1 : (\Auth()->user()->companyId??1);
         //机械设备总数
-        $urls['equipmentCountAll'] = $url.ApiModuleModel::MODULE_EQUIPMENT_COUNTALL;
-        $countInfo['equipmentCountAll'] = $this->servicesAdapte->getClient( $urls['equipmentCountAll'],0,0,['firmId'=>$company->id??'1'],[$this->servicesAdapte::LIMITATION,$this->servicesAdapte::PAGINATION]);
+        $countInfo['equipmentCountAll'] = $this->equipmentsServices->getInfoClient( $this->equipmentsServices->getCountAllUrl(),['firmId'=>$firmId]);
         //机械设备在线数
-        $urls['equipmentCount'] = $url.ApiModuleModel::MODULE_EQUIPMENT_COUNT;
-        $countInfo['equipmentCount'] = $this->servicesAdapte->getClient( $urls['equipmentCount'],0,0,['firmId'=>$company->id??'1','onlineFlag'=>'1'],[$this->servicesAdapte::LIMITATION,$this->servicesAdapte::PAGINATION]);
+        $countInfo['equipmentCount'] = $this->equipmentsServices->getInfoClient( $this->equipmentsServices->getCountUrl(),['firmId'=>$firmId,'onlineFlag'=>'1']);
 
-        $urls['collectorCount'] = $url.ApiModuleModel::MODULE_COLLECTOR_COUNT;
         //无线节点总数
-        $countInfo['collectorCountAll'] = $this->servicesAdapte->getClient( $urls['collectorCount'],0,0,['firmId'=>$company->id??'1'],[$this->servicesAdapte::LIMITATION,$this->servicesAdapte::PAGINATION]);
+        $countInfo['collectorCountAll'] = $this->collectorsServices->getInfoClient($this->collectorsServices->getCountUrl(),['firmId'=>$firmId]);
         //无线节点在线数
-        $countInfo['collectorCount'] = $this->servicesAdapte->getClient( $urls['collectorCount'],0,0,['firmId'=>$company->id??'1','onlineFlag'=>'1'],[$this->servicesAdapte::LIMITATION,$this->servicesAdapte::PAGINATION]);
+        $countInfo['collectorCount'] = $this->collectorsServices->getInfoClient( $this->collectorsServices->getCountUrl(),['firmId'=>$firmId,'onlineFlag'=>'1']);
 
-        $urls['alarmTempCount'] = $url.ApiModuleModel::MODULE_ALARM_COUNT.'/1';
         //温度告警总数
-        $countInfo['alarmTempCountAll'] = $this->servicesAdapte->getClient( $urls['alarmTempCount'],0,0,['firmId'=>$company->id??'1','category'=>'1'],[$this->servicesAdapte::LIMITATION,$this->servicesAdapte::PAGINATION]);
+        $countInfo['alarmTempCountAll'] = $this->alarmsServices->getInfoClient( $this->alarmsServices->getCountUrl('1'),['firmId'=>$firmId,'category'=>'1']);
         //温度告警待处理数
-        $urls['alarmTempCountAlarm'] = $url.ApiModuleModel::MODULE_ALARM_COUNTALARM;
-        $countInfo['alarmTempCount'] = $this->servicesAdapte->getClient( $urls['alarmTempCountAlarm'],0,0,['firmId'=>$company->id??'1','firmId'=>'1','category'=>'1'],[$this->servicesAdapte::LIMITATION,$this->servicesAdapte::PAGINATION]);
+        $countInfo['alarmTempCount'] = $this->alarmsServices->getInfoClient($this->alarmsServices->getCountAlarmUrl(),['firmId'=>$firmId,'firmId'=>'1','category'=>'1']);
 
-        $urls['alarmBobCount'] = $url.ApiModuleModel::MODULE_ALARM_COUNT.'/2';
         //振动告警总数
-        $countInfo['alarmBobCountAll'] = $this->servicesAdapte->getClient( $urls['alarmBobCount'],0,0,['firmId'=>$company->id??'1','category'=>'2'],[$this->servicesAdapte::LIMITATION,$this->servicesAdapte::PAGINATION]);
+        $countInfo['alarmBobCountAll'] = $this->alarmsServices->getInfoClient( $this->alarmsServices->getCountUrl('2'),['firmId'=>$firmId,'category'=>'2']);
         //振动警待处理数
-        $urls['alarmBobCountAlarm'] = $url.ApiModuleModel::MODULE_ALARM_COUNTALARM;
-        $countInfo['alarmBobCount'] = $this->servicesAdapte->getClient( $urls['alarmBobCountAlarm'],0,0,['firmId'=>$company->id??'1','firmId'=>'1','category'=>'2'],[$this->servicesAdapte::LIMITATION,$this->servicesAdapte::PAGINATION]);
+        $countInfo['alarmBobCount'] = $this->alarmsServices->getInfoClient( $this->alarmsServices->getCountAlarmUrl(),['firmId'=>$firmId,'category'=>'2']);
 
         $count = [];
         foreach ($countInfo as $key=>$data){
             $count[$key] = $data['code'] == 0?$data['data']:0;
         }
         return view('admin.index',[
-            'company' => $company,
+
             'count'   => $count
         ]);
     }

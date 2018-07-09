@@ -7,6 +7,7 @@
  */
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
 use App\Services\ThresholdsServices;
 use App\Services\EquipmentsServices;
 use App\Services\CollectorsServices;
@@ -29,30 +30,29 @@ class ThresholdsController extends Controller
         $this->companiesServices = new CompaniesServices();
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $queryArray['firmId'] = \Auth()->user()->company->id??'';
-        $thresholds = $this->thresholdsServices->getList(static::PAGE_SIZE_DEFAULT,$queryArray);
-        $thresholds->each(function($threshold){
-            $threshold->category = $this->thresholdsServices->getConstant($threshold,'category');
-            $threshold->grade    = $this->thresholdsServices->getConstant($threshold,'grade');
-        });
+        $queryArray['firmId'] =  (\Auth()->user()->companyId??1) == 0 ? 1 : (\Auth()->user()->companyId??1) ;
+        $page = $request->input('page')??1;
+        //$thresholds = $this->thresholdsServices->getList(static::PAGE_SIZE_DEFAULT,$queryArray);
+        $responses = $this->thresholdsServices->getApiList($this->thresholdsServices->getUrl(),static::PAGE_SIZE_DEFAULT, $page, $queryArray, ['category'=>true,'grade'=>true]);
         return view('thresholds.list',
             [
-                'thresholds'   => $thresholds??[],
-                'boxTitle'=>'告警阈值列表',
+                'thresholds' => $responses['data']??[],
+                'boxTitle' => '告警阈值列表',
                 'active' => 'thresholds',
             ]
         );
     }
 
     public function edit($id){
-        $threshold= $this->thresholdsServices->get($id);
+        $thresholdResponses = $this->thresholdsServices->getInfoClient($this->thresholdsServices->getRetrieveByIdUrl(),['id'=>$id]);
         $patterns   = $this->thresholdsServices->getPattern();
         $categories = $this->thresholdsServices->getConstant(null,'category');
         $grades     = $this->thresholdsServices->getConstant(null,'grade');
-        $patternStatus = $this->thresholdsServices->getPatternStatus($threshold);
-        $companies = $this->companiesServices->getAll();
+        $patternStatus = $this->thresholdsServices->getPatternStatus($thresholdResponses['data']);
+        $companyResponses = $this->companiesServices->getInfoClient($this->companiesServices->getUrl(),[]);
+
         return view('thresholds.edit',
             [
                 'route' => '/api/admin/thresholds/edit/'.$id,
@@ -60,12 +60,12 @@ class ThresholdsController extends Controller
                 'getCollectorUrl' => route('api.collectors.getCollectors'),
                 'boxTitle'=> '修改告警阈值',
                 'active' => 'thresholds',
-                'threshold' => $threshold,
+                'threshold' => $thresholdResponses['data'],
                 'patterns' => $patterns,
                 'categories' => $categories,
                 'grades' => $grades,
                 'patternStatus' => $patternStatus,
-                'companies' => $companies,
+                'companies' => $companyResponses['data'],
             ]
         );
     }
@@ -74,8 +74,7 @@ class ThresholdsController extends Controller
         $patterns   = $this->thresholdsServices->getPattern();
         $categories = $this->thresholdsServices->getConstant(null,'category');
         $grades     = $this->thresholdsServices->getConstant(null,'grade');
-        $companies = $this->companiesServices->getAll();
-
+        $companyResponses = $this->companiesServices->getInfoClient($this->companiesServices->getUrl(),[]);
         return view('thresholds.edit',
             [
                 'route' => route('api.thresholds.store'),
@@ -86,7 +85,7 @@ class ThresholdsController extends Controller
                 'patterns' => $patterns,
                 'categories' => $categories,
                 'grades' => $grades,
-                'companies' => $companies,
+                'companies' => $companyResponses['data'],
             ]
         );
     }

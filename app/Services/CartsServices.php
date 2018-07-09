@@ -43,6 +43,11 @@ class CartsServices extends ServicesAdapte
         return $thresholds;
     }
 
+    public function getCount(){
+        $count = $this->carts::deleteTime()->count();
+        return $count;
+    }
+
     public function save(array $modelData)
     {
         if(isset($modelData['id'])){

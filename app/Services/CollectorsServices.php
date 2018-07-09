@@ -7,8 +7,10 @@
  */
 namespace App\Services;
 
+use App\Eloquent\ApiModuleModel;
 use App\Eloquent\CollectorsModel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CollectorsServices extends ServicesAdapte{
 
@@ -114,6 +116,31 @@ class CollectorsServices extends ServicesAdapte{
             $haveCollector = true;
         }
         return $haveCollector;
+    }
+
+
+    public function getUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_COLLECTOR_RETRIEVEBYFIRMID;
+    }
+
+    public function getEditUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_COLLECTOR_MODIFY;
+    }
+
+    public function getSaveUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_COLLECTOR_SAVE;
+    }
+
+    public function getDeleteUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_COLLECTOR_DELETE;
+    }
+
+    public function getCollectorByIdUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_COLLECTOR_RETRIEVEBYID;
+    }
+
+    public function  getCountUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_COLLECTOR_COUNT;
     }
 
 }

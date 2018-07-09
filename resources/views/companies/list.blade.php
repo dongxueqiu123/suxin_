@@ -24,7 +24,7 @@
               <thead>
               <tr>
                 <th>名称</th>
-                <th>简称</th>
+
                 <th>更新时间</th>
                 <th>编辑</th>
               </tr>
@@ -32,13 +32,13 @@
               <tbody>
               @foreach($companies as $key=>$company)
               <tr>
-                <td>{{$company->name}}
+                <td>{{$company['name']}}
                 </td>
-                <td>{{$company->abbreviation}}</td>
-                <td>{{$company->updated_at}}</td>
+
+                <td>{{date('Y-m-d H:i:s',$company['updatedAt']/1000)}}</td>
                 <td>
-                  <a class="btn btn-default btn-flat btn-xs  " href={{route('companies.edit',['id'=>$company->id])}}>编辑</a>
-                  <a class="btn btn-default btn-flat btn-xs  delete" url="{{ route('api.companies.delete',['id'=>$company->id])}}" >删除</a>
+                  <a class="btn btn-default btn-flat btn-xs  " href={{route('companies.edit',['id'=>$company['id']])}}>编辑</a>
+                  <a class="btn btn-default btn-flat btn-xs  delete" url="{{ route('api.companies.delete',['id'=>$company['id']])}}" >删除</a>
                 </td>
               </tr>
               @endforeach

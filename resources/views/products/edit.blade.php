@@ -80,20 +80,23 @@
                             <div class="form-group">
                                 <label for="name" class="col-sm-2 control-label">名称</label>
                                 <div class="col-sm-5">
-                                    <input type="name" class="form-control" value="{{$product->name??''}}" id="name" placeholder="名称" datatype="*" errormsg="请填写信息" >
+                                    <input type="name" class="form-control" value="{{$product->name??''}}" id="name" placeholder="名称" datatype="*" errormsg="请填写名称" nullmsg="请填写名称" >
                                 </div>
+                                <div class="help-block">必填</div>
                             </div>
                             <div class="form-group">
                                 <label for="mac" class="col-sm-2 control-label">价格</label>
                                 <div class="col-sm-5">
                                     <input type="price" class="form-control" value="{{$product->price??''}}" id="price" placeholder="价格(精确到分)"   datatype="/^[0-9]+(.[0-9]{2})?$/" errormsg="请输入正确的价格" nullmsg="请输入价格" >
                                 </div>
+                                <div class="help-block">必填</div>
                             </div>
                             <div class="form-group">
                                 <label for="abbreviation" class="col-sm-2 control-label">原价</label>
                                 <div class="col-sm-5">
                                     <input type="priceOriginal" class="form-control" value="{{$product->price_original??''}}" id="priceOriginal" placeholder="原价(精确到分)"   datatype="/^[0-9]+(.[0-9]{2})?$/" errormsg="请输入正确的价格" nullmsg="请输入原价" >
                                 </div>
+                                <div class="help-block">必填</div>
                             </div>
                             <div class="form-group">
                                 <label for="abbreviation" class="col-sm-2 control-label">图片</label>
@@ -128,8 +131,9 @@
                             <div class="form-group">
                                 <label for="abbreviation" class="col-sm-2 control-label">单位</label>
                                 <div class="col-sm-5">
-                                    <input type="unit" class="form-control" value="{{$product->detail->unit??''}}" id="unit" placeholder="单位" datatype="*" errormsg="请填写信息" >
+                                    <input type="unit" class="form-control" value="{{$product->detail->unit??''}}" id="unit" placeholder="单位" datatype="*" errormsg="请填写单位" >
                                 </div>
+                                <div class="help-block">必填</div>
                             </div>
                             <div class="form-group">
                                 <label for="abbreviation" class="col-sm-2 control-label">描述</label>

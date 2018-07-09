@@ -33,44 +33,44 @@ class ThresholdsController extends Controller
     }
 
     public function edit($id,Request $request){
-        $request->validate([
-            'category' => 'required',
-            'grade' => 'required',
-            'companyId' => 'required',
-            'equipmentId' => 'required'
-        ]);
-        $input = $request->only(['category', 'grade', 'lowLimit', 'topLimit','companyId','equipmentId','collectorId']);
+
+        $input = $request->only(['category', 'grade', 'lowLimit', 'topLimit','firmId','equipmentId','collectorId']);
         $input['id'] = $id;
-        if($state = $this->thresholdsServices->save($input)){
+        /*接口此处未使用驼峰命名*/
+        $input['lowlimit'] = $input['lowLimit'];
+        $input['toplimit'] = $input['topLimit'];
+        $input['operatorId'] = Auth::user()->id;
+        if($state = $this->thresholdsServices->postClient($this->thresholdsServices->getSaveOrUpdateIdUrl(),$input)){
             return response()->json([
-                'state' => $state,
-                'route' => route('thresholds')
+                'code' => $state['code'],
+                'route' => route('thresholds'),
+                'info'  => config('code.'.$state['code'])
             ]);
         }
     }
 
     public function store(Request $request){
-        $request->validate([
-            'category' => 'required',
-            'grade' => 'required',
-            'companyId' => 'required',
-            'equipmentId' => 'required'
-        ]);
-        $input = $request->only(['category', 'grade', 'lowLimit', 'topLimit','companyId','equipmentId','collectorId']);
 
-        if($state = $this->thresholdsServices->save($input)){
+        $input = $request->only(['category', 'grade', 'lowLimit', 'topLimit','firmId','equipmentId','collectorId']);
+        /*接口此处未使用驼峰命名*/
+        $input['lowlimit'] = $input['lowLimit'];
+        $input['toplimit'] = $input['topLimit'];
+        $input['operatorId'] = Auth::user()->id;
+        if($state = $this->thresholdsServices->postClient($this->thresholdsServices->getSaveOrUpdateIdUrl(),$input)){
             return response()->json([
-                'state' => $state,
-                'route' => route('thresholds')
+                'code' => $state['code'],
+                'route' => route('thresholds'),
+                'info'  => config('code.'.$state['code'])
             ]);
         }
     }
 
     public function delete($id){
-        if($state = $this->thresholdsServices->destroy($id)){
+        if($state = $this->thresholdsServices->postClient($this->thresholdsServices->getDeleteUrl(),['id'=>$id])){
             return response()->json([
-                'state' => $state,
-                'route' => route('thresholds')
+                'state' => $state['code'],
+                'route' => route('thresholds'),
+                'info'  => config('code.'.$state['code'])
             ]);
         }
     }

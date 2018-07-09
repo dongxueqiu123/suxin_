@@ -22,48 +22,38 @@ class EquipmentsController extends Controller
     }
 
     public function edit($id,Request $request){
-        $request->validate([
-            'name' => 'required',
-            'providerId' => 'required',
-            'consumerId' => 'required',
-        ]);
-        $equipment = $this->equipments::find($id);
+
         $input = $request->only(['name', 'providerId', 'consumerId']);
-        $equipment->name = $input['name'];
-        $equipment->provider_id = $input['providerId'];
-        $equipment->consumer_id = $input['consumerId'];
-        if($state = $equipment->save()){
+        $input['id'] = $id;
+        $input['operatorId'] = Auth::user()->id;
+        if($state = $this->equipmentsServices->postClient($this->equipmentsServices->getSaveUrl(),$input)){
             return response()->json([
-                'state' => $state,
-                'route' => route('equipments')
+                'code' => $state['code'],
+                'route' => route('equipments'),
+                'info'  => config('code.'.$state['code'])
             ]);
         }
     }
 
     public function store(Request $request){
-        $request->validate([
-            'name' => 'required',
-            'providerId' => 'required',
-            'consumerId' => 'required',
-        ]);
+
         $input = $request->only(['name', 'providerId', 'consumerId']);
-        $this->equipments->name = $input['name'];
-        $this->equipments->provider_id = $input['providerId'];
-        $this->equipments->consumer_id = $input['consumerId'];
-        $this->equipments->operator_id = Auth::user()->id;
-        if($state = $this->equipments->save()){
+        $input['operatorId'] = Auth::user()->id;
+        if($state = $this->equipmentsServices->postClient($this->equipmentsServices->getSaveUrl(),$input)){
             return response()->json([
-                'state' => $state,
-                'route' => route('equipments')
+                'code' => $state['code'],
+                'route' => route('equipments'),
+                'info'  => config('code.'.$state['code'])
             ]);
         }
     }
 
     public function delete($id){
-        if($state = $this->equipmentsServices->destroy($id)){
+        if($state = $this->equipmentsServices->postClient($this->equipmentsServices->getDeleteUrl(),['id'=>$id])){
             return response()->json([
-                'state' => $state,
-                'route' => route('equipments')
+                'code' => $state['code'],
+                'route' => route('equipments'),
+                'info'  => config('code.'.$state['code'])
             ]);
         }
     }
@@ -71,17 +61,18 @@ class EquipmentsController extends Controller
     public function getEquipments(Request $request){
         $companyId = $request->input('companyId');
         $equipmentId = $request->input('equipmentId');
-        $company =  $this->companiesServices->get($companyId);
-        $providerEquipments = $company->provider??collect();
-        $consumerEquipments = $company->consumer??collect();
-        $equipments = $providerEquipments->merge($consumerEquipments)->unique();
+        //$this->companiesServices->getInfoClient($this->equipmentsServices->getUrl(),['id'=>$companyId]);
+/*        $company =  $this->companiesServices->get($companyId);
+        dump($company);die;*/
+        $equipmentResponses = $this->equipmentsServices->getInfoClient($this->equipmentsServices->getUrl(),['firmId'=>$companyId]);
+        $equipments = $equipmentResponses['data'];
         /*todo 增加公司权限控制*/
         $str ='';
         $str.= '<option value=0 >不选择</option>';
         foreach ($equipments??[] as $equipment){
 
-            $selected =  ($equipmentId == $equipment->id)?'selected':'';
-            $str.= '<option '.$selected.' value="'.$equipment->id.'">'.$equipment->name.'</option>';
+            $selected =  ($equipmentId == $equipment['id'])?'selected':'';
+            $str.= '<option '.$selected.' value="'.$equipment['id'].'">'.$equipment['name'].'</option>';
         }
         return ['state'=>0,'text' => $str];
     }

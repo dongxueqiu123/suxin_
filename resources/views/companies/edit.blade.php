@@ -28,23 +28,18 @@
                                 <label for="name" class="col-sm-2 control-label">名称</label>
 
                                 <div class="col-sm-5">
-                                    <input type="name" class="form-control" value="{{$company->name??''}}" id="name" placeholder="公司名称"  datatype="*" errormsg="请填写信息">
+                                    <input type="name" class="form-control" value="{{$company['name']??''}}" id="name" placeholder="公司名称"  datatype="*" errormsg="请填写公司名称">
                                 </div>
+                                <div class="help-block">必填</div>
                             </div>
-                            <div class="form-group">
-                                <label for="abbreviation" class="col-sm-2 control-label">简称</label>
 
-                                <div class="col-sm-5">
-                                    <input type="abbreviation" class="form-control" value="{{$company->abbreviation??''}}" id="abbreviation" placeholder="公司简称"  datatype="*" errormsg="请填写信息">
-                                </div>
-                            </div>
                             @if(!empty($users??[]))
                                 <div class="form-group">
                                     <label for="abbreviation" class="col-sm-2 control-label">管理员</label>
                                     <div class="col-sm-10">
                                         <select class="form-control select2 userId"  style="width: 100%;" datatype="*" nullmsg="请选择管理员">
                                             @foreach($users??[] as $user)
-                                                <option value="{{$user->id}}">{{$user->name}}</option>
+                                                <option value="{{$user['id']}}">{{$user['name']}}</option>
                                             @endforeach
                                         </select>
                                     </div>

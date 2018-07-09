@@ -36,33 +36,22 @@
                               </thead>
                               <tbody>
                               @foreach($collectors as $key=>$collector)
-                                  <?php
-                                  $name = $collector->company->name??'';
-                                  $providerName = $collector->equipment->provider->name??'';
-                                  $consumerName = $collector->equipment->consumer->name??'';
-                                  ?>
+
                                   <tr>
-                                      <td>{{$collector->name}}</td>
-                                      <td>{{$collector->equipment->name??'暂无'}}</td>
-                                      <td>@if($providerName)
-                                              {{$providerName}}
-                                              @elseif($consumerName)
-                                              {{$consumerName}}
-                                              @elseif($name)
-                                              {{$name}}
-                                              @endif
-                                          {{--@if($providerName)（生产设备）@elseif($consumerName)（使用设备）@endif--}}</td>
-                                      <td>@if($collector->online_flag??'')（在线）@else（离线）@endif</td>
-                                      <td>{{$collector->operate_time}}</td>
+                                      <td>{{$collector['name']}}</td>
+                                      <td>{{$collector['equipmentName']}}</td>
+                                      <td>{{$collector['companyName']}}</td>
+                                      <td>@if($collector['onlineFlag']??'')（在线）@else（离线）@endif</td>
+                                      <td>{{date('Y-m-d H:i:s',$collector['operateTime']/1000)}}</td>
                                       <td>
-                                          <a class="btn btn-default btn-flat btn-xs" href={{route('collectors.edit',['id'=>$collector->id])}}>修改{{--<i class="fa fa-edit" style="font-size: 14px;"></i>--}}</a>
-                                          <a class="btn btn-default btn-flat btn-xs delete" url="{{ route('api.collectors.delete',['id'=>$collector->id])}}" >删除{{--<i class="fa fa-trash-o" style="font-size: 14px;"></i>--}}</a>
+                                          <a class="btn btn-default btn-flat btn-xs" href={{route('collectors.edit',['id'=>$collector['id']])}}>修改{{--<i class="fa fa-edit" style="font-size: 14px;"></i>--}}</a>
+                                          <a class="btn btn-default btn-flat btn-xs delete" url="{{ route('api.collectors.delete',['id'=>$collector['id']])}}" >删除{{--<i class="fa fa-trash-o" style="font-size: 14px;"></i>--}}</a>
                                           @if( Auth::user()->id !==1 )
                                               @permission(['charts'])
-                                              <a class="btn btn-default btn-flat btn-xs " href={{route('charts.collectorChart',['id'=>$collector->id])}}>图表{{--<i class="fa fa-fw fa-area-chart" style="font-size: 14px;"></i>--}}</a>
+                                              <a class="btn btn-default btn-flat btn-xs " href={{route('charts.collectorChart',['id'=>$collector['id']])}}>图表{{--<i class="fa fa-fw fa-area-chart" style="font-size: 14px;"></i>--}}</a>
                                               @endpermission
                                           @else
-                                              <a class="btn btn-default btn-flat btn-xs " href={{route('charts.collectorChart',['id'=>$collector->id])}}>图表{{--<i class="fa fa-fw fa-area-chart" style="font-size: 14px;"></i>--}}</a>
+                                              <a class="btn btn-default btn-flat btn-xs " href={{route('charts.collectorChart',['id'=>$collector['id']])}}>图表{{--<i class="fa fa-fw fa-area-chart" style="font-size: 14px;"></i>--}}</a>
                                           @endif
                                       </td>
                                   </tr>

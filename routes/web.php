@@ -141,6 +141,11 @@ Route::group(['prefix' => 'admin/orders', 'middleware' =>['auth.user','RolePermi
     Route::get('/info/{orderNo}', 'Admin\OrdersController@info')->name('orders.info');
 });
 
+Route::group(['prefix' => 'admin/algorithms', 'middleware' =>['auth.user','RolePermission']],function(){
+    Route::get('/', 'Admin\AlgorithmsController@index')->name('algorithms');
+    Route::get('/getData', 'Admin\AlgorithmsController@getData')->name('algorithms.getData');
+});
+
 Route::group(['prefix' => 'admin/pay'],function(){
     Route::get('/alipay/{orderNo}', 'Admin\PayController@index')->name('pay.alipay');
     Route::get('/return', 'Admin\PayController@return')->name('pay.return');

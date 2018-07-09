@@ -32,26 +32,28 @@
                             <div class="form-group">
                                 <label for="name" class="col-sm-2 control-label">名称</label>
                                 <div class="col-sm-5">
-                                    <input type="name" class="form-control" value="{{$collector->name??''}}" id="name" placeholder="名称" datatype="*" errormsg="请填写信息" >
+                                    <input type="name" class="form-control" value="{{$collector['name']??''}}" id="name" placeholder="名称" datatype="*" errormsg="请填写名称" nullmsg="请填写名称">
                                 </div>
+                                <div class="help-block">必填</div>
                             </div>
                             <div class="form-group">
-                                <label for="mac" class="col-sm-2 control-label">mac地址</label>
+                                <label for="mac" class="col-sm-2 control-label">MAC地址</label>
                                 <div class="col-sm-5">
-                                    <input type="mac" class="form-control" value="{{$collector->mac??''}}" id="mac" placeholder="00-23-5A-15-99-42-11-25"  datatype="*23-23" errormsg="请填写正确的mac地址" >
+                                    <input type="mac" class="form-control" value="{{$collector['mac']??''}}" id="mac" placeholder="00-23-5A-15-99-42-11-25"  datatype="*23-23" errormsg="请填写正确的mac地址" nullmsg="请填写正确的mac地址">
                                 </div>
+                                <div class="help-block">必填</div>
                             </div>
                             <div class="form-group">
                                 <label for="abbreviation" class="col-sm-2 control-label">公司</label>
                                 <div class="col-sm-5">
                                     <select class="form-control select2 company"  style="width: 100%;">
                                         @foreach($companies as $key => $company)
-                                            <option @if(($collector->firm_id??'') == $company->id) selected @endif value="{{$company->id}}">{{$company->name}}</option>
+                                            <option @if(($collector['firm_id']??'') == $company['id']) selected @endif value="{{$company['id']}}">{{$company['name']}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group changeEquipment" @if(($collector->equipment_id??'') == '') style="display: none;"@endif>
+                            <div class="form-group changeEquipment" >
                                 <label for="abbreviation" class="col-sm-2 control-label">机械设备</label>
                                 <div class="col-sm-5">
                                     <select class="form-control select2 equipment"  style="width: 100%;">
@@ -72,11 +74,17 @@
     </section>
     <script src="{{asset('layer/layer.js')}}"></script>
     <script src="{{asset('vaildform/validform_min.js')}}"></script>
+    <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <script>
+        $('.select2').select2();
         var province,city,lat,lng,id,collectorId,collectorLng,collectorLat;
-        collectorId = '{{$collector->id??''}}';
-        collectorLng = '{{$collector->longitude??''}}';
-        collectorLat = '{{$collector->latitude??''}}';
+        collectorId = '{{$collector['id']??''}}';
+        collectorLng = '{{$collector['longitude']??''}}';
+        collectorLat = '{{$collector['latitude']??''}}';
+        lat = '{{$collector['latitude']??''}}';
+        lng = '{{$collector['longitude']??''}}';
+        city = '{{$collector['cityName']??''}}';
+        province = '{{$collector['provinceName']??''}}';
         if(collectorId){
             id = collectorId;
         }
@@ -152,6 +160,7 @@
                     layer.alert(msg);
                 }
             },
+
             callback: function (data) {//异步回调函数
                 var mac,name,companyId,equipmentId;
                 mac = $('#mac').val();
@@ -160,32 +169,26 @@
                 equipmentId = $('.equipment').val();
                 producerId = '1';
                 operatorId = '<?php echo Auth::user()->id;?>';
-                var data = {
-                    mac:mac,
-                    name:name,
-                    producerId: producerId,
-                    firmId:companyId,
-                    equipmentId:equipmentId,
-                    operatorId:operatorId,
-                    id:id,
-                    latitude:lat,
-                    longitude:lng,
-                    cityName:city,
-                    provinceName:province
-                };
-                var jsonData = JSON.stringify(data);
                 $.ajax({
-                    url:'/console/collector/saveOrUpdate',
+                    url:'{{$route}}',
                     type:'POST',    //GET
-                    contentType: "application/json;charset=utf-8",
-                    data:jsonData,
+                    data:{
+                        mac:mac,
+                        name:name,
+                        producerId: producerId,
+                        firmId:companyId,
+                        equipmentId:equipmentId,
+                        operatorId:operatorId,
+                        latitude:lat,
+                        longitude:lng,
+                        cityName:city,
+                        provinceName:province
+                    },
                     timeout:5000,    //超时时间
                     dataType:'json',
                     success:function(data){
-                        if(data.info === 'success'){
+                        if(data.code === '0'){
                             window.location.href = '<?php echo route('collectors'); ?>'
-                        }else if(data.info === 'macRepeat'){
-                            layer.alert('mac地址重复');
                         }else{
                             layer.alert(data.info)
                         }
@@ -204,9 +207,11 @@
             }
         });
 
+        var company = $('.company').val();
+        changeEquipments(company,'');
+
         $('.company').on('change',function(){
             var value = $(this).val();
-            $(".changeEquipment").show();
             changeEquipments(value,'');
         });
 

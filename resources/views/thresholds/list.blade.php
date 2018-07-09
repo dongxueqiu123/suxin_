@@ -42,16 +42,16 @@
                                   <tbody>
                                   @foreach($thresholds??[] as $key=>$threshold)
                                       <tr>
-                                          <td>{{$threshold->lowlimit}}~{{$threshold->toplimit}}</td>
-                                          <td>{{$threshold->category??'暂无'}}</td>
-                                          <td>{{$threshold->grade??'暂无'}}</td>
-                                          <td>{{$threshold->company->name??'暂无'}}</td>
-                                          <td>{{$threshold->equipment->name??'暂无'}}</td>
-                                          <td>{{$threshold->collector->name??'暂无'}}</td>
-                                          <td>{{$threshold->operate_time}}</td>
+                                          <td>{{$threshold['lowlimit']}}~{{$threshold['toplimit']}}</td>
+                                          <td>{{$threshold['categoryName']??'暂无'}}</td>
+                                          <td>{{$threshold['gradeName']??'暂无'}}</td>
+                                          <td>{{$threshold['companyName']??'暂无'}}</td>
+                                          <td>{{$threshold['equipmentName']??'暂无'}}</td>
+                                          <td>{{$threshold['collectorName']??'暂无'}}</td>
+                                          <td>{{date('Y-m-d H:i:s',$threshold['operateTime']/1000)}}</td>
                                           <td>
-                                              <a class="btn btn-default btn-flat btn-xs " href={{route('thresholds.edit',['id'=>$threshold->id])}}>编辑</a>
-                                              <a class="btn btn-default btn-flat btn-xs delete" url="{{ route('api.thresholds.delete',['id'=>$threshold->id])}}" >删除</a>
+                                              <a class="btn btn-default btn-flat btn-xs " href={{route('thresholds.edit',['id'=>$threshold['id']])}}>编辑</a>
+                                              <a class="btn btn-default btn-flat btn-xs delete" url="{{ route('api.thresholds.delete',['id'=>$threshold['id']])}}" >删除</a>
                                           </td>
                                       </tr>
                                   @endforeach

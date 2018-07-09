@@ -8,7 +8,9 @@
 namespace App\Services;
 
 use App\Eloquent\AlarmsModel;
+use App\Eloquent\ApiModuleModel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class AlarmsServices extends ServicesAdapte{
     public function __construct(){
@@ -21,6 +23,7 @@ class AlarmsServices extends ServicesAdapte{
         $this->companiesServices = new CompaniesServices();
         $this->equipmentsServices = new EquipmentsServices();
         $this->collectorsServices = new CollectorsServices();
+        $this->thresholdsServices = new ThresholdsServices();
     }
 
     /**
@@ -91,5 +94,29 @@ class AlarmsServices extends ServicesAdapte{
     public function get($id){
         $alarms = $this->alarms::find($id);
         return $alarms;
+    }
+
+    public function pagination($collectors,$count,$pageSize,$pagination){
+        return new LengthAwarePaginator($collectors,$count,$pageSize,$pagination,['path'=>'']);
+    }
+
+    public function getUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_ALARM_RETRIEVEALARM;
+    }
+
+    public function getRecoverUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_ALARM_RETRIEVEBYPARAMS;
+    }
+
+    public function getCountUrl($id){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_ALARM_COUNT.'/'.$id;
+    }
+
+    public function getCountAlarmUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_ALARM_COUNTALARM;
+    }
+
+    public function getUpadateByIdUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_ALARM_UPDATEBYID;
     }
 }

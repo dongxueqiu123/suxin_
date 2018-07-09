@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Eloquent\Permission;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\PermissionsServices;
 
 class PermissionsController extends Controller
 {
@@ -16,15 +18,18 @@ class PermissionsController extends Controller
     public function __construct()
     {
         $this->permissions = new Permission();
+        $this->permissionsServices = new PermissionsServices();
         $this->middleware('auth.user');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $permissions = $this->permissions->all();
+        $page = $request->input('page')??1;
+
+        $permissionsResponses = $this->permissionsServices->getApiList($this->permissionsServices->getUrl(),self::PAGE_SIZE_DEFAULT,$page,[]);
         return view('permissions.list',
             [
-                'permissions' => $permissions,
+                'permissions' => $permissionsResponses['data'],
                 'boxTitle'=>'权限列表',
                 'active' => 'permissions'
             ]
@@ -32,10 +37,10 @@ class PermissionsController extends Controller
     }
 
     public function edit($id){
-        $permission = $this->permissions::find($id);
+        $permissionResponses = $this->permissionsServices->getApiInfo($this->permissionsServices->getRetrieveByIdUrl(),['id'=>$id]);
         return view('permissions.edit',
             [
-                'permission' => $permission,
+                'permission' => $permissionResponses['data'],
                 'route' => '/api/admin/permissions/edit/'.$id,
                 'boxTitle'=>'修改权限',
                 'active' => 'permissions'
@@ -48,7 +53,7 @@ class PermissionsController extends Controller
             [
                 'route' => route('api.permissions.store'),
                 'boxTitle'=>'添加权限',
-                'active' => 'roles'
+                'active' => 'permissions'
             ]
         );
     }

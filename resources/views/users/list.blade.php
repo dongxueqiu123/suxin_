@@ -34,15 +34,15 @@
               <tbody>
               @foreach($users as $key=>$user)
               <tr>
-                <td>{{$user->name}}
+                <td>{{$user['name']}}
                 </td>
-                <td>{{$user->email}}</td>
-                <td>{{$user->company->name??'管理平台'}}</td>
-                <td>{{$user->roleUser->roles->name??''}}</td>
-                <td>{{$user->updated_at}}</td>
+                <td>{{$user['email']}}</td>
+                <td>{{$user['companyName']??'管理平台'}}</td>
+                <td>{{$user['roleName']??''}}</td>
+                <td>{{date('Y-m-d H:i:s',$user['updatedAt']/1000)}}</td>
                 <td>
-                  <a class="btn btn-default btn-flat btn-xs " href={{route('users.edit',['id'=>$user->id])}}>编辑</a>
-                  <a class="btn btn-default btn-flat btn-xs delete" url="{{ route('api.users.delete',['id'=>$user->id])}}" >删除</a>
+                  <a class="btn btn-default btn-flat btn-xs " href={{route('users.edit',['id'=>$user['id']])}}>编辑</a>
+                  <a class="btn btn-default btn-flat btn-xs delete" url="{{ route('api.users.delete',['id'=>$user['id']])}}" >删除</a>
                 </td>
               </tr>
               @endforeach

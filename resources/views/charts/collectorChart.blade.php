@@ -129,8 +129,9 @@
         </div>
 
     </section>
-
+    <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <script type="text/javascript">
+        $('.select2').select2();
         var myTime ,time ,curTime ,max ,status ,dateTime ,$time;
 
         myTime = $.myTime;

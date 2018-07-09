@@ -177,21 +177,20 @@
               if(value.length == 0){
                   value = '已解决';
               }
-              var data = {
-                  remark:value,
-                  status:1,
-                  collectorId:collectorId,
-                  id:alarmId,
-                  category:alarmCategory,
-                  operatorId:'{{\Auth::user()->id??0}}'
-              };
-              var jsonData = JSON.stringify(data);
+
               $.ajax({
                   url:'http://52.80.145.123:8080/console/alarm/updateById',
+                  url:'{{route('api.alarms.edit')}}',
                   type:'POST',    //GET
-                  contentType: "application/json;charset=utf-8",
                   async:true,    //或false,是否异步
-                  data:jsonData,
+                  data:{
+                      remark:value,
+                      status:1,
+                      collectorId:collectorId,
+                      id:alarmId,
+                      category:alarmCategory,
+                      operatorId:'{{\Auth::user()->id??0}}'
+                  },
                   timeout:5000,    //超时时间
                   dataType:'json',
                   success:function(data,textStatus,jqXHR){

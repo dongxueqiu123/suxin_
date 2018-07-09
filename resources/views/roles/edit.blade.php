@@ -28,13 +28,14 @@
                           <label for="name" class="col-sm-2 control-label">名称</label>
 
                           <div class="col-sm-5">
-                              <input type="name" class="form-control" value="{{$role->name??''}}" id="name" placeholder="角色名称"  datatype="*" errormsg="请填写信息">
+                              <input type="name" class="form-control" value="{{$role['name']??''}}" id="name" placeholder="角色名称"  datatype="*" errormsg="请填写信息" nullmsg="请填写角色名称" >
                           </div>
+                          <div class="help-block">必填</div>
                       </div>
                       <div class="form-group">
-                          <label for="description" class="col-sm-2 control-label">描述</label>
+                          <label class="col-sm-2 control-label">描述</label>
                           <div class="col-sm-5">
-                              <input type="description" class="form-control" value="{{$role->description??''}}" id="description" placeholder="角色描述"  datatype="*" errormsg="请填写信息">
+                              <input type="description" class="form-control" value="{{$role['description']??''}}" id="description" placeholder="角色描述">
                           </div>
                       </div>
 
@@ -48,14 +49,14 @@
                           @foreach($permissions??[] as $permission)
                               <div class="col-md-3 col-sm-4" >
                                   <label>
-                                      <input type="checkbox" value="{{$permission->id}}" class="flat-red"
-                                             @foreach($permissionRoles??[] as $permissionRole)
-                                             @if($permission->id == $permissionRole->permission_id)
+                                      <input type="checkbox" value="{{$permission['id']}}" class="flat-red"
+                                             @foreach($role['permissionIdsStr']??[] as $permissionRole)
+                                             @if($permission['id']== $permissionRole)
                                              checked
                                               @endif
                                               @endforeach
                                       >
-                                      {{$permission->display_name}}
+                                      {{$permission['displayName']}}
                                   </label>
                               </div>
                           @endforeach
@@ -101,10 +102,10 @@
                   timeout:5000,    //超时时间
                   dataType:'json',
                   success:function(data){
-                      if(data.state === '201'){
-                          layer.alert(data.info)
-                      }else{
+                      if(data.state === '0'){
                           window.location.href = data.route
+                      }else{
+                          layer.alert(data.info)
                       }
                   },
                   error:function(data){

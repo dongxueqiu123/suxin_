@@ -8,6 +8,8 @@
 namespace App\Services;
 
 use App\Eloquent\CompaniesModel;
+use App\Eloquent\ApiModuleModel;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CompaniesServices extends ServicesAdapte{
 
@@ -82,6 +84,23 @@ class CompaniesServices extends ServicesAdapte{
              }
          }
          return $result;
+    }
+
+
+    public function getUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_COMPANY_LIST;
+    }
+
+    public function getSaveUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_COMPANY_SAVE;
+    }
+
+    public function getDeleteUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_COMPANY_DELETE;
+    }
+
+    public function getRetrieveByIdUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_COMPANY_RETRIEVEBYID;
     }
 
 }

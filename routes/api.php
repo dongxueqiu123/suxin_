@@ -100,7 +100,10 @@ Route::group(['prefix' => 'admin/orderProduct'], function () {
     Route::post('/delete', 'Api\OrderProductController@delete')->name('api.orderProduct.delete');
 });
 
+Route::group(['prefix' => 'admin/algorithm'], function () {
+    Route::post('/getOptionHtml', 'Api\AlgorithmsController@getOptionHtml')->name('api.algorithm.getOptionHtml');
+});
 
 Route::group(['prefix' => 'admin/alarms'], function () {
-    Route::post('/edit/{id}', 'Api\AlarmsController@edit')->name('api.alarms.edit');
+    Route::post('/edit', 'Api\AlarmsController@edit')->name('api.alarms.edit');
 });

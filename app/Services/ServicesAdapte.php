@@ -8,6 +8,8 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
+use App\Eloquent\ThresholdsModel;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ServicesAdapte implements ServicesInterface{
     const  LIMITATION = 'limitation';
@@ -30,29 +32,68 @@ class ServicesAdapte implements ServicesInterface{
 
     }
 
-    public function getClient(string $url,int $pageSize = 0, int $pagination = 1 ,array $parameters = [], array $excepts = []){
-        $http = new Client();
+    public function getApiList($url,int $pageSize,int $pagination,array $parameters, array $ext = []){
+        $responses = $this->getClient($url,$pageSize,$pagination,$parameters);
+        $alarms = is_array($responses['data'])?$responses['data']:[];
+        $count = isset($responses['count'])?(int) $responses['count']:0;
+        foreach ($ext as $name=>$value){
+            if($name == 'category'||$name == 'grade'){
+                foreach($alarms as $key=>$alarm){
+                    $value && $alarms[$key]['categoryName'] = $this->getConstantByArray($alarm,'category');
+                    $value && $alarms[$key]['gradeName'] = $this->getConstantByArray($alarm,'grade');
+                }
+            }
+        }
+        $responses['data'] = $this->pagination($alarms,$count, $pageSize, $pagination);
+        return $responses;
+    }
+
+    private function pagination($collectors,$count,$pageSize,$pagination){
+        return new LengthAwarePaginator($collectors,$count,$pageSize,$pagination,['path'=>'']);
+    }
+
+    private function getClient(string $url,int $pageSize = 0, int $pagination = 1 ,array $parameters = []){
+
         $array = []; $urlParameter = '';
         foreach ($parameters as $name=>$parameter)
         {
-            foreach ($excepts as $except){
+/*            foreach ($excepts as $except){
                  if($except == $name){
                      continue 2;
                  }
-            }
+            }*/
             $array[] = $name.'='.$parameter;
         }
 
-        $pageUrl = '?'.self::LIMITATION.'='.$pageSize.'&'.self::PAGINATION.'='.$pagination.'&';
-        foreach ($excepts as $except){
-            if($except == self::LIMITATION && $except == self::PAGINATION){
-                $pageUrl ='?';
-            }
+        $pageUrl = $pageSize == 0?'?':'?'.self::LIMITATION.'='.$pageSize.'&'.self::PAGINATION.'='.$pagination;
+        $urlParameter = (empty($array)) ? $pageUrl : $pageUrl.'&'.implode('&',$array);
+        $body = $this->httpGet($url.$urlParameter);
+        return $body;
+    }
+
+    public function getApiInfo($url,array $parameters,array $ext = []){
+        return $this->getInfoClient($url,$parameters);
+    }
+
+    public function getInfoClient(string $url,array $parameters = []){
+        $array = [];
+        foreach ($parameters as $name=>$parameter)
+        {
+            $array[] = $name.'='.$parameter;
         }
-        (!empty($array)) && $urlParameter = $pageUrl.implode('&',$array);
+        $urlParameter = !empty($parameters)?'?'.implode('&',$array):'';
+        $body = $this->httpGet($url.$urlParameter);
+        return $body;
+    }
+
+    private function httpGet($url){
+
+        $http = new Client();
+
         try{
-            $response = $http->get($url.$urlParameter);
+            $response = $http->get($url);
             $body = json_decode((string)$response->getBody(), true);
+
         }catch (\Exception $e){
             $body = ['code' => 999,'info' => '请求超时','data' => '','count'=> 0];
         }
@@ -60,7 +101,9 @@ class ServicesAdapte implements ServicesInterface{
     }
 
     public function postClient(string $url,array $parameters = []){
+
         $jsonParameters = json_encode($parameters);
+
         $http = new Client();
         try{
             $result = $http->request('POST',$url,[
@@ -69,6 +112,7 @@ class ServicesAdapte implements ServicesInterface{
                 ],
                 'body'   => $jsonParameters
             ]);
+
             if($result->getBody()->getSize()){
                 $contents = $result->getBody()->getContents();
                 $body = json_decode($contents,true);
@@ -78,6 +122,15 @@ class ServicesAdapte implements ServicesInterface{
         }catch (\Exception $e){
             $body = ['code' => 999,'info' => '请求超时','data' => '','count'=> 0];
         }
+
         return $body;
     }
+
+    private function getConstantByArray(array $array,$name){
+        $thresholds = new ThresholdsModel();
+        $id = empty($array)?$array:($array[$name]??null);
+        $name ='get'.($name);
+        return  $thresholds->$name($id);
+    }
+
 }

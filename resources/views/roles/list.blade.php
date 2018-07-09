@@ -32,13 +32,13 @@
               <tbody>
               @foreach($roles as $key=>$role)
               <tr>
-                <td>{{$role->name}}
+                <td>{{$role['name']}}
                 </td>
-                <td>{{$role->description}}</td>
-                <td>{{$role->updated_at}}</td>
+                <td>{{$role['description']}}</td>
+                <td>{{date('Y-m-d H:i:s',$role['updatedAt']/1000)}}</td>
                 <td>
-                  <a class="btn btn-default btn-flat btn-xs " href={{route('roles.edit',['id'=>$role->id])}}>编辑</a>
-                  <a class="btn btn-default btn-flat btn-xs delete" url="{{ route('api.roles.delete',['id'=>$role->id])}}" >删除</a>
+                  <a class="btn btn-default btn-flat btn-xs " href={{route('roles.edit',['id'=>$role['id']])}}>编辑</a>
+                  <a class="btn btn-default btn-flat btn-xs delete" url="{{ route('api.roles.delete',['id'=>$role['id']])}}" >删除</a>
                 </td>
               </tr>
               @endforeach

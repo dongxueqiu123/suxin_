@@ -36,13 +36,13 @@
                               <tbody>
                               @foreach($equipments as $key=>$equipment)
                                   <tr>
-                                      <td>{{$equipment->name}}</td>
-                                      <td>{{$equipment->provider->name??''}}</td>
-                                      <td>{{$equipment->consumer->name??''}}</td>
-                                      <td>{{$equipment->operate_time}}</td>
+                                      <td>{{$equipment['name']}}</td>
+                                      <td>{{$equipment['providerName']??''}}</td>
+                                      <td>{{$equipment['counsumerName']??''}}</td>
+                                      <td>{{date('Y-m-d H:i:s',$equipment['operateTime']/1000)}}</td>
                                       <td>
-                                          <a class="btn btn-default btn-flat btn-xs " href={{route('equipments.edit',['id'=>$equipment->id])}}>编辑</a>
-                                          <a class="btn btn-default btn-flat btn-xs delete" url="{{ route('api.equipments.delete',['id'=>$equipment->id])}}" >删除</a>
+                                          <a class="btn btn-default btn-flat btn-xs " href={{route('equipments.edit',['id'=>$equipment['id']])}}>编辑</a>
+                                          <a class="btn btn-default btn-flat btn-xs delete" url="{{ route('api.equipments.delete',['id'=>$equipment['id']])}}" >删除</a>
                                       </td>
                                   </tr>
                               @endforeach

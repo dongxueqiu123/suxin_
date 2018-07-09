@@ -23,7 +23,7 @@ class OrdersController extends Controller
     }
 
     public function index(Request $request){
-        $type = $request->input('type')??1;
+        $type = $request->input('type')??0;
         $page = $request->input('page');
         $parameters = ['type' => ($type)];
         $companyId = \Auth::user()->company->id??'';

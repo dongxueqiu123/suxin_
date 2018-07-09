@@ -7,6 +7,7 @@
  */
 namespace App\Services;
 
+use App\Eloquent\ApiModuleModel;
 use App\Eloquent\ThresholdsModel;
 use Illuminate\Support\Facades\Auth;
 
@@ -81,6 +82,7 @@ class ThresholdsServices extends ServicesAdapte {
     }
 
     public function getConstantByArray(array $array,$name){
+
         $id = empty($array)?$array:($array[$name]??null);
         $name ='get'.($name);
         return  $this->thresholds->$name($id);
@@ -147,6 +149,22 @@ class ThresholdsServices extends ServicesAdapte {
             $result[$firm] = $collector->company->id??0;
         }
         return $result;
+    }
+
+    public function getUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_THRESHOLD_RETRIEVE;
+    }
+
+    public function getDeleteUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_THRESHOLD_DELETE;
+    }
+
+    public function getRetrieveByIdUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_THRESHOLD_RETRIEVEBYID;
+    }
+
+    public function getSaveOrUpdateIdUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_THRESHOLD_SAVEORUPDATE;
     }
 }
 ?>

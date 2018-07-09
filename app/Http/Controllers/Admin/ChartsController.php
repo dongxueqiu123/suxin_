@@ -169,30 +169,26 @@ class ChartsController extends Controller{
     }
 
     public function getTemperatureData($http_type,$state,$id,$endDate){
-        $_SERVER['HTTP_HOST'] = 'www.suxiniot.com';
-        $url = $http_type.$_SERVER['HTTP_HOST'].'/console/influx/timeseries/'.$state.'/'.$id.'?startTime='.$endDate*1000;
+        $url = env('HTTP_URL',$_SERVER['HTTP_HOST']).'/console/influx/timeseries/'.$state.'/'.$id.'?startTime='.$endDate*1000;
         $data = $this->httpGet($url,[]);
         return $data;
     }
 
     public function getSpeedData($http_type,$state,$id,$endDate){
-        $_SERVER['HTTP_HOST'] = 'www.suxiniot.com';
-        $url = $http_type.$_SERVER['HTTP_HOST'].'/console/influx/timeseries/'.$state.'/'.$id.'?startTime='.$endDate*1000;
+        $url = env('HTTP_URL',$_SERVER['HTTP_HOST']).'/console/influx/timeseries/'.$state.'/'.$id.'?startTime='.$endDate*1000;
         $data = $this->httpGet($url,[]);
         return $data;
     }
 
     public function getHumidityData($http_type,$state,$id,$endDate){
-        $_SERVER['HTTP_HOST'] = 'www.suxiniot.com';
-        $url = $http_type.$_SERVER['HTTP_HOST'].'/console/influx/timeseries/'.$state.'/'.$id.'?startTime='.$endDate*1000;
+        $url = env('HTTP_URL',$_SERVER['HTTP_HOST']).'/console/influx/timeseries/'.$state.'/'.$id.'?startTime='.$endDate*1000;
         $data = $this->httpGet($url,[]);
         return $data;
     }
 
     public function getHistorySpeedData($http_type,$state,$id,$endDate,$period){
 
-        $_SERVER['HTTP_HOST'] = 'www.suxiniot.com';
-        $url = $http_type.$_SERVER['HTTP_HOST'].'/console/influx/timeseries/period/'.$state.'/'.$id.'?endTime='.$endDate*1000 .'&period='.$period;
+        $url = env('HTTP_URL',$_SERVER['HTTP_HOST']).'/console/influx/timeseries/period/'.$state.'/'.$id.'?endTime='.$endDate*1000 .'&period='.$period;
         $data = $this->httpGet($url,[]);
         return $data;
     }

@@ -29,8 +29,9 @@
                 <div class="form-group">
                   <label for="name" class="col-sm-2 control-label">名称</label>
                   <div class="col-sm-5">
-                    <input type="name" class="form-control" value="{{$equipment->name??''}}" id="name" placeholder="名称" datatype="*" errormsg="请填写信息" >
+                    <input type="name" class="form-control" value="{{$equipment['name']??''}}" id="name" placeholder="名称" datatype="*" errormsg="请填写名称"  nullmsg="请填写名称" >
                   </div>
+                    <div class="help-block">必填</div>
                 </div>
 
                   <div class="form-group">
@@ -39,7 +40,7 @@
                           <select class="form-control select2 providerId"  style="width: 100%;">
 
                               @foreach($companies??[] as $company)
-                                  <option @if(($equipment->provider_id??'') == $company->id) selected @endif value="{{$company->id}}">{{$company->name}}</option>
+                                  <option @if(($equipment['providerId']??'') == $company['id']) selected @endif value="{{$company['id']}}">{{$company['name']}}</option>
                               @endforeach
                           </select>
                       </div>
@@ -51,7 +52,7 @@
                           <select class="form-control select2 consumerId"  style="width: 100%;">
 
                               @foreach($companies??[] as $company)
-                                  <option @if(($equipment->consumer_id??'') == $company->id) selected @endif value="{{$company->id}}">{{$company->name}}</option>
+                                  <option @if(($equipment['consumerId']??'') == $company['id']) selected @endif value="{{$company['id']}}">{{$company['name']}}</option>
                               @endforeach
                           </select>
                       </div>
@@ -70,8 +71,9 @@
   </section>
   <script src="{{asset('layer/layer.js')}}"></script>
   <script src="{{asset('vaildform/validform_min.js')}}"></script>
+  <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
   <script>
-
+      $('.select2').select2();
       $(".form-horizontal").Validform({
           btnSubmit:".sign",
           tipSweep: true,
@@ -94,20 +96,14 @@
                   timeout:5000,    //超时时间
                   dataType:'json',
                   success:function(data){
-                      if(data.state === '201'){
-                          layer.alert(data.info)
-                      }else{
+                      if(data.code === '0'){
                           window.location.href = data.route
+                      }else{
+                          layer.alert(data.info)
                       }
                   },
                   error:function(data){
-                      if(data.responseJSON.errors['name']){
-                          layer.alert(data.responseJSON.errors['name']['0'])
-                      }else if(data.responseJSON.errors['providerId']){
-                          layer.alert(data.responseJSON.errors['providerId']['0'])
-                      }else if(data.responseJSON.errors['consumerId']){
-                          layer.alert(data.responseJSON.errors['consumerId']['0'])
-                      }
+
                   }
               });
               return false;

@@ -108,40 +108,9 @@
       <div class="col-md-12">
           <div class="box box-solid">
               <div class="mailbox-read-message">
-                  <p>Hello John,</p>
-
-                  <p>Keffiyeh blog actually fashion axe vegan, irony biodiesel. Cold-pressed hoodie chillwave put a bird
-                      on it aesthetic, bitters brunch meggings vegan iPhone. Dreamcatcher vegan scenester mlkshk. Ethical
-                      master cleanse Bushwick, occupy Thundercats banjo cliche ennui farm-to-table mlkshk fanny pack
-                      gluten-free. Marfa butcher vegan quinoa, bicycle rights disrupt tofu scenester chillwave 3 wolf moon
-                      asymmetrical taxidermy pour-over. Quinoa tote bag fashion axe, Godard disrupt migas church-key tofu
-                      blog locavore. Thundercats cronut polaroid Neutra tousled, meh food truck selfies narwhal American
-                      Apparel.</p>
-
-                  <p>Raw denim McSweeney's bicycle rights, iPhone trust fund quinoa Neutra VHS kale chips vegan PBR&amp;B
-                      literally Thundercats +1. Forage tilde four dollar toast, banjo health goth paleo butcher. Four dollar
-                      toast Brooklyn pour-over American Apparel sustainable, lumbersexual listicle gluten-free health goth
-                      umami hoodie. Synth Echo Park bicycle rights DIY farm-to-table, retro kogi sriracha dreamcatcher PBR&amp;B
-                      flannel hashtag irony Wes Anderson. Lumbersexual Williamsburg Helvetica next level. Cold-pressed
-                      slow-carb pop-up normcore Thundercats Portland, cardigan literally meditation lumbersexual crucifix.
-                      Wayfarers raw denim paleo Bushwick, keytar Helvetica scenester keffiyeh 8-bit irony mumblecore
-                      whatever viral Truffaut.</p>
-
-                  <p>Post-ironic shabby chic VHS, Marfa keytar flannel lomo try-hard keffiyeh cray. Actually fap fanny
-                      pack yr artisan trust fund. High Life dreamcatcher church-key gentrify. Tumblr stumptown four dollar
-                      toast vinyl, cold-pressed try-hard blog authentic keffiyeh Helvetica lo-fi tilde Intelligentsia. Lomo
-                      locavore salvia bespoke, twee fixie paleo cliche brunch Schlitz blog McSweeney's messenger bag swag
-                      slow-carb. Odd Future photo booth pork belly, you probably haven't heard of them actually tofu ennui
-                      keffiyeh lo-fi Truffaut health goth. Narwhal sustainable retro disrupt.</p>
-
-                  <p>Skateboard artisan letterpress before they sold out High Life messenger bag. Bitters chambray
-                      leggings listicle, drinking vinegar chillwave synth. Fanny pack hoodie American Apparel twee. American
-                      Apparel PBR listicle, salvia aesthetic occupy sustainable Neutra kogi. Organic synth Tumblr viral
-                      plaid, shabby chic single-origin coffee Etsy 3 wolf moon slow-carb Schlitz roof party tousled squid
-                      vinyl. Readymade next level literally trust fund. Distillery master cleanse migas, Vice sriracha
-                      flannel chambray chia cronut.</p>
-
-                  <p>Thanks,<br>Jane</p>
+                  {{$product->detail->description??'算法（Algorithm）是指解题方案的准确而完整的描述，是一系列解决问题的清晰指令，算法代表着用系统的方法描述解决问题的策略机制。也就是说，能够对一定规范的输入，在有限时间内获得所要求的输出。如果一个算法有缺陷，或不适合于某个问题，执行这个算法将不会解决这个问题。不同的算法可能用不同的时间、空间或效率来完成同样的任务。一个算法的优劣可以用空间复杂度与时间复杂度来衡量。
+算法中的指令描述的是一个计算，当其运行时能从一个初始状态和（可能为空的）初始输入开始，经过一系列有限而清晰定义的状态，最终产生输出并停止于一个终态。一个状态到另一个状态的转移不一定是确定的。随机化算法在内的一些算法，包含了一些随机输入。
+形式化算法的概念部分源自尝试解决希尔伯特提出的判定问题，并在其后尝试定义有效计算性或者有效方法中成形。这些尝试包括库尔特·哥德尔、Jacques Herbrand和斯蒂芬·科尔·克莱尼分别于1930年、1934年和1935年提出的递归函数，阿隆佐·邱奇于1936年提出的λ演算，1936年Emil Leon Post的Formulation 1和艾伦·图灵1937年提出的图灵机。即使在当前，依然常有直觉想法难以定义为形式化算法的情况。'}}
               </div>
           </div>
       </div>

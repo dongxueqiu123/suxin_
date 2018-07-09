@@ -380,8 +380,8 @@
              */
             var requestMgr = {
                 request: function (time, successCbk) {
-                    //var url = '{{route('api.home.getMapPoint')}}';
-                    var url = '/console/collector/retrieveByFirmId';
+                    var url = '{{route('api.home.getMapPoint')}}';
+                    //var url = '/console/collector/retrieveByFirmId';
                     var xhr = new XMLHttpRequest();
                     xhr.onreadystatechange = function() {
                         if( xhr.readyState == 4  && xhr.status == 200 ) {
@@ -408,7 +408,7 @@
                             }
                         }
                     }
-                    xhr.open( "GET", url, true );
+                    xhr.open( "POST", url, true );
                     xhr.send( null );
                 }
             }

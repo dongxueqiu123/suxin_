@@ -30,20 +30,22 @@
                                 <label for="display_name" class="col-sm-2 control-label">名称</label>
 
                                 <div class="col-sm-5">
-                                    <input type="display_name" class="form-control" value="{{$permission->display_name??''}}" id="display_name" placeholder="权限名称"  datatype="*" errormsg="请填写信息">
+                                    <input type="display_name" class="form-control" value="{{$permission['displayName']??''}}" id="display_name" placeholder="权限名称"  datatype="*" errormsg="请填写正确名称" nullmsg="请填写名称">
                                 </div>
+                                <div class="help-block">必填</div>
                             </div>
                             <div class="form-group">
-                                <label for="description" class="col-sm-2 control-label">描述</label>
+                                <label class="col-sm-2 control-label">描述</label>
                                 <div class="col-sm-5">
-                                    <input type="description" class="form-control" value="{{$permission->description??''}}" id="description" placeholder="权限描述"  datatype="*" errormsg="请填写信息">
+                                    <input type="description" class="form-control" value="{{$permission['description']??''}}" id="description" placeholder="权限描述">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="name" class="col-sm-2 control-label">路由</label>
                                 <div class="col-sm-5">
-                                    <input type="name" class="form-control" value="{{$permission->name??''}}" id="name" placeholder="权限路由"  datatype="*" errormsg="请填写信息">
+                                    <input type="name" class="form-control" value="{{$permission['name']??''}}" id="name" placeholder="权限路由"  datatype="*" errormsg="请填写正确路由"  nullmsg="请填写路由">
                                 </div>
+                                <div class="help-block">必填</div>
                             </div>
                         </div>
                         <!-- /.box-body -->
@@ -74,30 +76,24 @@
                 var name,description,module_types;
                 name = $('#name').val();
                 description = $('#description').val();
-                display_name = $('#display_name').val();
+                displayName = $('#display_name').val();
                 $.ajax({
                     url:'{{$route}}',
                     type:'POST',    //GET
                     data:{
-                        name:name,description:description,display_name:display_name
+                        name:name,description:description,displayName:displayName
                     },
                     timeout:5000,    //超时时间
                     dataType:'json',
                     success:function(data){
-                        if(data.state === '201'){
-                            layer.alert(data.info)
-                        }else{
+                        if(data.state === '0'){
                             window.location.href = data.route
+
+                        }else{
+                            layer.alert(data.info)
                         }
                     },
                     error:function(data){
-                        if(data.responseJSON.errors['display_name']){
-                            layer.alert(data.responseJSON.errors['display_name']['0']);
-                        }else if(data.responseJSON.errors['description']){
-                            layer.alert(data.responseJSON.errors['description']['0']);
-                        }else if(data.responseJSON.errors['name']){
-                            layer.alert(data.responseJSON.errors['name']['0']);
-                        }
                     }
                 });
                 return false;

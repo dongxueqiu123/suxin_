@@ -7,6 +7,7 @@
  */
 namespace App\Services;
 
+use App\Eloquent\ApiModuleModel;
 use App\Eloquent\EquipmentsModel;
 use Illuminate\Support\Facades\Auth;
 
@@ -93,4 +94,27 @@ class EquipmentsServices extends ServicesAdapte{
         return $haveEquipmentId;
     }
 
+    public function getUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_EQUIPMENT_MANAGE;
+    }
+
+    public function getSaveUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_EQUIPMENT_SAVE;
+    }
+
+    public function getDeleteUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_EQUIPMENT_DELETE;
+    }
+
+    public function getEquipmentByIdUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_EQUIPMENT_RETRIEVEBYID;
+    }
+
+    public function getCountUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_EQUIPMENT_COUNT;
+    }
+
+    public function getCountAllUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_EQUIPMENT_COUNTALL;
+    }
 }

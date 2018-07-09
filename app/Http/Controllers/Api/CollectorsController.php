@@ -24,42 +24,44 @@ class CollectorsController extends Controller
     }
 
     public function edit($id,Request $request){
-        $request->validate([
-            'mac'=>'required|between:23,23',
-            'name' => 'required',
-            'companyId' => 'required',
-        ]);
-        $input = $request->only(['mac','name','companyId','equipmentId']);
+
+        $input = $request->only(['mac','name','firmId','equipmentId','operatorId','latitude','longitude','cityName','provinceName']);
         $input['id'] = $id;
-        if($state = $this->collectorsServices->save($input)){
+        $input['firmId'] = $input['firmId']??0;
+        $input['equipmentId'] = $input['equipmentId']??0;
+
+        if($state = $this->collectorsServices->postClient($this->collectorsServices->getEditUrl(),$input)){
             return response()->json([
-                'state' => $state,
-                'route' => route('collectors')
+                'code' => $state['code'],
+                'route' => route('collectors'),
+                'info'  => config('code.'.$state['code'])
             ]);
         }
     }
 
     public function store(Request $request){
-        $request->validate([
-            'mac'=>'required|between:23,23',
-            'name' => 'required',
-            'companyId' => 'required',
-        ]);
-        $input = $request->only(['mac','name','companyId','equipmentId']);
-        //$ids =  $this->thresholdsServices->getBelongIds($pattern,$patternId);
-        if($state = $this->collectorsServices->save($input)){
+
+        $input = $request->only(['mac','name','firmId','equipmentId','operatorId','latitude','longitude','cityName','provinceName']);
+        $input['companyId'] = $input['companyId']??0;
+        $input['equipmentId'] = $input['equipmentId']??0;
+
+        if($state = $this->collectorsServices->postClient($this->collectorsServices->getSaveUrl(),$input)){
+
             return response()->json([
-                'state' => $state,
-                'route' => route('collectors')
+                'code' => $state['code'],
+                'route' => route('collectors'),
+                'info'  => config('code.'.$state['code'])
             ]);
         }
     }
 
     public function delete($id){
-        if($state = $this->collectorsServices->destroy($id)){
+        $input['id'] = $id;
+        if($state = $this->collectorsServices->postClient($this->collectorsServices->getDeleteUrl(),$input)){
             return response()->json([
-                'state' => $state,
-                'route' => route('collectors')
+                'code' => $state['code'],
+                'route' => route('collectors'),
+                'info'  => config('code.'.$state['code'])
             ]);
         }
     }
@@ -69,11 +71,12 @@ class CollectorsController extends Controller
         $companyId = $request->input('companyId');
         $equipmentId = $request->input('equipmentId');
         $collectorId = $request->input('collectorId');
-        $company =  $this->companiesServices->get($companyId);
-        if($equipmentId){
+        //$company =  $this->companiesServices->get($companyId);
+    /*    if($equipmentId){
             $equipment = $this->equipmentsServices->get($equipmentId);
             $collectors = $equipment->collector??[];
         }else{
+
             //公司下所有的无线节点
             $companyCollectors = $company->collector??collect();
             //公司设备下所有的无线节点
@@ -89,13 +92,16 @@ class CollectorsController extends Controller
             });
             //直接绑定公司的无线节点
             $collectors = $companyCollectors->diff($equipmentCollectors);
-        }
+        }*/
+        $collectorResponses = $this->collectorsServices->getInfoClient($this->collectorsServices->getUrl(),['firmId'=>$companyId,'equipmentId'=>$equipmentId]);
+        $collectors = $collectorResponses['data'];
+
         /*todo 增加公司权限控制*/
         $str ='';
         $str.= '<option value=0 >不选择</option>';
         foreach ($collectors??[] as $collector){
-            $selected =  ($collectorId == $collector->id)?'selected':'';
-            $str.= '<option '.$selected.' value="'.$collector->id.'">'.$collector->name.'</option>';
+            $selected =  ($collectorId == $collector['id'])?'selected':'';
+            $str.= '<option '.$selected.' value="'.$collector['id'].'">'.$collector['name'].'</option>';
         }
         return ['state'=>0,'text' => $str];
     }
