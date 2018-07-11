@@ -53,41 +53,43 @@
               </div>
           </div>
       </div>
+
+      <div class="row">
+          <div class="col-xs-12">
+              <div class="box box-solid">
+                      <div class="box-header with-border">
+                          <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">算法简介</h3>
+                          <div class="box-tools pull-right">
+
+                              <div class="btn-group changeButton"  data-toggle="btn-toggle">
+                              </div>
+                          </div>
+                      </div>
+                  <div class="box-body ">
+                      &ensp;&ensp;&ensp;&ensp;<span class="infoName">对于给定的 N+1 个点，可以通过牛顿插值法求取经过这些点的N 次多项式。</span>
+                  </div>
+              </div>
+          </div>
+      </div>
       <div class="row">
           <div class="col-xs-12">
               <!-- interactive chart -->
               <div class="box box-solid">
                   <div class="box-header with-border">
-                      <i class="fa fa-bar-chart-o" style="color: black;font-size:13px;"></i>
-
-                      <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">原始数据</h3>
-
+                      <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">实例演示</h3>
+                      <a  class="btn bg-light-blue btn-flat motion" style="margin-left: 10px;">
+                          <i class="fa fa-fw fa-paper-plane"></i>
+                          点击运行
+                      </a>
                       <div class="box-tools pull-right">
 
                           <div class="btn-group changeButton"  data-toggle="btn-toggle">
                           </div>
                       </div>
                   </div>
-                  <div class="box-body">
-                      <div id="container" style="height: 300px;"></div>
-                      {{--                        <div id="fadeOut" class="highcharts-loading" style="position: absolute; background-color: white; opacity: 1; text-align: center; z-index: 10;   margin: auto;  top: 100px; left: 0;  right: 0;   width: 800px; height: 258px;">
-                                                  <span class="highcharts-loading-inner" style="font-weight: bold; position: relative; top: 45%; color: gray;">Loading...</span></div>--}}
-                  </div>
-                  <!-- /.box-body-->
-              </div>
-              <!-- /.box -->
-
-          </div>
-          <!-- /.col -->
-
-          <div class="col-xs-12">
-              <!-- interactive chart -->
-              <div class="box box-solid">
                   <div class="box-header with-border">
-                      <i class="fa fa-bar-chart-o" style="color: black;font-size:13px;"></i>
-
-                      <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">计算后数据</h3>
-
+                      <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">输入数据：</h3>
+                      <span class="inPutInfo">N+1个观测点</span>
                       <div class="box-tools pull-right">
 
                           <div class="btn-group changeButton"  data-toggle="btn-toggle">
@@ -95,15 +97,28 @@
                       </div>
                   </div>
                   <div class="box-body">
-                      <div id="container1" style="height: 300px;"></div>
+                      <div id="container" style="width: 800px;"></div>
                       {{--                        <div id="fadeOut" class="highcharts-loading" style="position: absolute; background-color: white; opacity: 1; text-align: center; z-index: 10;   margin: auto;  top: 100px; left: 0;  right: 0;   width: 800px; height: 258px;">
                                                   <span class="highcharts-loading-inner" style="font-weight: bold; position: relative; top: 45%; color: gray;">Loading...</span></div>--}}
+                  </div>
+
+                  <div class="box-header with-border" style="border-top: 1px solid #f4f4f4;">
+                      <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">输出数据：</h3>
+                      <span class="outPutInfo">N次多项式</span>
+                      <div class="box-tools pull-right">
+                          <div class="btn-group changeButton"  data-toggle="btn-toggle">
+                          </div>
+                      </div>
+                  </div>
+                  <div class="box-body">
+                      <div id="container1" style="width: 800px; margin: auto;"></div>
                   </div>
                   <!-- /.box-body-->
               </div>
               <!-- /.box -->
 
           </div>
+
       </div>
       <!-- /.row -->
 
@@ -112,7 +127,12 @@
   <script>
       $('.select2').select2();
 
-      highChart = function(url){
+      highChart = function(url,isPost){
+          if(!isPost){
+              highChartInputData([]);
+              highChartOutputData([],[]);
+              return false;
+          }
           $.ajax({
               url:'{{route('algorithms.getData')}}',
               type:'GET',    //GET
@@ -123,7 +143,13 @@
               dataType:'json',
               success:function(data){
                   highChartInputData(data.data.inputData);
-                  highChartOutputData(data.data.outputData);
+                  highChartOutputData(data.data.outputData,data.data.inputData);
+                  $('.inPutInfo').html(data.data.inputExplain);
+                  $('.outPutInfo').html(data.data.outputExplain);
+
+/*
+                  high.series[0].data[1].select(true,true);
+                  high.series[0].data[2].select(true,true);*/
                   return false;
               },
               error:function(data){
@@ -137,6 +163,9 @@
               title: {
                   text: '包含趋势线的散点图'
               },
+              credits: {
+                  enabled: false //不显示LOGO
+              },
               series: [ {
                   type: 'scatter',
                   name: '观测值',
@@ -145,10 +174,13 @@
           });
       }
 
-      function highChartOutputData(outputData) {
-          Highcharts.chart('container1', {
+      function highChartOutputData(outputData,inputData) {
+        var chart = Highcharts.chart('container1', {
               title: {
                   text: '包含趋势线的散点图'
+              },
+              credits: {
+                  enabled: false //不显示LOGO
               },
               plotOptions: {
                   spline: {
@@ -164,11 +196,18 @@
                   }
               },
               series: [ {
-                  type: 'spline',
+                  //type: 'scatter',
+                  type:'line',
                   name: '观测值',
                   data: outputData,
               }]
           });
+
+/*          inputData.forEach(function(value,index,array){
+              console.log(value[0]);
+              chart.series[0].data[5].select(true,true);
+              chart.series[0].data[10].select(true,true);
+          });*/
       }
 
       getOption = function(name){
@@ -184,16 +223,15 @@
                   if(data.code == '0'){
                       $(".className").find("option").remove();
                       $(".className").append(data.info);
-                      var className =  $(".className option:selected").val();
-                      //var className =  $(".className option:first").val();
-                      highChart(name+'/'+className)
+                      changeOptionAndText(name);
+
                   }
               },
               error:function(data){
 
               }
           });
-      }
+      };
 
       var name = $(".method option:selected").val();
       getOption(name);
@@ -201,11 +239,23 @@
       $('.method').change(function(){
           var name = $(".method option:selected").val();
           getOption(name);
-      })
+      });
 
       $('.className').change(function(){
-          var className =  $(".className option:selected").val();
-          highChart(name+'/'+className)
+          changeOptionAndText(name);
+      });
+
+      function changeOptionAndText(name){
+          var option = $(".className option:selected");
+          var className = option.val();
+          $('.infoName').html(option.attr('info'));
+          $('.inPutInfo').html(option.attr('inPutInfo'));
+          $('.outPutInfo').html(option.attr('outPutInfo'));
+          highChart(name+'/'+className,false);
+      }
+
+      $('.motion').click(function(){
+          highChart($(".method option:selected").val()+'/'+$(".className option:selected").val(),true);
       })
 
   </script>

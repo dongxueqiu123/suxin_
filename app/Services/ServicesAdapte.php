@@ -37,8 +37,9 @@ class ServicesAdapte implements ServicesInterface{
         $alarms = is_array($responses['data'])?$responses['data']:[];
         $count = isset($responses['count'])?(int) $responses['count']:0;
         foreach ($ext as $name=>$value){
-            if($name == 'category'||$name == 'grade'){
+            if($name == 'category'||$name == 'grade'||$name == 'categoryUnit'){
                 foreach($alarms as $key=>$alarm){
+                    $value && $alarms[$key]['categoryUnit'] = $this->getConstantByArray($alarm,'categoryUnit','category');
                     $value && $alarms[$key]['categoryName'] = $this->getConstantByArray($alarm,'category');
                     $value && $alarms[$key]['gradeName'] = $this->getConstantByArray($alarm,'grade');
                 }
@@ -126,10 +127,12 @@ class ServicesAdapte implements ServicesInterface{
         return $body;
     }
 
-    private function getConstantByArray(array $array,$name){
+    private function getConstantByArray(array $array,$name,$key = ''){
         $thresholds = new ThresholdsModel();
-        $id = empty($array)?$array:($array[$name]??null);
+        $key = empty($key)?$name:$key;
+        $id = empty($array)?$array:($array[$key]??null);
         $name ='get'.($name);
+        //dump($array,$id,$name);
         return  $thresholds->$name($id);
     }
 
