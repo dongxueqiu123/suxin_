@@ -12,6 +12,12 @@
         #csv {
             display: none;
         }
+        #container1 {
+            min-width: 300px;
+            max-width: 800px;
+            height: 300px;
+            margin: 1em auto;
+        }
         .demo-input{padding-left: 10px; height: 28px;  min-width: 162px; line-height: 28px; border: 1px solid #e6e6e6;  background-color: #fff;  border-radius: 2px;}
         .demo-footer{padding: 50px 0; color: #999; font-size: 14px;}
         .demo-footer a{padding: 0 5px; color: #01AAED;}
@@ -97,7 +103,7 @@
                       </div>
                   </div>
                   <div class="box-body">
-                      <div id="container" style="width: 800px;"></div>
+                      <div id="container" style="width: 800px; margin: auto;"></div>
                       {{--                        <div id="fadeOut" class="highcharts-loading" style="position: absolute; background-color: white; opacity: 1; text-align: center; z-index: 10;   margin: auto;  top: 100px; left: 0;  right: 0;   width: 800px; height: 258px;">
                                                   <span class="highcharts-loading-inner" style="font-weight: bold; position: relative; top: 45%; color: gray;">Loading...</span></div>--}}
                   </div>
@@ -161,14 +167,20 @@
       function highChartInputData(inputData) {
           Highcharts.chart('container', {
               title: {
-                  text: '包含趋势线的散点图'
+                  text: '输入数据',
+                  style: {
+                      fontSize: '13'
+                  },
               },
               credits: {
                   enabled: false //不显示LOGO
               },
+              exporting: {
+                  enabled: false
+              },
               series: [ {
                   type: 'scatter',
-                  name: '观测值',
+                  name: '观测点',
                   data: inputData,
               }]
           });
@@ -177,10 +189,16 @@
       function highChartOutputData(outputData,inputData) {
         var chart = Highcharts.chart('container1', {
               title: {
-                  text: '包含趋势线的散点图'
+                  text: '输出数据',
+                  style: {
+                      fontSize: '13'
+                  },
               },
               credits: {
                   enabled: false //不显示LOGO
+              },
+              exporting: {
+                  enabled: false
               },
               plotOptions: {
                   spline: {
@@ -198,7 +216,7 @@
               series: [ {
                   //type: 'scatter',
                   type:'line',
-                  name: '观测值',
+                  name: '观测点',
                   data: outputData,
               }]
           });

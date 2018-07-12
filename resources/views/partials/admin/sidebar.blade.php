@@ -62,6 +62,44 @@
       </li>
 
       @if( Auth::user()->id !==1 )
+        @permission(['charts'])
+        <li class="@if (in_array($active??'', ['realTime','historyRealTime','algorithms'])) active @endif  treeview">
+          <a href="#">
+            <i class="fa fa-industry"></i> <span>数据展示</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+          </a>
+          <ul class="treeview-menu">
+            @permission('charts')
+            <li class="@if (($active??'') === 'realTime') active @endif"><a href="{{route('charts.collectorChartRealTime',['id'=>0])}}"><i class="fa fa-area-chart"></i> 实时数据</a></li>
+            @endpermission
+            @permission('charts')
+            <li class="@if (($active??'') === 'historyRealTime') active @endif"><a href="{{route('charts.collectorHistoryChart',['id'=>0])}}"><i class="fa fa-bar-chart"></i> 历史数据</a></li>
+            @endpermission
+            @permission('algorithms')
+            <li class="@if (($active??'') === 'algorithms') active @endif"><a href="{{route('algorithms')}}"><i class="fa fa-line-chart"></i> 算法数据</a></li>
+            @endpermission
+          </ul>
+        </li>
+@endpermission
+      @else
+        <li class="@if (in_array($active??'', ['realTime','historyRealTime','algorithms'])) active @endif  treeview">
+          <a href="#">
+            <i class="fa fa-industry"></i> <span>数据展示</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="@if (($active??'') === 'realTime') active @endif"><a href="{{route('charts.collectorChartRealTime',['id'=>0])}}"><i class="fa fa-area-chart"></i> 实时数据</a></li>
+            <li class="@if (($active??'') === 'historyRealTime') active @endif"><a href="{{route('charts.collectorHistoryChart',['id'=>0])}}"><i class="fa fa-bar-chart"></i> 历史数据</a></li>
+            <li class="@if (($active??'') === 'algorithms') active @endif"><a href="{{route('algorithms')}}"><i class="fa fa-line-chart"></i> 算法数据</a></li>
+          </ul>
+        </li>
+      @endif
+
+{{--      @if( Auth::user()->id !==1 )
         @permission(['intelligents'])
         <li class="@if (($active??'') === 'realTime') active @endif">
           <a href="{{route('charts.collectorChartRealTime',['id'=>0])}}">
@@ -97,7 +135,7 @@
           </span>
           </a>
         </li>
-      @endif
+      @endif--}}
 
       @if( Auth::user()->id !==1 )
         @permission(['intelligents'])
