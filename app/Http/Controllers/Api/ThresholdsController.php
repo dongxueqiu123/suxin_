@@ -34,11 +34,14 @@ class ThresholdsController extends Controller
 
     public function edit($id,Request $request){
 
-        $input = $request->only(['category', 'grade', 'lowLimit', 'topLimit','firmId','equipmentId','collectorId']);
+        $input = $request->only(['category', 'grade', 'lowLimit', 'topLimit','firmId','equipmentId','collectorId','list']);
         $input['id'] = $id;
+        $input['list'] = json_encode($input['list']);
         /*接口此处未使用驼峰命名*/
         $input['lowlimit'] = $input['lowLimit'];
+        unset($input['lowLimit']);
         $input['toplimit'] = $input['topLimit'];
+        unset($input['topLimit']);
         $input['operatorId'] = Auth::user()->id;
         if($state = $this->thresholdsServices->postClient($this->thresholdsServices->getSaveOrUpdateIdUrl(),$input)){
             return response()->json([
@@ -51,11 +54,15 @@ class ThresholdsController extends Controller
 
     public function store(Request $request){
 
-        $input = $request->only(['category', 'grade', 'lowLimit', 'topLimit','firmId','equipmentId','collectorId']);
+        $input = $request->only(['category', 'grade', 'lowLimit', 'topLimit','firmId','equipmentId','collectorId','list']);
         /*接口此处未使用驼峰命名*/
         $input['lowlimit'] = $input['lowLimit'];
+        unset($input['lowLimit']);
         $input['toplimit'] = $input['topLimit'];
+        unset($input['topLimit']);
+        $input['list'] = json_encode($input['list']);
         $input['operatorId'] = Auth::user()->id;
+
         if($state = $this->thresholdsServices->postClient($this->thresholdsServices->getSaveOrUpdateIdUrl(),$input)){
             return response()->json([
                 'code' => $state['code'],

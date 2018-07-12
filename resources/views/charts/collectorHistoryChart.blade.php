@@ -35,7 +35,7 @@
         {{--    <div class="row">
                 <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
             </div>--}}
-        <div class="row">
+{{--        <div class="row">
             <div class="col-xs-12">
                 <div class="box box-solid">
                     <div class="box-body">
@@ -54,24 +54,37 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--}}
         <div class="row">
             <div class="col-xs-12">
                 <!-- interactive chart -->
                 <div class="box box-solid">
                     <div class="box-header with-border">
-                        <i class="fa fa-bar-chart-o" style="color: black;font-size:13px;"></i>
+{{--                        <i class="fa fa-bar-chart-o" style="color: black;font-size:13px;"></i>
 
-                        <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">采集器数据图</h3>
-
+                        <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">采集器数据图</h3>--}}
+                        <div class="box-body">
+                            <input type="text" class="demo-input startTime" style="height: 34px;padding-bottom: 5px;" placeholder="开始时间"  id="test2"  >
+                            <input type="text" class="demo-input endTime" style="height: 34px;padding-bottom: 5px;" placeholder="截止时间" id="test1">
+                            <select class="demo-input select2 method"  data-placeholder="Select a State"  style="width: 20%;">
+                                <option  value="acc_peak">峰值加速度</option>
+                                <option  value="ex_temp">温度</option>
+                                <option  value="in_hum">湿度</option>
+                            </select>
+                            <select class="demo-input select2 collector"  data-placeholder="Select a State"  style="width: 20%;">
+                                @foreach($collectors as $collectorInfo)
+                                    <option @if($collector->id == $collectorInfo->id) selected @endif value="{{$collectorInfo->id}}" >{{$collectorInfo->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="box-tools pull-right">
 
                             <div class="btn-group changeButton"  data-toggle="btn-toggle">
                             </div>
                         </div>
                     </div>
-                    <div class="box-body">
-                        <div id="container" style="height: 300px;"></div>
+                    <div class="box-body" style="padding-bottom: 50px;">
+                        <div id="container" style=" width: 650px;"></div>
 {{--                        <div id="fadeOut" class="highcharts-loading" style="position: absolute; background-color: white; opacity: 1; text-align: center; z-index: 10;   margin: auto;  top: 100px; left: 0;  right: 0;   width: 800px; height: 258px;">
                             <span class="highcharts-loading-inner" style="font-weight: bold; position: relative; top: 45%; color: gray;">Loading...</span></div>--}}
                     </div>

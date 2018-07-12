@@ -35,7 +35,7 @@ class ThresholdsController extends Controller
         $queryArray['firmId'] =  (\Auth()->user()->companyId??1) == 0 ? 1 : (\Auth()->user()->companyId??1) ;
         $page = $request->input('page')??1;
         //$thresholds = $this->thresholdsServices->getList(static::PAGE_SIZE_DEFAULT,$queryArray);
-        $responses = $this->thresholdsServices->getApiList($this->thresholdsServices->getUrl(),static::PAGE_SIZE_DEFAULT, $page, $queryArray, ['category'=>true,'grade'=>true]);
+        $responses = $this->thresholdsServices->getApiList($this->thresholdsServices->getUrl(),static::PAGE_SIZE_DEFAULT, $page, $queryArray, ['category'=>true,'grade'=>true,'categoryUnit'=>true]);
         return view('thresholds.list',
             [
                 'thresholds' => $responses['data']??[],

@@ -21,7 +21,7 @@ class ThresholdsModel extends AppModel
     const EQUIPMENT = 'equipment_id';
     const COLLECTOR = 'collector_id';
     const PATTERN = [self::FIRM=>'厂家'  ,self::EQUIPMENT=>'机械设备' ,self::COLLECTOR=>'采集设备'];
-    const CATEGORY = ['1'=>'温度' ,'2'=>'加速度' ,'3'=>'离线'];
+    const CATEGORY = ['1'=>['name'=>'温度','unit'=>'℃'] ,'2'=>['name'=>'加速度','unit'=>'m/s²']  ,'3'=>['name'=>'离线','unit'=>'']];
     const GRADE = ['1'=>'一般' ,'2'=>'次要' ,'3'=>'重要' ,'4'=>'紧要'];
 
     protected $fillable = [
@@ -34,8 +34,18 @@ class ThresholdsModel extends AppModel
     }
 
     public function getCategory($id){
-        $category = self::CATEGORY;
-        $result   = empty($id)?$category:$category[$id];
+        $categories = self::CATEGORY;
+/*        $result = [];
+        foreach ($categories as $key=>$category){
+            $result[$key] = $category['name'];
+        }*/
+        $result = empty($id)?$categories:$categories[$id]['name'];
+        return $result;
+    }
+
+    public function getCategoryUnit($id){
+        $categories = self::CATEGORY;
+        $result = empty($id)?'':$categories[$id]['unit'];
         return $result;
     }
 

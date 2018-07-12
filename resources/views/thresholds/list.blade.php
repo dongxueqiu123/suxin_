@@ -42,7 +42,7 @@
                                   <tbody>
                                   @foreach($thresholds??[] as $key=>$threshold)
                                       <tr>
-                                          <td>{{$threshold['lowlimit']}}~{{$threshold['toplimit']}}</td>
+                                          <td>{{$threshold['lowlimit']}}{{$threshold['categoryUnit']}}~{{$threshold['toplimit']}}{{$threshold['categoryUnit']}}</td>
                                           <td>{{$threshold['categoryName']??'暂无'}}</td>
                                           <td>{{$threshold['gradeName']??'暂无'}}</td>
                                           <td>{{$threshold['companyName']??'暂无'}}</td>

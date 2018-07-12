@@ -61,7 +61,7 @@
                       <div class="col-sm-5">
                           <select class="form-control select2 category"  style="width: 100%;">
                               @foreach($categories??[] as $key =>$category)
-                                  <option @if(($threshold['category']??'') == $key) selected @endif value="{{$key}}">{{$category}}</option>
+                                  <option @if(($threshold['category']??'') == $key) selected @endif value="{{$key}}" name="{{$category['unit']}}">{{$category['name']}}</option>
                               @endforeach
                           </select>
                       </div>
@@ -83,6 +83,7 @@
                       <div class="col-sm-5">
                           <input type="lowLimit" class="form-control" value="{{$threshold['lowlimit']??''}}" id="lowLimit" placeholder="下限（-999~999）"  datatype="/^-?[1-9]{0,3}(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]{1}[0-9]{0,2}(\.\d+)?$/" errormsg="请设正确的阈值下线" >
                       </div>
+                      <div class="help-block unit">℃</div>
                   </div>
 
                   <div class="form-group">
@@ -90,7 +91,62 @@
                       <div class="col-sm-5">
                           <input type="topLimit" class="form-control" value="{{$threshold['toplimit']??''}}" id="topLimit" placeholder="上限（-999~999）" datatype="/^-?[1-9]{0,3}(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]{1}[0-9]{0,2}(\.\d+)?$/"  errormsg="请设正确的阈值上线" >
                       </div>
+                      <div class="help-block unit">℃</div>
                   </div>
+                  <legend> <span></span><span id="boardCounts"></span></legend>
+                  <div class="form-group">
+                      <label for="serial" class="col-sm-2 col-xs-12">
+                      </label>
+                      <div class="col-md-6 col-sm-8 col-xs-12">
+                          <a href="javascript:void(0);" class="btn btn-default btn-flat addLiaisons"  style="">
+                              <i class="fa fa-fw fa-plus"></i>
+                              增加联系人
+                          </a>
+                      </div>
+                      <div class="help-block"></div>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="topLimit" class="col-sm-2 control-label">联系人</label>
+                      <div class="col-sm-5">
+                          <div class="box-body no-padding">
+                              <table class="table addTr">
+                                  <tr>
+                                      <th>姓名</th>
+                                      <th>电话</th>
+                                      <th>邮箱</th>
+                                      <th style="width: 50px">操作</th>
+                                  </tr>
+           {{--                       <tr>
+                                      <td>董董董</td>
+                                      <td>18205190915</td>
+                                      <td>344748243@qq.com</td>
+                                      <td><a class="btn btn-default btn-flat btn-xs delete" url="">删除</a></td>
+                                  </tr>
+                                  <tr>
+                                      <td>董董董</td>
+                                      <td>18205190915</td>
+                                      <td>344748243@qq.com</td>
+                                      <td><a class="btn btn-default btn-flat btn-xs delete" url="">删除</a></td>
+                                  </tr>--}}
+                                  <tr id="1">
+                                      <td><input type="text" style="width: 70px; border: 0px;" class="name" value="董一"></td>
+                                      <td><input type="text" style="width: 90px; border: 0px;" class="phone" value="18205190915"></td>
+                                      <td><input type="text" style="width: 135px; border: 0px;" class="email" value="344748243@qq.com"></td>
+                                      <td><a class="btn btn-default btn-flat btn-xs delete" url="">删除</a></td>
+                                  </tr>
+                                  <tr id="2">
+                                      <td><input type="text" style="width: 70px; border: 0px;" class="name" value="大山"></td>
+                                      <td><input type="text" style="width: 90px; border: 0px;" class="phone" value="18205190915"></td>
+                                      <td><input type="text" style="width: 135px; border: 0px;" class="email" value="344748243@qq.com"></td>
+                                      <td><a class="btn btn-default btn-flat btn-xs delete" url="">删除</a></td>
+                                  </tr>
+                              </table>
+                          </div>
+                      </div>
+
+                  </div>
+
               </div>
 
             </form>
@@ -107,6 +163,7 @@
   <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
   <script>
       $('.select2').select2();
+      var ids = [];
       $(".form-horizontal").Validform({
           btnSubmit: ".sign",
           tipSweep: true,
@@ -116,7 +173,7 @@
               }
           },
           callback: function (data) {//异步回调函数
-              var companyId,equipmentId,collectorId,category,grade,lowLimit,topLimit;
+              var companyId,equipmentId,collectorId,category,grade,lowLimit,topLimit,tableInput=[],info=[];
               companyId   = $('.company').val();
               equipmentId = $('.equipment').val();
               collectorId = $('.collector').val();
@@ -124,11 +181,25 @@
               grade     = $('.grade').val();
               lowLimit  = $('#lowLimit').val();
               topLimit  = $('#topLimit').val();
+
+              $('.addTr tr').each(function (index,tr) {
+                  if(index>0){
+                      //console.log($(tr).find('.name').val());
+                      var id = $(tr).attr('id');
+                      if(id != 0){
+                          tableInput.push({'id':id,'name':$(tr).find('.name').val(),'phone':$(tr).find('.phone').val(),'email':$(tr).find('.email').val()});
+                      }else{
+                          tableInput.push({'name':$(tr).find('.name').val(),'phone':$(tr).find('.phone').val(),'email':$(tr).find('.email').val()});
+                      }
+                      tableInput.concat(ids);
+                  }
+              });
+
               $.ajax({
                   url:'{{$route}}',
                   type:'POST',    //GET
                   data:{
-                      firmId:companyId,equipmentId:equipmentId,collectorId:collectorId,category:category,grade:grade,lowLimit:lowLimit,topLimit:topLimit
+                      firmId:companyId,equipmentId:equipmentId,collectorId:collectorId,category:category,grade:grade,lowLimit:lowLimit,topLimit:topLimit,list:tableInput
                   },
                   timeout:5000,    //超时时间
                   dataType:'json',
@@ -144,7 +215,7 @@
               });
               return false;
           }
-      })
+      });
 
 
      $('.company').on('change',function(){
@@ -176,7 +247,6 @@
          changeEquipments(company,equipment);
          changeCollectors(company,equipment,collector);
      }
-
 
      function changeEquipments(companyId,equipmentId){
          $.ajax({
@@ -217,5 +287,31 @@
              }
          });
      }
+
+     $('.category').change(function(){
+         var unit = $(".category").find("option:selected").attr('name');
+         $('.unit').html(unit);
+     });
+      var unit = $(".category").find("option:selected").attr('name');
+      $('.unit').html(unit);
+
+      $(document).on('click','.delete',function(){
+          ids.push({'id':$(this).parent().parent().attr('id')});
+          $(this).parent().parent().html('');
+      });
+
+      $('.addLiaisons').click(function(){
+         var html = '<tr id="0">' +
+             '<td><input type="text" style="width: 70px;" class="name" ></td>' +
+             '<td><input type="text" style="width: 90px;" class="phone" ></td>' +
+             '<td><input type="text" style="width: 135px;" class="email"  ></td>' +
+             '<td><a class="btn btn-default btn-flat btn-xs delete" url="">删除</a></td>' +
+             '</tr>';
+          $(".addTr").append(html);
+      });
+
+      $(document).on('mouseleave','.name',function(){
+
+      })
   </script>
 @endsection

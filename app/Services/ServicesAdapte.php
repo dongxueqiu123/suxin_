@@ -120,6 +120,7 @@ class ServicesAdapte implements ServicesInterface{
             }else{
                 $body = ['code' => 998,'info' => '其他错误','data' => '','count'=> 0];;
             }
+
         }catch (\Exception $e){
             $body = ['code' => 999,'info' => '请求超时','data' => '','count'=> 0];
         }

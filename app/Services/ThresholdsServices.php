@@ -81,12 +81,12 @@ class ThresholdsServices extends ServicesAdapte {
         return  $this->thresholds->$name($id);
     }
 
-    public function getConstantByArray(array $array,$name){
+/*    public function getConstantByArray(array $array,$name){
 
         $id = empty($array)?$array:($array[$name]??null);
         $name ='get'.($name);
         return  $this->thresholds->$name($id);
-    }
+    }*/
 
     public function getChName($thresholds){
         foreach ($thresholds as $threshold){
