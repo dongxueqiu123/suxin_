@@ -75,7 +75,7 @@
             <li class="@if (($active??'') === 'realTime') active @endif"><a href="{{route('charts.collectorChartRealTime',['id'=>0])}}"><i class="fa fa-area-chart"></i> 实时数据</a></li>
             @endpermission
             @permission('charts')
-            <li class="@if (($active??'') === 'historyRealTime') active @endif"><a href="{{route('charts.collectorHistoryChart',['id'=>0])}}"><i class="fa fa-bar-chart"></i> 历史数据</a></li>
+            <li class="@if (($active??'') === 'historyRealTime') active @endif"><a href="{{route('collectorHistoryChart',['id'=>0])}}"><i class="fa fa-bar-chart"></i> 历史数据</a></li>
             @endpermission
             @permission('algorithms')
             <li class="@if (($active??'') === 'algorithms') active @endif"><a href="{{route('algorithms')}}"><i class="fa fa-line-chart"></i> 算法数据</a></li>
@@ -93,7 +93,7 @@
           </a>
           <ul class="treeview-menu">
             <li class="@if (($active??'') === 'realTime') active @endif"><a href="{{route('charts.collectorChartRealTime',['id'=>0])}}"><i class="fa fa-area-chart"></i> 实时数据</a></li>
-            <li class="@if (($active??'') === 'historyRealTime') active @endif"><a href="{{route('charts.collectorHistoryChart',['id'=>0])}}"><i class="fa fa-bar-chart"></i> 历史数据</a></li>
+            <li class="@if (($active??'') === 'historyRealTime') active @endif"><a href="{{route('collectorHistoryChart',['id'=>0])}}"><i class="fa fa-bar-chart"></i> 历史数据</a></li>
             <li class="@if (($active??'') === 'algorithms') active @endif"><a href="{{route('algorithms')}}"><i class="fa fa-line-chart"></i> 算法数据</a></li>
           </ul>
         </li>
@@ -189,22 +189,20 @@
           </span>
           </a>
           <ul class="treeview-menu">
+              @permission('alarms')
+              <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-warning"></i> 告警记录
+                      <span class="pull-right-container">
+              <small class="label pull-right bg-red">{{ Session::get('alarmCount') }}</small>
+            </span>
+                  </a></li>
 
+              <li class="@if (($active??'') === 'recover') active @endif"><a href="{{route('recover')}}"><i class="fa fa-check-square-o"></i> 解决记录</a></li>
+              @endpermission
             @permission('thresholds')
             <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 添加告警</a></li>
             @endpermission
-            @permission('liaisons')
-            <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-comments-o"></i> 告警方式</a></li>
-            @endpermission
-            @permission('alarms')
-            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-warning"></i> 告警记录
-                <span class="pull-right-container">
-              <small class="label pull-right bg-red">{{ Session::get('alarmCount') }}</small>
-            </span>
-              </a></li>
 
-            <li class="@if (($active??'') === 'recover') active @endif"><a href="{{route('recover')}}"><i class="fa fa-check-square-o"></i> 解决记录</a></li>
-            @endpermission
+
 
           </ul>
         </li>
@@ -233,16 +231,14 @@
           </span>
           </a>
           <ul class="treeview-menu">
-            <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 添加告警</a></li>
-            <li class="@if (($active??'') === 'liaisons') active @endif"><a href="{{route('liaisons')}}"><i class="fa fa-comments-o"></i> 告警方式</a></li>
-            <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-warning"></i>
-                告警记录
-                <span class="pull-right-container">
+              <li class="@if (($active??'') === 'alarms') active @endif"><a href="{{route('alarms')}}"><i class="fa fa-warning"></i>
+                      告警记录
+                      <span class="pull-right-container">
               <small class="label pull-right bg-red">{{ Session::get('alarmCount') }}</small>
             </span>
-              </a></li>
-
-            <li class="@if (($active??'') === 'recover') active @endif"><a href="{{route('recover')}}"><i class="fa  fa-check-square-o"></i> 解决记录</a></li>
+                  </a></li>
+              <li class="@if (($active??'') === 'recover') active @endif"><a href="{{route('recover')}}"><i class="fa  fa-check-square-o"></i> 解决记录</a></li>
+              <li class="@if (($active??'') === 'thresholds') active @endif"><a href="{{route('thresholds')}}"><i class="fa fa-cog"></i> 添加告警</a></li>
           </ul>
         </li>
 

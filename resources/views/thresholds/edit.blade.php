@@ -78,21 +78,26 @@
                       </div>
                   </div>
 
-                  <div class="form-group">
-                      <label for="lowLimit" class="col-sm-2 control-label">阈值下线</label>
+                  <div class="form-group" id="pattern">
+                      <label for="abbreviation" class="col-sm-2 control-label">阈值方式</label>
                       <div class="col-sm-5">
-                          <input type="lowLimit" class="form-control" value="{{$threshold['lowlimit']??''}}" id="lowLimit" placeholder="下限（-999~999）"  datatype="/^-?[1-9]{0,3}(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]{1}[0-9]{0,2}(\.\d+)?$/" errormsg="请设正确的阈值下线" >
+                          <select class="form-control select2 pattern"  style="width: 100%;">
+                              @foreach($limits??[] as $key =>$limit)
+                                  <option @if(($threshold['pattern']??'') == $key) selected @endif value="{{$key}}">{{$limit['name']}}</option>
+                              @endforeach
+                          </select>
+                      </div>
+                  </div>
+
+
+                  <div class="form-group" id="extremum">
+                      <label for="lowLimit" class="col-sm-2 control-label">阈值</label>
+                      <div class="col-sm-5">
+                          <input type="extremum" class="form-control extremum" value="{{$threshold['extremum']??''}}"  placeholder="下限（-999~999）"  datatype="/^-?[1-9]{0,3}(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]{1}[0-9]{0,2}(\.\d+)?$/" errormsg="请设正确的阈值下线" >
                       </div>
                       <div class="help-block unit">℃</div>
                   </div>
 
-                  <div class="form-group">
-                      <label for="topLimit" class="col-sm-2 control-label">阈值上线</label>
-                      <div class="col-sm-5">
-                          <input type="topLimit" class="form-control" value="{{$threshold['toplimit']??''}}" id="topLimit" placeholder="上限（-999~999）" datatype="/^-?[1-9]{0,3}(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]{1}[0-9]{0,2}(\.\d+)?$/"  errormsg="请设正确的阈值上线" >
-                      </div>
-                      <div class="help-block unit">℃</div>
-                  </div>
                   <legend> <span></span><span id="boardCounts"></span></legend>
                   <div class="form-group">
                       <label for="serial" class="col-sm-2 col-xs-12">
@@ -117,30 +122,14 @@
                                       <th>邮箱</th>
                                       <th style="width: 50px">操作</th>
                                   </tr>
-           {{--                       <tr>
-                                      <td>董董董</td>
-                                      <td>18205190915</td>
-                                      <td>344748243@qq.com</td>
+                                  @foreach($threshold['liaisons']??[] as $liaison)
+                                 <tr id="{{$liaison['id']??0}}">
+                                      <td><input type="text" style="width: 70px; border: 0px;" class="name" value="{{$liaison['name']??''}}"></td>
+                                      <td><input type="text" style="width: 90px; border: 0px;" class="mobile" value="{{$liaison['mobile']??''}}"></td>
+                                      <td><input type="text" style="width: 135px; border: 0px;" class="email" value="{{$liaison['email']??''}}"></td>
                                       <td><a class="btn btn-default btn-flat btn-xs delete" url="">删除</a></td>
                                   </tr>
-                                  <tr>
-                                      <td>董董董</td>
-                                      <td>18205190915</td>
-                                      <td>344748243@qq.com</td>
-                                      <td><a class="btn btn-default btn-flat btn-xs delete" url="">删除</a></td>
-                                  </tr>--}}
-                                  <tr id="1">
-                                      <td><input type="text" style="width: 70px; border: 0px;" class="name" value="董一"></td>
-                                      <td><input type="text" style="width: 90px; border: 0px;" class="phone" value="18205190915"></td>
-                                      <td><input type="text" style="width: 135px; border: 0px;" class="email" value="344748243@qq.com"></td>
-                                      <td><a class="btn btn-default btn-flat btn-xs delete" url="">删除</a></td>
-                                  </tr>
-                                  <tr id="2">
-                                      <td><input type="text" style="width: 70px; border: 0px;" class="name" value="大山"></td>
-                                      <td><input type="text" style="width: 90px; border: 0px;" class="phone" value="18205190915"></td>
-                                      <td><input type="text" style="width: 135px; border: 0px;" class="email" value="344748243@qq.com"></td>
-                                      <td><a class="btn btn-default btn-flat btn-xs delete" url="">删除</a></td>
-                                  </tr>
+                                  @endforeach
                               </table>
                           </div>
                       </div>
@@ -173,33 +162,45 @@
               }
           },
           callback: function (data) {//异步回调函数
-              var companyId,equipmentId,collectorId,category,grade,lowLimit,topLimit,tableInput=[],info=[];
+              var companyId,equipmentId,collectorId,category,grade,pattern,extremum,tableInput=[],info=[],onlyName;
               companyId   = $('.company').val();
               equipmentId = $('.equipment').val();
               collectorId = $('.collector').val();
               category  = $('.category').val();
               grade     = $('.grade').val();
-              lowLimit  = $('#lowLimit').val();
-              topLimit  = $('#topLimit').val();
+              pattern  = $('.pattern').val();
+              extremum  = $('.extremum').val();
 
               $('.addTr tr').each(function (index,tr) {
+
                   if(index>0){
                       //console.log($(tr).find('.name').val());
                       var id = $(tr).attr('id');
-                      if(id != 0){
-                          tableInput.push({'id':id,'name':$(tr).find('.name').val(),'phone':$(tr).find('.phone').val(),'email':$(tr).find('.email').val()});
-                      }else{
-                          tableInput.push({'name':$(tr).find('.name').val(),'phone':$(tr).find('.phone').val(),'email':$(tr).find('.email').val()});
+                      var mobile = $(tr).find('.mobile').val();
+                      var email  = $(tr).find('.email').val();
+                      var name = $(tr).find('.name').val();
+                      if(mobile.length==0 && email.length==0&&mobile.name!=0){
+                          onlyName = name;
                       }
-                      tableInput.concat(ids);
+                      if(id != 0){
+                          tableInput.push({'id':id,'name':name,'mobile':mobile,'email':email});
+                      }else{
+                          tableInput.push({'name':name,'mobile':mobile,'email':email});
+                      }
+                      tableInput = tableInput.concat(ids);
                   }
               });
+
+              if(onlyName){
+                  layer.alert('联系人"'+onlyName+'"手机和邮箱不能同时为空');
+                  return false;
+              }
 
               $.ajax({
                   url:'{{$route}}',
                   type:'POST',    //GET
                   data:{
-                      firmId:companyId,equipmentId:equipmentId,collectorId:collectorId,category:category,grade:grade,lowLimit:lowLimit,topLimit:topLimit,list:tableInput
+                      firmId:companyId,equipmentId:equipmentId,collectorId:collectorId,category:category,grade:grade,pattern:pattern,extremum:extremum,liaisons:tableInput
                   },
                   timeout:5000,    //超时时间
                   dataType:'json',
@@ -216,7 +217,6 @@
               return false;
           }
       });
-
 
      $('.company').on('change',function(){
          var value = $(this).val();
@@ -291,27 +291,38 @@
      $('.category').change(function(){
          var unit = $(".category").find("option:selected").attr('name');
          $('.unit').html(unit);
+         hidePatternAndExtremum($(".category").find("option:selected").val());
      });
+
       var unit = $(".category").find("option:selected").attr('name');
       $('.unit').html(unit);
+      hidePatternAndExtremum($(".category").find("option:selected").val());
+
+      function hidePatternAndExtremum(categoryId){
+          if(categoryId == 3 ){
+              $('#extremum').hide();
+              $('#pattern').hide();
+          }else{
+              $('#extremum').show();
+              $('#pattern').show();
+          }
+      }
 
       $(document).on('click','.delete',function(){
           ids.push({'id':$(this).parent().parent().attr('id')});
-          $(this).parent().parent().html('');
+          $(this).parent().parent().remove();
       });
 
       $('.addLiaisons').click(function(){
          var html = '<tr id="0">' +
              '<td><input type="text" style="width: 70px;" class="name" ></td>' +
-             '<td><input type="text" style="width: 90px;" class="phone" ></td>' +
+             '<td><input type="text" style="width: 90px;" class="mobile" ></td>' +
              '<td><input type="text" style="width: 135px;" class="email"  ></td>' +
              '<td><a class="btn btn-default btn-flat btn-xs delete" url="">删除</a></td>' +
              '</tr>';
           $(".addTr").append(html);
       });
 
-      $(document).on('mouseleave','.name',function(){
 
-      })
   </script>
 @endsection

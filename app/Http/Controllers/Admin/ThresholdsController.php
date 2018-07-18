@@ -35,7 +35,8 @@ class ThresholdsController extends Controller
         $queryArray['firmId'] =  (\Auth()->user()->companyId??1) == 0 ? 1 : (\Auth()->user()->companyId??1) ;
         $page = $request->input('page')??1;
         //$thresholds = $this->thresholdsServices->getList(static::PAGE_SIZE_DEFAULT,$queryArray);
-        $responses = $this->thresholdsServices->getApiList($this->thresholdsServices->getUrl(),static::PAGE_SIZE_DEFAULT, $page, $queryArray, ['category'=>true,'grade'=>true,'categoryUnit'=>true]);
+        $responses = $this->thresholdsServices->getApiList($this->thresholdsServices->getUrl(),static::PAGE_SIZE_DEFAULT, $page, $queryArray, ['category'=>true,'grade'=>true,'categoryUnit'=>true,'limit'=>true]);
+
         return view('thresholds.list',
             [
                 'thresholds' => $responses['data']??[],
@@ -50,9 +51,9 @@ class ThresholdsController extends Controller
         $patterns   = $this->thresholdsServices->getPattern();
         $categories = $this->thresholdsServices->getConstant(null,'category');
         $grades     = $this->thresholdsServices->getConstant(null,'grade');
+        $limits     = $this->thresholdsServices->getConstant(null,'limit');
         $patternStatus = $this->thresholdsServices->getPatternStatus($thresholdResponses['data']);
         $companyResponses = $this->companiesServices->getInfoClient($this->companiesServices->getUrl(),[]);
-
         return view('thresholds.edit',
             [
                 'route' => '/api/admin/thresholds/edit/'.$id,
@@ -66,6 +67,7 @@ class ThresholdsController extends Controller
                 'grades' => $grades,
                 'patternStatus' => $patternStatus,
                 'companies' => $companyResponses['data'],
+                'limits' => $limits,
             ]
         );
     }
@@ -74,6 +76,7 @@ class ThresholdsController extends Controller
         $patterns   = $this->thresholdsServices->getPattern();
         $categories = $this->thresholdsServices->getConstant(null,'category');
         $grades     = $this->thresholdsServices->getConstant(null,'grade');
+        $limits     = $this->thresholdsServices->getConstant(null,'limit');
         $companyResponses = $this->companiesServices->getInfoClient($this->companiesServices->getUrl(),[]);
         return view('thresholds.edit',
             [
@@ -85,6 +88,7 @@ class ThresholdsController extends Controller
                 'patterns' => $patterns,
                 'categories' => $categories,
                 'grades' => $grades,
+                'limits' => $limits,
                 'companies' => $companyResponses['data'],
             ]
         );

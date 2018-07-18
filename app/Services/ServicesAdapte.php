@@ -37,11 +37,12 @@ class ServicesAdapte implements ServicesInterface{
         $alarms = is_array($responses['data'])?$responses['data']:[];
         $count = isset($responses['count'])?(int) $responses['count']:0;
         foreach ($ext as $name=>$value){
-            if($name == 'category'||$name == 'grade'||$name == 'categoryUnit'){
+            if($name == 'category'||$name == 'grade'||$name == 'categoryUnit'||$name == 'limit'){
                 foreach($alarms as $key=>$alarm){
                     $value && $alarms[$key]['categoryUnit'] = $this->getConstantByArray($alarm,'categoryUnit','category');
                     $value && $alarms[$key]['categoryName'] = $this->getConstantByArray($alarm,'category');
                     $value && $alarms[$key]['gradeName'] = $this->getConstantByArray($alarm,'grade');
+                    $value && $alarms[$key]['limitName'] = $this->getConstantByArray($alarm,'limit','pattern');
                 }
             }
         }
@@ -102,7 +103,6 @@ class ServicesAdapte implements ServicesInterface{
     }
 
     public function postClient(string $url,array $parameters = []){
-
         $jsonParameters = json_encode($parameters);
 
         $http = new Client();

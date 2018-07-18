@@ -23,7 +23,7 @@ class ThresholdsModel extends AppModel
     const PATTERN = [self::FIRM=>'厂家'  ,self::EQUIPMENT=>'机械设备' ,self::COLLECTOR=>'采集设备'];
     const CATEGORY = ['1'=>['name'=>'温度','unit'=>'℃'] ,'2'=>['name'=>'加速度','unit'=>'m/s²']  ,'3'=>['name'=>'离线','unit'=>'']];
     const GRADE = ['1'=>'一般' ,'2'=>'次要' ,'3'=>'重要' ,'4'=>'紧要'];
-
+    const LIMIT = ['1'=>['name'=>'下限'] , '2'=>['name'=>'上限']];
     protected $fillable = [
         'id','pattern','pattern_id','category','grade','lowlimit','toplimit','operator_id'
     ];
@@ -46,6 +46,12 @@ class ThresholdsModel extends AppModel
     public function getCategoryUnit($id){
         $categories = self::CATEGORY;
         $result = empty($id)?'':$categories[$id]['unit'];
+        return $result;
+    }
+
+    public function getLimit($id){
+        $limit  = self::LIMIT;
+        $result = empty($id)?$limit:($limit[$id]??'');
         return $result;
     }
 

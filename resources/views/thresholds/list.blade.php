@@ -35,6 +35,7 @@
                                       <th>公司</th>
                                       <th>机械设备</th>
                                       <th>无线节点</th>
+                                      <th>报警联系人</th>
                                       <th>更新时间</th>
                                       <th>编辑</th>
                                   </tr>
@@ -42,12 +43,29 @@
                                   <tbody>
                                   @foreach($thresholds??[] as $key=>$threshold)
                                       <tr>
-                                          <td>{{$threshold['lowlimit']}}{{$threshold['categoryUnit']}}~{{$threshold['toplimit']}}{{$threshold['categoryUnit']}}</td>
+                                          <td>{{$threshold['extremum']??''}}{{$threshold['categoryUnit']??''}}({{$threshold['limitName']['name']??'未知'}})</td>
                                           <td>{{$threshold['categoryName']??'暂无'}}</td>
                                           <td>{{$threshold['gradeName']??'暂无'}}</td>
                                           <td>{{$threshold['companyName']??'暂无'}}</td>
                                           <td>{{$threshold['equipmentName']??'暂无'}}</td>
                                           <td>{{$threshold['collectorName']??'暂无'}}</td>
+                                          <td>
+                                              @foreach($threshold['liaisons'] as $liaison)
+                                              <span
+                                                      @if(isset($liaison['mobile'])&&isset($liaison['email']))
+                                                              title="电话：{{$liaison['mobile']}}&#10;邮箱：{{$liaison['email']}}"
+                                                          @elseif(isset($liaison['mobile']))
+                                                              title="电话：{{$liaison['mobile']}}"
+                                                          @elseif(isset($liaison['email']))
+                                                              title=" 邮箱：{{$liaison['email']}}"
+                                                      @endif
+                                              >
+                                                  <span style="float:left;margin-right:2px;margin-bottom:2px;" class="labelList label-default">
+                                                      {{$liaison['name']}}
+                                                  </span>
+                                              </span>
+                                              @endforeach
+                                          </td>
                                           <td>{{date('Y-m-d H:i:s',$threshold['operateTime']/1000)}}</td>
                                           <td>
                                               <a class="btn btn-default btn-flat btn-xs " href={{route('thresholds.edit',['id'=>$threshold['id']])}}>编辑</a>

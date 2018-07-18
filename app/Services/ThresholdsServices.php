@@ -163,8 +163,12 @@ class ThresholdsServices extends ServicesAdapte {
         return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_THRESHOLD_RETRIEVEBYID;
     }
 
-    public function getSaveOrUpdateIdUrl(){
-        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_THRESHOLD_SAVEORUPDATE;
+    public function getSaveUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_THRESHOLD_SAVE;
+    }
+
+    public function getUpdateUrl(){
+        return env('HTTP_URL',$_SERVER['HTTP_HOST']).ApiModuleModel::MODULE_THRESHOLD_UPDATE;
     }
 }
 ?>

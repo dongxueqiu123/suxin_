@@ -34,7 +34,8 @@ class ApiModuleModel extends AppModel
     const MODULE_THRESHOLD_RETRIEVE = self::CONSOLE.'/threshold/retrieve';
     const MODULE_THRESHOLD_DELETE = self::CONSOLE.'/threshold/delete';
     const MODULE_THRESHOLD_RETRIEVEBYID = self::CONSOLE.'/threshold/retrieveById';
-    const MODULE_THRESHOLD_SAVEORUPDATE = self::CONSOLE.'/threshold/saveOrUpdate';
+    const MODULE_THRESHOLD_SAVE = self::CONSOLE.'/threshold/save';
+    const MODULE_THRESHOLD_UPDATE = self::CONSOLE.'/threshold/update';
 
     const MODULE_COMPANY_LIST   = self::CONSOLE.'/company/list';
     const MODULE_COMPANY_DELETE = self::CONSOLE.'/company/delete';

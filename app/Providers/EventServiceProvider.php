@@ -16,6 +16,13 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Event' => [
             'App\Listeners\EventListener',
         ],
+/*        'App\Events\GetSql' => [
+            'App\Listeners\SqlListener',
+        ],*/
+        'Illuminate\Database\Events\QueryExecuted' => [
+            'App\Listeners\SqlListener',
+        ],
+
     ];
 
     /**

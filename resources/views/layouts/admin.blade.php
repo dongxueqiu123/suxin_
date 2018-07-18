@@ -94,6 +94,18 @@
         .box-header>.fa, .box-header>.glyphicon, .box-header>.ion, .box-header .box-title {
              font-size: 13px;
         }
+        .labelList{
+            display: inline;
+            padding: .2em .6em .2em;
+            font-size: 75%;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            background-color: grey;
+            border-radius: .25em;
+        }
     </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini " style="font-size: 13px;">
