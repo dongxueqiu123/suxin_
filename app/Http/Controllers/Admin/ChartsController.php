@@ -202,8 +202,7 @@ class ChartsController extends Controller{
         $collectors = $this->collectorsServices->getList(0,$queryArray,'','',$ext);
 
         $collector =  ($id==0)?$collectors->first():$this->collectorsServices->get($id);
-
-        return view('collectorHistoryChart',
+        return view('charts.collectorHistoryChart',
             [
                 'time'=>$endTime,
                 'collector'=>$collector,

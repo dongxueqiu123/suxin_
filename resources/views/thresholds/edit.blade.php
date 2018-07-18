@@ -187,7 +187,11 @@
                       }else{
                           tableInput.push({'name':name,'mobile':mobile,'email':email});
                       }
-                      tableInput = tableInput.concat(ids);
+                      tableInput.concat(ids);
+                  }else{
+                      if(tableInput.length == 0){
+                          tableInput = ids;
+                      }
                   }
               });
 
@@ -315,9 +319,9 @@
 
       $('.addLiaisons').click(function(){
          var html = '<tr id="0">' +
-             '<td><input type="text" style="width: 70px;" class="name" ></td>' +
-             '<td><input type="text" style="width: 90px;" class="mobile" ></td>' +
-             '<td><input type="text" style="width: 135px;" class="email"  ></td>' +
+             '<td><input type="text" style="width: 70px;" placeholder="必填" class="name" ></td>' +
+             '<td><input type="text" style="width: 90px;" placeholder="电话邮箱选填" class="mobile" ></td>' +
+             '<td><input type="text" style="width: 135px;" placeholder="电话邮箱选填" class="email"  ></td>' +
              '<td><a class="btn btn-default btn-flat btn-xs delete" url="">删除</a></td>' +
              '</tr>';
           $(".addTr").append(html);

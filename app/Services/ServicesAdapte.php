@@ -89,7 +89,6 @@ class ServicesAdapte implements ServicesInterface{
     }
 
     private function httpGet($url){
-
         $http = new Client();
 
         try{
