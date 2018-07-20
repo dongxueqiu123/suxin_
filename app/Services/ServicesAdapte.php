@@ -94,7 +94,6 @@ class ServicesAdapte implements ServicesInterface{
         try{
             $response = $http->get($url);
             $body = json_decode((string)$response->getBody(), true);
-
         }catch (\Exception $e){
             $body = ['code' => 999,'info' => '请求超时','data' => '','count'=> 0];
         }

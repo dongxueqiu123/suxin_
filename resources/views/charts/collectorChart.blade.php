@@ -4,7 +4,7 @@
     <style type="text/css">
         #container {
             min-width: 300px;
-            max-width: 800px;
+            max-width: 100%;
             height: 300px;
             margin: 1em auto;
         }
@@ -33,10 +33,12 @@
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
+
                 <div class="box box-solid">
+
                     <div class="box-body">
 
-                        <div class="col-sm-3">
+                        <div class="col-sm-3" style="padding-left: 0px;">
                             <select class="form-control select2 collector"  style="width: 100%;">
                                 @foreach($collectors??[] as $collectorValue)
                                     <option @if(($collectorValue->id??'') == $collector->id) selected @endif value="{{route('charts.collectorChartRealTime',['id'=>$collectorValue->id])}}">{{$collectorValue->name}}</option>
@@ -44,90 +46,48 @@
                             </select>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-xs-12">
-                <!-- interactive chart -->
-                <div class="box box-solid">
-                    <div class="box-header with-border">
-                        <i class="fa fa-bar-chart-o" style="color: black;font-size:13px;"></i>
-
-                        <h3 class="box-title"></h3>
-
+                    <div class="box-header with-border" style="border-top: 1px solid #f4f4f4;">
+                        <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">加速度数据图</h3>
                         <div class="box-tools pull-right">
-
+                            <div class="btn-group changeButton"  data-toggle="btn-toggle">
+                            </div>
                         </div>
                     </div>
-                    <div class="box-body">
-                        <div id="containerSpeed"  style="height: 300px; width: 800px;  margin: auto;"></div>
+                    <div class="box-body" >
+                        <div id="containerSpeed"  style="height: 300px; width: 100%;  margin: auto;"></div>
                         <div style="display:none;" id="containerSpeedData">{{$speedData}}</div>
                     </div>
-                    <!-- /.box-body-->
-                </div>
-                <!-- /.box -->
 
-            </div>
-            <!-- /.col -->
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12">
-                <!-- interactive chart -->
-                <div class="box box-solid">
-                    <div class="box-header with-border">
-                        <i class="fa fa-bar-chart-o" style="color: black;font-size:13px;"></i>
-
-                        <h3 class="box-title"></h3>
-
+                    <div class="box-header with-border" style="border-top: 1px solid #f4f4f4;">
+                        <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">温度数据图</h3>
                         <div class="box-tools pull-right">
 
+                            <div class="btn-group changeButton"  data-toggle="btn-toggle">
+                            </div>
                         </div>
                     </div>
                     <div class="box-body">
-                        <div id="container"  style="height: 300px; width: 800px;  margin: auto;"></div>
+                        <div id="container"  style="height: 300px; width:100%;  margin: auto;"></div>
                         <div style="display:none;" id="containerData">{{$data}}</div>
                     </div>
-                    <!-- /.box-body-->
-                </div>
-                <!-- /.box -->
 
-            </div>
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
-
-        <div class="row">
-            <div class="col-xs-12">
-                <!-- interactive chart -->
-                <div class="box box-solid">
-                    <div class="box-header with-border">
-                        <i class="fa fa-bar-chart-o" style="color: black;font-size:13px;"></i>
-
-                        <h3 class="box-title"></h3>
-
+                    <div class="box-header with-border" style="border-top: 1px solid #f4f4f4;">
+                        <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">湿度数据图</h3>
                         <div class="box-tools pull-right">
 
-                            {{--                          <div class="btn-group changeButton"  data-toggle="btn-toggle">
-                                                          <button type="button" class="btn btn-default btn-xs temperature active" value="ex_temp">温度</button>
-                                                          <button type="button" class="btn btn-default btn-xs speed" value="acc_peak" >加速度</button>
-                                                      </div>--}}
+                            <div class="btn-group changeButton"  data-toggle="btn-toggle">
+                            </div>
                         </div>
                     </div>
-                    <div class="box-body">
-                        <div id="containerHumidity"  style="height: 300px; width: 800px;  margin: auto;"></div>
+                    <div class="box-body" >
+                        <div id="containerHumidity"  style="height: 300px; width:100%;  margin: auto;"></div>
                         <div style="display:none;" id="containerHumidityData">{{$humidityData}}</div>
                     </div>
-                    <!-- /.box-body-->
+
                 </div>
-                <!-- /.box -->
-
             </div>
-            <!-- /.col -->
         </div>
-
     </section>
     <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <script type="text/javascript">

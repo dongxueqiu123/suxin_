@@ -42,57 +42,35 @@
                           </tr>
                           </tbody>
                       </table>
+
                       <div class="box-body" style="display:none">
-                          <table class="table table-bordered">
+                          <ul class="timeline timeline-inverse" style="margin-bottom: 1px;">
+                              <li class="time-label">
+                        <span class="bg-light-blue" style="border-radius: 0;">
+                          {{date('Y-m-d',$alarm['alarmTime']/1000)}}
+                        </span>
+                              </li>
+                          <table class="table table-bordered" style="width: 95%; margin-left: 5%">
                               <tr>
-                                  <th >状态</th>
-                                  <th>等级</th>
-                                  <th>告警详情</th>
-                                  <th>开始告警时间</th>
-                                  <th>最近告警时间</th>
-                                  <th>操作</th>
+                                  <td >状态</td>
+                                  <td>等级</td>
+                                  <td>告警详情</td>
+                                  <td>最近告警时间</td>
+                                  <td>操作</td>
                               </tr>
                               <tr >
                                   <td>待处理</td>
                                   <td>{{$alarm['gradeName']}}</td>
                                   <td>{{$alarm['detail']}}</td>
-                                  <td>2018-12-21 12:12:12</td>
                                   <td>{{date('Y-m-d H:i:s',$alarm['alarmTime']/1000)}}</td>
                                   <td><span class="btn btn-default btn-flat btn-xs restore" alarmId={{$alarm['id']}}  collectorId={{$alarm['collectorId']}} alarmCategory={{$alarm['category']}}>解决</span></td>
                               </tr>
-{{--                              <tr style="color: #00ad9c">
-                                  <td>恢复</td>
-                                  <td>重要</td>
-                                  <td>此报警已经解决</td>
-                                  <td>2018-05-22 17:15:36加速度峰值4.431055m/s^2</td>
-                                  <td>2018-12-21 12:12:12</td>
-                                  <td></td>
-                                  <td></td>
-                                  <td>已解决</td>
-                              </tr>
-                              <tr style="color: #00ad9c">
-                                  <td>恢复</td>
-                                  <td>重要</td>
-                                  <td>此报警已经解决</td>
-                                  <td>2018-05-22 17:15:36加速度峰值4.431055m/s^2</td>
-                                  <td>2018-12-21 12:12:12</td>
-                                  <td></td>
-                                  <td></td>
-                                  <td>已解决</td>
-                              </tr>
-                              <tr style="color: #00ad9c">
-                                  <td>恢复</td>
-                                  <td>重要</td>
-                                  <td>此报警已经解决</td>
-                                  <td>2018-05-22 17:15:36加速度峰值4.431055m/s^2</td>
-                                  <td>2018-12-21 12:12:12</td>
-                                  <td ></td>
-                                  <td></td>
-                                  <td>已解决</td>
-                              </tr>--}}
                           </table>
+                          </ul>
                       </div>
+
                       @endforeach
+                      {!! $alarms->links() !!}
                   </div>
               </div>
           </div>

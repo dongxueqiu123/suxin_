@@ -94,31 +94,24 @@
                       </div>
                   </div>
                   <div class="box-header with-border">
-                      <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">输入数据：</h3>
-                      <span class="inPutInfo">N+1个观测点</span>
-                      <div class="box-tools pull-right">
-
-                          <div class="btn-group changeButton"  data-toggle="btn-toggle">
-                          </div>
+                      <div style="width: 50%;float: left;">
+                          <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">输入数据：</h3>
+                          <span class="inPutInfo">N+1个观测点</span>
                       </div>
-                  </div>
-                  <div class="box-body">
-                      <div id="container" style="width: 800px; margin: auto;"></div>
-                      {{--                        <div id="fadeOut" class="highcharts-loading" style="position: absolute; background-color: white; opacity: 1; text-align: center; z-index: 10;   margin: auto;  top: 100px; left: 0;  right: 0;   width: 800px; height: 258px;">
-                                                  <span class="highcharts-loading-inner" style="font-weight: bold; position: relative; top: 45%; color: gray;">Loading...</span></div>--}}
-                  </div>
-
-                  <div class="box-header with-border" style="border-top: 1px solid #f4f4f4;">
+                      <div style="float: left;">
                       <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">输出数据：</h3>
                       <span class="outPutInfo">N次多项式</span>
+                      </div>
                       <div class="box-tools pull-right">
                           <div class="btn-group changeButton"  data-toggle="btn-toggle">
                           </div>
                       </div>
                   </div>
                   <div class="box-body">
-                      <div id="container1" style="width: 800px; margin: auto;"></div>
+                      <div id="container" style="width: 50%; float: left;"></div>
+                      <div id="container1" style="width: 50%;; float: left;"></div>
                   </div>
+
                   <!-- /.box-body-->
               </div>
               <!-- /.box -->
@@ -133,10 +126,10 @@
   <script>
       $('.select2').select2();
 
-      highChart = function(url,isPost){
+      highChart = function(url, isPost, inPutType, outPutType){
           if(!isPost){
-              highChartInputData([]);
-              highChartOutputData([],[]);
+              highChartInputData([],inPutType);
+              highChartOutputData([],outPutType);
               return false;
           }
           $.ajax({
@@ -148,8 +141,8 @@
               timeout:5000,    //超时时间
               dataType:'json',
               success:function(data){
-                  highChartInputData(data.data.inputData);
-                  highChartOutputData(data.data.outputData,data.data.inputData);
+                  highChartInputData(data.data.inputData,inPutType);
+                  highChartOutputData(data.data.outputData,outPutType);
                   $('.inPutInfo').html(data.data.inputExplain);
                   $('.outPutInfo').html(data.data.outputExplain);
 
@@ -164,7 +157,7 @@
           highChartInputData(url);
       };
 
-      function highChartInputData(inputData) {
+      function highChartInputData(inputData,inPutType) {
           Highcharts.chart('container', {
               title: {
                   text: '输入数据',
@@ -179,14 +172,14 @@
                   enabled: false
               },
               series: [ {
-                  type: 'scatter',
+                  type: inPutType,
                   name: '观测点',
                   data: inputData,
               }]
           });
       }
 
-      function highChartOutputData(outputData,inputData) {
+      function highChartOutputData(outputData, outPutType) {
         var chart = Highcharts.chart('container1', {
               title: {
                   text: '输出数据',
@@ -215,7 +208,7 @@
               },
               series: [ {
                   //type: 'scatter',
-                  type:'line',
+                  type: outPutType,
                   name: '观测点',
                   data: outputData,
               }]
@@ -269,11 +262,12 @@
           $('.infoName').html(option.attr('info'));
           $('.inPutInfo').html(option.attr('inPutInfo'));
           $('.outPutInfo').html(option.attr('outPutInfo'));
-          highChart(name+'/'+className,false);
+          highChart(name+'/'+className,false,option.attr('inPutType'),option.attr('outPutType'));
       }
 
       $('.motion').click(function(){
-          highChart($(".method option:selected").val()+'/'+$(".className option:selected").val(),true);
+          var option = $(".className option:selected");
+          highChart($(".method option:selected").val()+'/'+option.val(),true,option.attr('inPutType'),option.attr('outPutType'));
       })
 
   </script>

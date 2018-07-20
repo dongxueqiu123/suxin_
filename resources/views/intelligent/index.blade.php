@@ -31,8 +31,11 @@
     </section>
 
     <section class="content">
+
+
         <div class="row">
             <div class="col-xs-12">
+                <!-- interactive chart -->
                 <div class="box box-solid">
                     <div class="box-body">
                         <div style="width:840px;margin:auto;height: 200px">
@@ -44,118 +47,37 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-xs-12">
-                <!-- interactive chart -->
-                <div class="box box-solid">
-                    <div class="box-header with-border">
-                        <i class="fa fa-bar-chart-o" style="color: black;font-size:13px;"></i>
-
-                        <h3 class="box-title"></h3>
-
+                    <div class="box-header with-border" style="border-top: 1px solid #f4f4f4;">
+                        <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">基于均方根（RMS）算法的齿轮磨损故障诊断结果</h3>
                         <div class="box-tools pull-right">
+
+                            <div class="btn-group changeButton"  data-toggle="btn-toggle">
+                            </div>
                         </div>
                     </div>
                     <div class="box-body">
-                        <div id="rmsIn" style="height: 300px; width: 800px;  margin: auto;"></div>
+                        <div id="rmsIn" style="height: 300px; width:49%; float: left;"></div>
+                        <div id="rmsOut"  style="height: 300px; width:49%; float:right;"></div>
                     </div>
-                    <!-- /.box-body-->
-                </div>
-                <!-- /.box -->
 
-            </div>
-            <!-- /.col -->
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12">
-                <!-- interactive chart -->
-                <div class="box box-solid">
-                    <div class="box-header with-border">
-                        <i class="fa fa-bar-chart-o" style="color: black;font-size:13px;"></i>
-
-                        <h3 class="box-title"></h3>
-
+                    <div class="box-header with-border" style="border-top: 1px solid #f4f4f4;">
+                        <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">基于时间同步平均（TSA）算法的齿轮局部损伤诊断结果</h3>
                         <div class="box-tools pull-right">
 
-                            {{--                          <div class="btn-group changeButton"  data-toggle="btn-toggle">
-                                                          <button type="button" class="btn btn-default btn-xs temperature active" value="ex_temp">温度</button>
-                                                          <button type="button" class="btn btn-default btn-xs speed" value="acc_peak" >加速度</button>
-                                                      </div>--}}
+                            <div class="btn-group changeButton"  data-toggle="btn-toggle">
+                            </div>
                         </div>
                     </div>
-                    <div class="box-body">
-                        <div id="rmsOut"  style="height: 300px; width: 800px;  margin: auto;"></div>
-
+                    <div class="box-body" >
+                        <div id="tsaIn"  style="height: 300px; width: 50%; float: left;"></div>
+                        <div id="tsaOut"  style="height: 300px; width: 50%; float:right;"></div>
                     </div>
-                    <!-- /.box-body-->
                 </div>
-                <!-- /.box -->
-
             </div>
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-xs-12">
-                <!-- interactive chart -->
-                <div class="box box-solid">
-                    <div class="box-header with-border">
-                        <i class="fa fa-bar-chart-o" style="color: black;font-size:13px;"></i>
-
-                        <h3 class="box-title"></h3>
-
-                        <div class="box-tools pull-right">
-
-                            {{--                          <div class="btn-group changeButton"  data-toggle="btn-toggle">
-                                                          <button type="button" class="btn btn-default btn-xs temperature active" value="ex_temp">温度</button>
-                                                          <button type="button" class="btn btn-default btn-xs speed" value="acc_peak" >加速度</button>
-                                                      </div>--}}
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div id="tsaIn"  style="height: 300px; width: 800px;  margin: auto;"></div>
-                        <div style="display:none;" id="containerHumidityData"></div>
-                    </div>
-                    <!-- /.box-body-->
-                </div>
-                <!-- /.box -->
-
-            </div>
-            <!-- /.col -->
         </div>
 
-        <div class="row">
-            <div class="col-xs-12">
-                <!-- interactive chart -->
-                <div class="box box-solid">
-                    <div class="box-header with-border">
-                        <i class="fa fa-bar-chart-o" style="color: black;font-size:13px;"></i>
 
-                        <h3 class="box-title"></h3>
-
-                        <div class="box-tools pull-right">
-
-                            {{--                          <div class="btn-group changeButton"  data-toggle="btn-toggle">
-                                                          <button type="button" class="btn btn-default btn-xs temperature active" value="ex_temp">温度</button>
-                                                          <button type="button" class="btn btn-default btn-xs speed" value="acc_peak" >加速度</button>
-                                                      </div>--}}
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div id="tsaOut"  style="height: 300px; width: 800px;  margin: auto;"></div>
-                    </div>
-                    <!-- /.box-body-->
-                </div>
-                <!-- /.box -->
-
-            </div>
-            <!-- /.col -->
-        </div>
     </section>
 
     <script type="text/javascript">
@@ -186,7 +108,7 @@
                         style: {
                             fontSize: '13'
                         },
-                        text: '基于均方根（RMS）算法的齿轮磨损故障诊断结果（输入轴数据）'
+                        text: '输入轴数据'
                     },
                     credits: {
                         enabled: false //不显示LOGO
@@ -280,7 +202,7 @@
                         style: {
                             fontSize: '13'
                         },
-                        text: '基于均方根（RMS）算法的齿轮磨损故障诊断结果（输出轴数据）'
+                        text: '输出轴数据'
                     },
                     credits: {
                         enabled: false //不显示LOGO
@@ -376,7 +298,7 @@
                         style: {
                             fontSize: '13'
                         },
-                        text: '基于时间同步平均（TSA）算法的齿轮局部损伤诊断结果（输入轴数据）'
+                        text: '输入轴数据'
                     },
                     credits: {
                         enabled: false //不显示LOGO
@@ -466,7 +388,7 @@
                         style: {
                             fontSize: '13'
                         },
-                        text: '基于时间同步平均（TSA）算法的齿轮局部损伤诊断结果（输出轴数据）'
+                        text: '输出轴数据'
                     },
                     credits: {
                         enabled: false //不显示LOGO

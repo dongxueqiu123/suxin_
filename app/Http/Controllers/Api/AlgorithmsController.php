@@ -25,7 +25,7 @@ class AlgorithmsController extends Controller{
         $str = '';
         $classes = config('algorithm.'.$className.'.classify');
         foreach ($classes as $name=>$class){
-            $str.= '<option value="'.$name.'" info="'.($class['info']??'暂无数据').'" outPutInfo="'.($class['outPutInfo']??'暂无数据').'" inPutInfo="'.($class['inPutInfo']??'暂无数据').'" >'.$class['name'].'</option>';
+            $str.= '<option value="'.$name.'" info="'.($class['info']??'暂无数据').'" outPutInfo="'.($class['outPutInfo']??'暂无数据').'" inPutInfo="'.($class['inPutInfo']??'暂无数据').'" inPutType="'.($class['inPutType']??'暂无数据').'" outPutType="'.($class['outPutType']??'暂无数据').'" >'.$class['name'].'</option>';
         }
         return response()->json([
             'code' => 0,

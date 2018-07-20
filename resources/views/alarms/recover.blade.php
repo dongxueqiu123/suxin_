@@ -12,28 +12,22 @@
   </section>
 
   <section class="content">
+
       <div class="row">
           <div class="col-xs-12">
               <div class="box box-solid">
                   <div class="box-body">
-                      <div class="col-sm-3">
+                      <div class="col-sm-3" style="padding-left: 0px;">
                           <input type="name" class="form-control" value="{{$name}}" id="name" placeholder="无线节点或设备名称" datatype="*" errormsg="请填写信息">
                       </div>
-                      <div class="col-sm-3">
+                      <div class="col-sm-3" style="padding-left: 0px;">
                           <div class="input-group">
                               <button type="button" class="btn btn-primary btn-flat search">查询</button>
 
                           </div>
                       </div>
                   </div>
-              </div>
-          </div>
-      </div>
-
-      <div class="row">
-          <div class="col-xs-12">
-              <div class="box box-solid">
-                  <div class="box-body">
+                  <div class="box-body" style="border-top: 1px solid #f4f4f4;">
                       <table id="example1" class="table table-bordered table-striped">
                           <thead>
                           <tr>
