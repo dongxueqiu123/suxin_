@@ -78,6 +78,7 @@ class ServicesAdapte implements ServicesInterface{
     }
 
     public function getInfoClient(string $url,array $parameters = []){
+
         $array = [];
         foreach ($parameters as $name=>$parameter)
         {

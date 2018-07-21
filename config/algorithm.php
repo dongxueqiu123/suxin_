@@ -64,6 +64,22 @@ return [
                 'outPutType' => 'line',
                 'inPutType' => 'line'
             ],
+            'yulewalker' => [
+                'name' => 'Yule-Walker 谱估计方法',
+                'info' => 'Yule-Walker 谱估计方法是描述自回归序列参数与其协方差函数之间关系的一种谱估计算法',
+                'outPutInfo' => '谱估计后的数据',
+                'inPutInfo'  => '观测数据',
+                'outPutType' => 'line',
+                'inPutType' => 'line'
+            ],
+            'burg' => [
+                'name' => 'Burg 谱估计方法',
+                'info' => 'Burg 谱估计方法一种直接由已知的时间信号序列计算功率谱估计值的递推算法',
+                'outPutInfo' => '谱估计后的数据',
+                'inPutInfo'  => '观测数据',
+                'outPutType' => 'line',
+                'inPutType' => 'line'
+            ],
         ]
     ],
 /*    'adaptiveFilters'=>[
