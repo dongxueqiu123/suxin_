@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer class="footer" style="position: static;">
   <div class="footer_main">
     <div class="container">
       <div class="row">
