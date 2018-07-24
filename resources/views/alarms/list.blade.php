@@ -27,6 +27,11 @@
                               <th width="10%">分类</th>
                               <th width="10%">操作</th>
                           </tr>
+                          @if($alarms->total() == 0 )
+                              <tr>
+                                  <td  colspan="6" align="center"  style="background-color: #ffffff">暂无数据</td>
+                              </tr>
+                          @endif
                           </thead>
                       </table>
                       @foreach($alarms as $key=>$alarm)
@@ -68,7 +73,6 @@
                           </table>
                           </ul>
                       </div>
-
                       @endforeach
                       {!! $alarms->links() !!}
                   </div>

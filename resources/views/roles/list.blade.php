@@ -42,6 +42,11 @@
                 </td>
               </tr>
               @endforeach
+              @if($roles->total() == 0 )
+                  <tr>
+                      <td  colspan="4" align="center"  style="background-color: #ffffff">暂无数据</td>
+                  </tr>
+              @endif
               </tbody>
             </table>
           </div>

@@ -127,9 +127,9 @@
             time = new Date();
             curTime = myTime.CurTime();
             var timeZone = new Date().getTimezoneOffset();
-            max = myTime.UnixToDate(curTime,true,timeZone/-60);
+            max = myTime.UnixToDate({{$time}},true,timeZone/-60);
 
-            startDateTime = myTime.UnixToDate(curTime-300,true,timeZone/-60);
+            startDateTime = myTime.UnixToDate({{$time}}-300,true,timeZone/-60);
             changeHighChart(startDateTime,max);
         }
 

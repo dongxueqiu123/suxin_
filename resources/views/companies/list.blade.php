@@ -42,6 +42,11 @@
                 </td>
               </tr>
               @endforeach
+              @if($companies->total() == 0 )
+                  <tr>
+                      <td  colspan="3" align="center"  style="background-color: #ffffff">暂无数据</td>
+                  </tr>
+              @endif
               </tbody>
             </table>
           </div>

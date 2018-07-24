@@ -29,8 +29,8 @@ return [
             ],
         ]
     ],
-    'powerSpectrumEstimation'=>[
-        'name'=>'功率谱估计',
+    'classical'=>[
+        'name'=>'经典谱估计方法',
         'classify'=>[
             'periodogram' => [
                 'name' => '周期图法谱估计',
@@ -64,6 +64,11 @@ return [
                 'outPutType' => 'line',
                 'inPutType' => 'line'
             ],
+        ]
+    ],
+    'paramet'=>[
+        'name'=>'参数化谱估计方法',
+        'classify'=>[
             'yulewalker' => [
                 'name' => 'Yule-Walker 谱估计方法',
                 'info' => 'Yule-Walker 谱估计方法是描述自回归序列参数与其协方差函数之间关系的一种谱估计算法',
@@ -82,6 +87,43 @@ return [
             ],
         ]
     ],
+    'eigenanal'=>[
+        'name'=>'特征分析谱估计方法',
+        'classify'=>[
+            'capon' => [
+                'name' => 'Capon 谱估计方法',
+                'info' => 'Capon 法有时也被称为最大似然（ML）估计器，在具有任意空间特性的高斯白噪声存在的情况下，对于任意的 θ ， PCapon (θ )是来自方向θ 的信号功率的最大似然估计',
+                'outPutInfo' => '谱估计后的数据',
+                'inPutInfo'  => '观测数据',
+                'outPutType' => 'line',
+                'inPutType' => 'line'
+            ],
+            'music' => [
+                'name' => 'MUSIC 谱估计方法',
+                'info' => '多重信号分类，是一类空间谱估计算法。其思想是利用接收数据的协方差矩阵(Rx)进行特征分解，分离出信号子空间和噪声子空间，利用信号方向向量与噪声子空间的正交性来构成空间扫描谱，进行全域搜索谱峰，从而实现信号的参数估计',
+                'outPutInfo' => '谱估计后的数据',
+                'inPutInfo'  => '观测数据',
+                'outPutType' => 'line',
+                'inPutType' => 'line'
+            ],
+            'pisarenko' => [
+                'name' => 'Pisarenko 谱估计方法',
+                'info' => '算法选取噪声子空间中最小特征值对应的特征向量作为阵列导向矢量的投影矢量，由于只利用了最小特征值对应的特征向量，其谱分辨力较MUSIC 算法有所提高，但是其空间谱曲线容易产生伪峰',
+                'outPutInfo' => '谱估计后的数据',
+                'inPutInfo'  => '观测数据',
+                'outPutType' => 'line',
+                'inPutType' => 'line'
+            ],
+            'esprit' => [
+                'name' => 'ESPRIT 谱估计方法',
+                'info' => 'ESPRIT 谱估计方法属于信号子空间算法，它是利用子阵间信号子空间的旋转不变性来求解的',
+                'outPutInfo' => '谱估计后的数据',
+                'inPutInfo'  => '观测数据',
+                'outPutType' => 'line',
+                'inPutType' => 'line'
+            ],
+        ]
+    ]
 /*    'adaptiveFilters'=>[
         'name'=>'自适应滤波器',
         'classify'=>[

@@ -45,7 +45,13 @@
                   <a class="btn btn-default btn-flat btn-xs delete" url="{{ route('api.users.delete',['id'=>$user['id']])}}" >删除</a>
                 </td>
               </tr>
+
               @endforeach
+              @if($users->total() == 0 )
+                  <tr>
+                      <td  colspan="6" align="center"  style="background-color: #ffffff">暂无数据</td>
+                  </tr>
+              @endif
               </tbody>
             </table>
           </div>

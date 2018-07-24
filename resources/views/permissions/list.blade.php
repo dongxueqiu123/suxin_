@@ -45,6 +45,11 @@
                 </td>
               </tr>
               @endforeach
+              @if($permissions->total() == 0 )
+                  <tr>
+                      <td  colspan="6" align="center"  style="background-color: #ffffff">暂无数据</td>
+                  </tr>
+              @endif
               </tbody>
             </table>
           </div>

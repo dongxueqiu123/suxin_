@@ -165,6 +165,11 @@
                       fontSize: '13'
                   },
               },
+/*              xAxis: {
+                  title: {
+                      text: 'f/fs'
+                  },
+              },*/
               credits: {
                   enabled: false //不显示LOGO
               },
@@ -193,6 +198,11 @@
               exporting: {
                   enabled: false
               },
+/*            xAxis: {
+                title: {
+                    text: 'f/fs'
+                },
+            },*/
               plotOptions: {
                   spline: {
                       lineWidth: 1,

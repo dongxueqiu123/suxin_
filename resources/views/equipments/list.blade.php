@@ -46,6 +46,11 @@
                                       </td>
                                   </tr>
                               @endforeach
+                              @if($equipments->total() == 0 )
+                                  <tr>
+                                      <td  colspan="5" align="center"  style="background-color: #ffffff">暂无数据</td>
+                                  </tr>
+                              @endif
                               </tbody>
                           </table>
                           {!! $equipments->links() !!}

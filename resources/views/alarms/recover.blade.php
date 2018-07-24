@@ -56,6 +56,11 @@
                                   <td>{{$alarm['remark']??''}}</td>
                               </tr>
                           @endforeach
+                          @if($alarms->total() == 0 )
+                              <tr>
+                                  <td  colspan="9" align="center"  style="background-color: #ffffff">暂无数据</td>
+                              </tr>
+                          @endif
                           </tbody>
                       </table>
                       {!! $alarms->appends(['name'=>$name])->links() !!}

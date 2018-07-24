@@ -73,14 +73,17 @@
                                           </td>
                                       </tr>
                                   @endforeach
+                                  @if($thresholds->total() == 0 )
+                                      <tr>
+                                          <td  colspan="9" align="center"  style="background-color: #ffffff">暂无数据</td>
+                                      </tr>
+                                  @endif
                                   </tbody>
                               </table>
                               {!! $thresholds->links() !!}
                           </div>
                           <!-- /.box-body -->
                       </div>
-                      <!-- /.box -->
-
                   <!-- /.box -->
               </div>
           </div>

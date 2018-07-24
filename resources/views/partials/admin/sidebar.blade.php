@@ -62,7 +62,7 @@
       </li>
 
       @if( Auth::user()->id !==1 )
-        @permission(['charts'])
+        @permission(['charts','collectorHistoryChart','algorithms'])
         <li class="@if (in_array($active??'', ['realTime','historyRealTime','algorithms'])) active @endif  treeview">
           <a href="#">
             <i class="fa fa-industry"></i> <span>数据展示</span>
@@ -74,7 +74,7 @@
             @permission('charts')
             <li class="@if (($active??'') === 'realTime') active @endif"><a href="{{route('charts.collectorChartRealTime',['id'=>0])}}"><i class="fa fa-area-chart"></i> 实时数据</a></li>
             @endpermission
-            @permission('charts')
+            @permission('collectorHistoryChart')
             <li class="@if (($active??'') === 'historyRealTime') active @endif"><a href="{{route('collectorHistoryChart',['id'=>0])}}"><i class="fa fa-bar-chart"></i> 历史数据</a></li>
             @endpermission
             @permission('algorithms')
