@@ -123,7 +123,49 @@ return [
                 'inPutType' => 'line'
             ],
         ]
-    ]
+    ],
+    'adaptiveFilters'=>[
+        'name'=>'自适应滤波器',
+        'classify'=>[
+            'wiener' => [
+                'name' => 'Wiener滤波器',
+                'info' => '维纳滤波器一种基于最小均方误差准则、对平稳过程的最优估计器，可用于提取被平稳噪声所污染的信号',
+                'outPutInfo' => '滤波后的数据',
+                'inPutInfo'  => '原始数据',
+                'outPutType' => 'line',
+                'inPutType' => 'line'
+            ],
+            'lms' => [
+                'name' => 'LMS滤波器',
+                'info' => 'LMS是最常用的自适应滤波算法，它以当前的误差代替期望误差，通过梯度下降方法调整滤波器的系数，从而跟踪输入信号或系统的变化，达到自适应的目的',
+                'outPutInfo' => '滤波后的数据',
+                'inPutInfo'  => '原始数据',
+                'outPutType' => 'line',
+                'inPutType' => 'line'
+            ],
+            'rls' => [
+                'name' => 'RLS滤波器',
+                'info' => 'RLS算法与LMS算法不同，不是最小均方意义下的自适应滤波器，而是通过递归的方法求解以误差信号为代价函数的加权最小二乘问题，从而更新滤波器的系数',
+                'outPutInfo' => '滤波后的数据',
+                'inPutInfo'  => '原始数据',
+                'outPutType' => 'line',
+                'inPutType' => 'line'
+            ],
+        ]
+    ],
+    'timeFrequencyAnalysis'=>[
+        'name'=>'时频分析',
+        'classify'=>[
+            'windowFourierTransform' => [
+                'name' => '加窗Fourier变换',
+                'info' => '通过对信号与时频原子作内积，将信号从时域信号变换到时频域，实现了时频局部化的分析特性，克服了 Fourier 变换全局性的缺点',
+                'outPutInfo' => '滤波后的数据',
+                'inPutInfo'  => '原始数据',
+                'outPutType' => 'line',
+                'inPutType' => 'line'
+            ],
+        ]
+    ],
 /*    'adaptiveFilters'=>[
         'name'=>'自适应滤波器',
         'classify'=>[
