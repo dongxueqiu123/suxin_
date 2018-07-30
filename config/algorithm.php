@@ -153,12 +153,25 @@ return [
             ],
         ]
     ],
-    'timeFrequencyAnalysis'=>[
+/*    'timeFrequencyAnalysis'=>[
         'name'=>'时频分析',
         'classify'=>[
             'windowFourierTransform' => [
                 'name' => '加窗Fourier变换',
                 'info' => '通过对信号与时频原子作内积，将信号从时域信号变换到时频域，实现了时频局部化的分析特性，克服了 Fourier 变换全局性的缺点',
+                'outPutInfo' => '滤波后的数据',
+                'inPutInfo'  => '原始数据',
+                'outPutType' => 'line',
+                'inPutType' => 'line'
+            ],
+        ]
+    ],*/
+    'waveletTransform'=>[
+        'name'=>'小波变换',
+        'classify'=>[
+            'discrete' => [
+                'name' => '离散小波变换',
+                'info' => '离散小波变换是对基本小波的尺度和平移进行离散化',
                 'outPutInfo' => '滤波后的数据',
                 'inPutInfo'  => '原始数据',
                 'outPutType' => 'line',
