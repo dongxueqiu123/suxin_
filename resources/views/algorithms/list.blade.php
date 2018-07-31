@@ -38,69 +38,43 @@
 
   <section class="content">
 
-      {{--    <div class="row">
-              <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-          </div>--}}
       <div class="row">
           <div class="col-xs-12">
               <div class="box box-solid">
                   <div class="box-body">
-{{--                      <input type="text" class="demo-input startTime" style="height: 34px;padding-bottom: 5px;" placeholder="开始时间"  id="test2"  >
-                      <input type="text" class="demo-input endTime" style="height: 34px;padding-bottom: 5px;" placeholder="截止时间" id="test1">--}}
                       <select class="demo-input select2 method"  data-placeholder="Select a State"  style="width: 20%;">
                           @foreach($algorithms as $name=>$algorithm)
-                          <option  value="{{$name}}">{{$algorithm['name']}}</option>
+                              <option  value="{{$name}}">{{$algorithm['name']}}</option>
                           @endforeach
                       </select>
                       <select class="demo-input select2 className"  data-placeholder="Select a State"  style="width: 20%;">
 
                       </select>
-                  </div>
-              </div>
-          </div>
-      </div>
-
-      <div class="row">
-          <div class="col-xs-12">
-              <div class="box box-solid">
-                      <div class="box-header with-border">
-                          <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">算法简介</h3>
-                          <div class="box-tools pull-right">
-
-                              <div class="btn-group changeButton"  data-toggle="btn-toggle">
-                              </div>
-                          </div>
-                      </div>
-                  <div class="box-body ">
-                      &ensp;&ensp;&ensp;&ensp;<span class="infoName">对于给定的 N+1 个点，可以通过牛顿插值法求取经过这些点的N 次多项式。</span>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="row">
-          <div class="col-xs-12">
-              <!-- interactive chart -->
-              <div class="box box-solid">
-                  <div class="box-header with-border">
-                      <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">实例演示</h3>
                       <a  class="btn bg-light-blue btn-flat motion" style="margin-left: 10px;">
                           <i class="fa fa-fw fa-paper-plane"></i>
                           点击运行
                       </a>
+                  </div>
+                  <div class="box-header with-border">
+                      <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">算法简介</h3>
                       <div class="box-tools pull-right">
 
                           <div class="btn-group changeButton"  data-toggle="btn-toggle">
                           </div>
                       </div>
                   </div>
-                  <div class="box-header with-border">
+                  <div class="box-body with-border" >
+                      &ensp;&ensp;&ensp;&ensp;<span class="infoName" >对于给定的 N+1 个点，可以通过牛顿插值法求取经过这些点的N 次多项式。</span>
+                  </div>
+
+                  <div class="box-header with-border" style="border-top: 1px solid #f4f4f4;">
                       <div style="width: 50%;float: left;">
                           <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">输入数据：</h3>
                           <span class="inPutInfo">N+1个观测点</span>
                       </div>
                       <div style="float: left;">
-                      <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">输出数据：</h3>
-                      <span class="outPutInfo">N次多项式</span>
+                          <h3 class="box-title" style="color: black;font-weight:bold;font-size:13px;">输出数据：</h3>
+                          <span class="outPutInfo">N次多项式</span>
                       </div>
                       <div class="box-tools pull-right">
                           <div class="btn-group changeButton"  data-toggle="btn-toggle">
@@ -111,15 +85,9 @@
                       <div id="container" style="width: 50%; float: left;"></div>
                       <div id="container1" style="width: 50%;; float: left;"></div>
                   </div>
-
-                  <!-- /.box-body-->
               </div>
-              <!-- /.box -->
-
           </div>
-
       </div>
-      <!-- /.row -->
 
   </section>
     <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
