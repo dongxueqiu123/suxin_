@@ -172,7 +172,7 @@
 
       <section class="col-lg-12 connectedSortable">
 
-        <div class="nav-tabs-custom">
+        <div class="nav-tabs-custom" style=" background-color:#ecf0f5">
           <ul class="nav nav-tabs pull-right">
 {{--            <li class="pull-left header" style="width: 100%;font-size: 13px;line-height:25px;"><i class="fa fa-map-marker"></i> 地图</li>--}}
             <div id="map" style="height: 500px; width: 1012px; margin: 0 auto; background-color:#ecf0f5">
@@ -295,7 +295,6 @@
                 myChart.setOption(option);
                 myChart.on('mouseover', function (params) {
                     var dataIndex = params.dataIndex;
-                    console.log(params);
                 });
 
             }

@@ -153,19 +153,27 @@ return [
             ],
         ]
     ],
-/*    'timeFrequencyAnalysis'=>[
+    'timeFrequencyAnalysis'=>[
         'name'=>'时频分析',
         'classify'=>[
-            'windowFourierTransform' => [
+/*            'windowFourierTransform' => [
                 'name' => '加窗Fourier变换',
                 'info' => '通过对信号与时频原子作内积，将信号从时域信号变换到时频域，实现了时频局部化的分析特性，克服了 Fourier 变换全局性的缺点',
                 'outPutInfo' => '滤波后的数据',
                 'inPutInfo'  => '原始数据',
                 'outPutType' => 'line',
                 'inPutType' => 'line'
+            ],*/
+            'wignerWilleDistribution' => [
+                'name' => 'Wigner-Wille分布',
+                'info' => 'Wigner-Ville 分布（WVD）正是一种没有时频分辨率损失的时频能量人分布，它是通过信号本身的时间与频率平移计算所得',
+                'outPutInfo' => '滤波后的数据',
+                'inPutInfo'  => '原始数据',
+                'outPutType' => 'line',
+                'inPutType' => 'line'
             ],
         ]
-    ],*/
+    ],
     'waveletTransform'=>[
         'name'=>'小波变换',
         'classify'=>[
