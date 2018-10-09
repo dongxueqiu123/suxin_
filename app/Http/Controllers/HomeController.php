@@ -90,6 +90,41 @@ class HomeController extends Controller
         return view('sensors')->with($view_data);
     }
 
+    public function ywIndex()
+    {
+        $locale = app()->getLocale();
+        $title = ($locale === 'ch') ? "传感器" : "Sensors";
+        $view_data = [
+            "action" => "sensors",
+            "title" => $title
+        ];
+        return view('yw.index')->with($view_data);
+    }
+
+    public function ywMalfunction()
+    {
+        $locale = app()->getLocale();
+        $title = ($locale === 'ch') ? "传感器" : "Sensors";
+        $view_data = [
+            "action" => "sensors",
+            "title" => $title
+        ];
+        return view('yw/index1')->with($view_data);
+    }
+
+    public function ywAlgorithm()
+    {
+        $locale = app()->getLocale();
+        $title = ($locale === 'ch') ? "传感器" : "Sensors";
+        $view_data = [
+            "action" => "sensors",
+            "title" => $title
+        ];
+        return view('yw/index2')->with($view_data);
+    }
+
+
+
     public function login(Request $request){
         if($this->attemptLogin($request)){
             $result['name']    = \Auth::user()->name;

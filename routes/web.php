@@ -42,6 +42,10 @@ Route::prefix('{locale}')->group(function () {
     Route::get('cloud', 'HomeController@industrial');
     Route::get('analytics', 'HomeController@analytics');
     Route::get('contact_us', 'HomeController@contact_us');
+
+    Route::get('ywIndex','HomeController@ywIndex')->name('ywIndex');
+    Route::get('ywMalfunction','HomeController@ywMalfunction')->name('ywMalfunction');
+    Route::get('ywAlgorithm','HomeController@ywAlgorithm')->name('ywAlgorithm');
 });
 
 Route::post('admin/users/login', 'HomeController@login');

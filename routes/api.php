@@ -102,6 +102,7 @@ Route::group(['prefix' => 'admin/orderProduct'], function () {
 
 Route::group(['prefix' => 'admin/algorithm'], function () {
     Route::post('/getOptionHtml', 'Api\AlgorithmsController@getOptionHtml')->name('api.algorithm.getOptionHtml');
+    Route::post('/getAcc', 'Api\AlgorithmsController@getAcc')->name('api.algorithm.getAcc');
 });
 
 Route::group(['prefix' => 'admin/alarms'], function () {
